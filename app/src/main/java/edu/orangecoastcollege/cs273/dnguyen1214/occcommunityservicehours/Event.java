@@ -13,13 +13,8 @@ public class Event {
     private int mId;
     private String mName, mDescription, mLocation, mStartTime, mEndTime, mDate, mDuration;
 
-    // Time diff
-
-
     public Event() {
-        // Calendar c = Calendar.getInstance();
-        // SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yy hh:mm aa");
-        // this(0, 1, 1, , "", )
+        this(0, "", "", "", "", "", "");
     }
 
     public Event(int id, String name, String description,
@@ -134,4 +129,18 @@ public class Event {
 
         return duration;
     }
+
+    // eventPassed
+    public boolean eventPassed() {
+        Calendar c = Calendar.getInstance();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yy hh:mm aa");
+        String dateTime = dateFormat.format(c.getTime());
+        //System.out.println(dateTime);
+
+
+        return true;
+
+    }
+
+    // eventUpcoming
 }
