@@ -11,17 +11,25 @@ import java.util.Locale;
 public class Event {
     // Declare private fields
     private int mId;
-    private String mName, mDescription, mLocation, mStartTime, mEndTime, mDate, mDuration;
+    private String mName;
+    private int mDay, mMonth, mYear;
+    private String mDescription, mLocation, mStartTime, mEndTime, mDuration;
 
-    public Event() {
-        this(0, "", "", "", "", "", "");
+    public Event(String name,
+                 int day, int month, int year,
+                 String description, String location, String startTime, String endTime) {
+        this(-1, name, 00, 00, 0000, description, location, startTime, endTime);
     }
 
-    public Event(int id, String name, String description,
-                 String location, String startTime, String endTime, String date) {
+    private Event(int id,
+                 String name,
+                 int month, int day, int year,
+                 String description, String location, String startTime, String endTime) {
         mId = id;
-        mDate = date;
         mName = name;
+        mMonth = month;
+        mYear = year;
+        mDay = day;
         mDescription = description;
         mLocation = location;
         mStartTime = startTime;
@@ -130,17 +138,47 @@ public class Event {
         return duration;
     }
 
-    // eventPassed
-    public boolean eventPassed() {
+    /**
+     * eventPassed - Returns a boolean value depending on whether the event has passed.
+     *
+     *
+     *      ex. If, the event is set for '09-10-2018 09:30 am'
+     *              and the current date and time is '09-10-2018 08:00 am'
+     *          Then, the value false will be returned.
+     *
+     * @return boolean value
+     */
+    private boolean eventPassed() {
         Calendar c = Calendar.getInstance();
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yy hh:mm aa");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm aa", Locale.US);
         String dateTime = dateFormat.format(c.getTime());
-        //System.out.println(dateTime);
+        //System.out.println(dateTime);f
+        String [] values = dateTime.split(" ");
+        String [] date = values[0].split("-");
+        String [] time = values[1].split(":");
+        String period = values[2];
 
+        String [] startTime = mStartTime.split(" ");
+        String eventPeriod = startTime[1];
 
+        String [] eventTime = startTime[0].split(":");
+
+        if (mYear >= Integer.parseInt(date[2]))
+        {
+            if (mMonth >= Integer.parseInt(date[0]))
+            {
+                if (mDay >= Integer.parseInt(date[1]))
+                {
+                    if (eventPeriod.equals(period)) {
+                        return (Integer.parseInt(eventTime[0]) < Integer.parseInt(time[0])) ||
+                                !(Integer.parseInt(eventTime[0]) >= Integer.parseInt(time[0]));
+                    }
+                    return (eventPeriod.equals("am") && period.equals("pm"));
+                }
+                return true;
+            }
+            return true;
+        }
         return true;
-
     }
-
-    // eventUpcoming
 }
