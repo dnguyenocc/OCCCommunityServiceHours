@@ -44,6 +44,8 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_LOCATION = "location";
     private static final String FIELD_START_TIME = "start_time";
     private static final String FIELD_END_TIME = "end_time";
+    private static final String FIELD_EVENT_IMAGE_NAME = "image_name";
+
 
 //
 //    //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE OFFERINGS TABLE
@@ -81,7 +83,8 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_DESCRIPTION + " TEXT, "
                 + FIELD_LOCATION + " TEXT, "
                 + FIELD_START_TIME + " TEXT, "
-                + FIELD_END_TIME + " TEXT" + ")";
+                + FIELD_END_TIME + " TEXT, "
+                + FIELD_EVENT_IMAGE_NAME + " TEXT" + ")";
         database.execSQL(createQuery);
 
 
@@ -104,6 +107,7 @@ class DBHelper extends SQLiteOpenHelper {
                           int oldVersion,
                           int newVersion) {
         database.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + EVENTS_TABLE);
 //        database.execSQL("DROP TABLE IF EXISTS " + INSTRUCTORS_TABLE);
 //        database.execSQL("DROP TABLE IF EXISTS " + OFFERINGS_TABLE);
         onCreate(database);
@@ -217,22 +221,28 @@ class DBHelper extends SQLiteOpenHelper {
         return user;
     }
 
-//
-//    //********** INSTRUCTOR TABLE OPERATIONS:  ADD, GETALL, EDIT, DELETE
-//
-//    public void addInstructor(Instructor instructor) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//
-//        values.put(FIELD_LAST_NAME, instructor.getLastName());
-//        values.put(FIELD_FIRST_NAME, instructor.getFirstName());
-//        values.put(FIELD_EMAIL, instructor.getEmail());
-//
-//        db.insert(INSTRUCTORS_TABLE, null, values);
-//
-//        // CLOSE THE DATABASE CONNECTION
-//        db.close();
-//    }
+
+    //********** EVENTS TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
+
+    public void addEvent(Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FIELD_NAME, event.getName());
+        values.put(FIELD_MONTH, event.getMonth());
+        values.put(FIELD_DAY, event.getDay());
+        values.put(FIELD_YEAR, event.getYear());
+        values.put(FIELD_DESCRIPTION, event.getDescription());
+        values.put(FIELD_LOCATION, event.getLocation());
+        values.put(FIELD_START_TIME, event.getStartTime());
+        values.put(FIELD_END_TIME, event.getEndTime());
+        values.put(FIELD_IMAGE_NAME,event.getImageUri().toString());
+
+        db.insert(EVENTS_TABLE, null, values);
+
+        // CLOSE THE DATABASE CONNECTION
+        db.close();
+    }
 //
 //    public ArrayList<Instructor> getAllInstructors() {
 //        ArrayList<Instructor> instructorsList = new ArrayList<>();
