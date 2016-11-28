@@ -19,7 +19,7 @@ class DBHelper extends SQLiteOpenHelper {
     private Context mContext;
 
     //TASK: DEFINE THE DATABASE VERSION AND NAME  (DATABASE CONTAINS MULTIPLE TABLES)
-    static final String DATABASE_NAME = "OCC COMMUNITY SERVICE";
+    private static final String DATABASE_NAME = "OCC COMMUNITY SERVICE";
     private static final int DATABASE_VERSION = 1;
 
     //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE USERS TABLE
@@ -33,13 +33,18 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_PASSWORD = "password";
     private static final String FIELD_IMAGE_NAME = "image_name";
 
+    // FIELD NAMES FOR THE EVENTS TABLE
+    private static final String EVENTS_TABLE = "Events";
+    private static final String EVENTS_KEY_FIELD_ID = "id";
+    private static final String FIELD_NAME = "name";
+    private static final String FIELD_MONTH = "month";
+    private static final String FIELD_DAY = "day";
+    private static final String FIELD_YEAR = "year";
+    private static final String FIELD_DESCRIPTION = "description";
+    private static final String FIELD_LOCATION = "location";
+    private static final String FIELD_START_TIME = "start_time";
+    private static final String FIELD_END_TIME = "end_time";
 
-//    //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE INSTRUCTORS TABLE
-//    private static final String INSTRUCTORS_TABLE = "Instructors";
-//    private static final String INSTRUCTORS_KEY_FIELD_ID = "_id";
-//    static final String FIELD_FIRST_NAME = "first_name";
-//    static final String FIELD_LAST_NAME = "last_name";
-//    private static final String FIELD_EMAIL = "email";
 //
 //    //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE OFFERINGS TABLE
 //    private static final String OFFERINGS_TABLE = "Offerings";
@@ -66,12 +71,20 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_IMAGE_NAME + " TEXT" + ")";
         database.execSQL(createQuery);
 
-//        createQuery = "CREATE TABLE " + INSTRUCTORS_TABLE + "("
-//                + INSTRUCTORS_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-//                + FIELD_FIRST_NAME + " TEXT, "
-//                + FIELD_LAST_NAME + " TEXT, "
-//                + FIELD_EMAIL + " TEXT" + ")";
-//        database.execSQL(createQuery);
+        // Create the Events table
+        createQuery = "CREATE TABLE " + EVENTS_TABLE + "("
+                + EVENTS_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + FIELD_NAME + " TEXT, "
+                + FIELD_MONTH + " INTEGER, "
+                + FIELD_DAY + " INTEGER, "
+                + FIELD_YEAR + " INTEGER, "
+                + FIELD_DESCRIPTION + " TEXT, "
+                + FIELD_LOCATION + " TEXT, "
+                + FIELD_START_TIME + " TEXT, "
+                + FIELD_END_TIME + " TEXT" + ")";
+        database.execSQL(createQuery);
+
+
 //
 //        createQuery = "CREATE TABLE " + OFFERINGS_TABLE + "("
 //                + OFFERINGS_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
