@@ -94,6 +94,18 @@ public class Event {
         mDuration = calculateDuration();
     }
 
+    public int getDay() {
+        return mDay;
+    }
+
+    public int getMonth() {
+        return mMonth;
+    }
+
+    public int getYear() {
+        return mYear;
+    }
+
     /**
      * calculateDuration - Returns the duration of the event to the calling object.
      *
