@@ -217,6 +217,8 @@ class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(6),
                         Uri.parse(cursor.getString(7)));
 
+        cursor.close();
+
         db.close();
         return user;
     }
@@ -242,6 +244,34 @@ class DBHelper extends SQLiteOpenHelper {
 
         // CLOSE THE DATABASE CONNECTION
         db.close();
+    }
+
+    public Event getEvent(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                EVENTS_TABLE,
+                new String[]{EVENTS_KEY_FIELD_ID, FIELD_NAME, FIELD_MONTH, FIELD_DAY, FIELD_YEAR,
+                        FIELD_DESCRIPTION, FIELD_LOCATION, FIELD_START_TIME, FIELD_END_TIME, FIELD_EVENT_IMAGE_NAME},
+                EVENTS_KEY_FIELD_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+        if (cursor != null) cursor.moveToFirst();
+
+        Event event =
+                new Event(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getInt(2),
+                        cursor.getInt(3),
+                        cursor.getInt(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getString(7),
+                        cursor.getString(8),
+                        Uri.parse(cursor.getString(9)));
+        cursor.close();
+        db.close();
+        return event;
     }
 
     public ArrayList<Event> getAllEvents() {
@@ -275,7 +305,7 @@ class DBHelper extends SQLiteOpenHelper {
         }
 
         cursor.close();
-        
+
         return eventsList;
     }
 
