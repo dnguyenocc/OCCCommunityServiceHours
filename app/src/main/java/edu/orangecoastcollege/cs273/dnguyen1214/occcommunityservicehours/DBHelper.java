@@ -273,9 +273,27 @@ class DBHelper extends SQLiteOpenHelper {
                 eventsList.add(event);
             } while (cursor.moveToNext());
         }
+
+        cursor.close();
+        
         return eventsList;
     }
 
+    public void deleteEvent(Event event) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // Delete the specific event
+        db.delete(EVENTS_TABLE, EVENTS_KEY_FIELD_ID + " = ? ",
+                new String[]{String.valueOf(event.getId())});
+
+        db.close();
+    }
+
+    public void deleteAllEvents() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(EVENTS_TABLE, null, null);
+        db.close();
+    }
 //
 //    public ArrayList<Instructor> getAllInstructors() {
 //        ArrayList<Instructor> instructorsList = new ArrayList<>();
