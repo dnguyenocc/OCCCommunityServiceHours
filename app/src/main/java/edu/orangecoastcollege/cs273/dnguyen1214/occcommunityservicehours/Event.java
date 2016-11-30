@@ -1,7 +1,11 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
+import android.net.Uri;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 /**
@@ -9,41 +13,46 @@ import java.util.Locale;
  */
 
 public class Event {
+
     // Declare private fields
     private int mId;
     private String mName;
-    private int mDay, mMonth, mYear;
-    private String mDescription, mLocation, mStartTime, mEndTime, mDuration;
+    private Date mStartDate, mEndDate;
+    private String mDescription, mLocation;
+    private Uri mImageUri;
+
+    private SimpleDateFormat dateFormat;
 
     public Event(String name,
-                 int day, int month, int year,
-                 String description, String location, String startTime, String endTime) {
-        this(-1, name, 00, 00, 0000, description, location, startTime, endTime);
+                 String startDate, String endDate,
+                 String description, String location,
+                 Uri imageUri) {
+        this(-1, name, startDate, endDate, description, location, imageUri);
     }
 
-    private Event(int id,
+    public Event(int id,
                  String name,
-                 int month, int day, int year,
-                 String description, String location, String startTime, String endTime) {
+                 String startDate, String endDate,
+                 String description, String location, Uri imageUri) {
+
+        dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm aa", Locale.US);
         mId = id;
         mName = name;
-        mMonth = month;
-        mYear = year;
-        mDay = day;
+
+        try {
+            mStartDate = dateFormat.parse(startDate);
+            mEndDate = dateFormat.parse(endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         mDescription = description;
         mLocation = location;
-        mStartTime = startTime;
-        mEndTime = endTime;
-
-        setDuration();
+        mImageUri = imageUri;
     }
 
     public int getId() {
         return mId;
-    }
-
-    public void setId(int id) {
-        mId = id;
     }
 
     public String getName() {
@@ -70,43 +79,49 @@ public class Event {
         mLocation = location;
     }
 
-    public String getStartTime() {
-        return mStartTime;
+    public Uri getImageUri() {
+        return mImageUri;
     }
 
-    public void setStartTime(String startTime) {
-        mStartTime = startTime;
+    public void setImageUri(Uri imageUri) {
+        mImageUri = imageUri;
     }
 
-    public String getEndTime() {
-        return mEndTime;
+    public String getStartDate() {
+        return mStartDate.toString();
     }
 
-    public void setEndTime(String endTime) {
-        mEndTime = endTime;
+    public void setStartDate(String startDate) {
+        dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm aa", Locale.US);
+
+        try {
+            mStartDate = dateFormat.parse(startDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
-    public String getDuration() {
-        return mDuration;
+    public String getEndDate() {
+        return mEndDate.toString();
     }
 
-    private void setDuration() {
-        mDuration = calculateDuration();
+    public void setEndDate(String endDate) {
+        dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm aa", Locale.US);
+
+        try {
+            mEndDate = dateFormat.parse(endDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
-    public int getDay() {
-        return mDay;
+    public boolean eventPassed()
+    {
+        Date now = new Date(Calendar.getInstance().getTimeInMillis());
+        return now.after(mEndDate);
     }
 
-    public int getMonth() {
-        return mMonth;
-    }
-
-    public int getYear() {
-        return mYear;
-    }
-
-    /**
+    /*
      * calculateDuration - Returns the duration of the event to the calling object.
      *
      *
@@ -114,7 +129,7 @@ public class Event {
      *          Then, 1:10 will be returned.
      *
      * @return duration
-     */
+
     private String calculateDuration() {
         // Declare a local variable, 'duration' that will store the amount of time the event takes.
         String duration;
@@ -149,9 +164,10 @@ public class Event {
 
         return duration;
     }
+    */
 
-    /**
-     * eventPassed - Returns a boolean value depending on whether the event has passed.
+
+     /* eventPassed - Returns a boolean value depending on whether the event has passed.
      *
      *
      *      ex. If, the event is set for '09-10-2018 09:30 am'
@@ -159,11 +175,12 @@ public class Event {
      *          Then, the value false will be returned.
      *
      * @return boolean value
-     */
+
     private boolean eventPassed() {
         Calendar c = Calendar.getInstance();
         SimpleDateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm aa", Locale.US);
         String dateTime = dateFormat.format(c.getTime());
+
         //System.out.println(dateTime);f
         String [] values = dateTime.split(" ");
         String [] date = values[0].split("-");
@@ -193,4 +210,5 @@ public class Event {
         }
         return true;
     }
+    */
 }
