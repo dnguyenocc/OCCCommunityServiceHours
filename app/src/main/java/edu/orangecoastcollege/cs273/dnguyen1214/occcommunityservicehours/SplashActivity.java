@@ -8,10 +8,9 @@ import android.widget.ProgressBar;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-
 public class SplashActivity extends AppCompatActivity {
     private ProgressBar bar;
+
 
 
     @Override

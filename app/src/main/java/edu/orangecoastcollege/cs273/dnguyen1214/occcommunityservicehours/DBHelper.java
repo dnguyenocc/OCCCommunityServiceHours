@@ -113,14 +113,64 @@ class DBHelper extends SQLiteOpenHelper {
         onCreate(database);
     }
 
-    //********** COURSE TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
+    //********** USER TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
 
-    public void addUser(Users user) {
+
+    public boolean checkLogin(String username,String password)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] selectionArgs = new String[]{username, password};
+
+
+        Cursor  c = db.rawQuery("select * from "+USERS_TABLE+ " where " +FIELD_USERNAME+ " =? and "+FIELD_PASSWORD+" =? ", selectionArgs);
+        c.moveToFirst();
+        if(c.getCount() <= 0){
+            c.close();
+            return false;
+        }
+        c.close();
+        return true;
+    }
+
+    public boolean checkUserName(String username)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] selectionArgs = new String[]{username};
+
+
+        Cursor  c = db.rawQuery("select * from "+USERS_TABLE+ " where " +FIELD_USERNAME+ " =? ", selectionArgs);
+        c.moveToFirst();
+        if(c.getCount() <= 0){
+            c.close();
+            return false;
+        }
+        c.close();
+        return true;
+    }
+    public boolean checkEmail(String email)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] selectionArgs = new String[]{email};
+
+
+        Cursor  c = db.rawQuery("select * from "+USERS_TABLE+ " where " +FIELD_EMAIL+ " =? ", selectionArgs);
+        c.moveToFirst();
+        if(c.getCount() <= 0){
+            c.close();
+            return false;
+        }
+        c.close();
+        return true;
+    }
+    public void addUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(FIELD_FIRST_NAME, user.getmFirstName());
-        values.put(FIELD_LAST_NAME, user.getmLastName());
+        values.put(FIELD_FIRST_NAME, user.getFirstName());
+        values.put(FIELD_LAST_NAME, user.getLastName());
         values.put(FIELD_USERNAME, user.getmUserName());
         values.put(FIELD_EMAIL,user.getmEmail());
         values.put(FIELD_PHONE_NUMBER,user.getmPhoneNum());
@@ -133,8 +183,8 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<Users> getAllUser() {
-        ArrayList<Users> usersList = new ArrayList<>();
+    public ArrayList<User> getAllUser() {
+        ArrayList<User> usersList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
         //Cursor cursor = database.rawQuery(queryList, null);
         Cursor cursor = database.query(
@@ -147,8 +197,8 @@ class DBHelper extends SQLiteOpenHelper {
         //COLLECT EACH ROW IN THE TABLE
         if (cursor.moveToFirst()) {
             do {
-                Users user =
-                        new Users(cursor.getInt(0),
+                User user =
+                        new User(cursor.getInt(0),
                                 cursor.getString(1),
                                 cursor.getString(2),
                                 cursor.getString(3),
@@ -162,7 +212,7 @@ class DBHelper extends SQLiteOpenHelper {
         return usersList;
     }
 
-    public void deleteUser(Users user) {
+    public void deleteUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         // DELETE THE TABLE ROW
@@ -177,12 +227,12 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public void updateUser(Users user) {
+    public void updateUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(FIELD_FIRST_NAME, user.getmFirstName());
-        values.put(FIELD_LAST_NAME, user.getmLastName());
+        values.put(FIELD_FIRST_NAME, user.getFirstName());
+        values.put(FIELD_LAST_NAME, user.getLastName());
         values.put(FIELD_USERNAME, user.getmUserName());
         values.put(FIELD_EMAIL, user.getmEmail());
         values.put(FIELD_PHONE_NUMBER, user.getmPhoneNum());
@@ -195,7 +245,7 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Users getUser(int id) {
+    public User getUser(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
                 USERS_TABLE,
@@ -207,8 +257,8 @@ class DBHelper extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        Users user =
-                new Users(cursor.getInt(0),
+        User user =
+                new User(cursor.getInt(0),
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
