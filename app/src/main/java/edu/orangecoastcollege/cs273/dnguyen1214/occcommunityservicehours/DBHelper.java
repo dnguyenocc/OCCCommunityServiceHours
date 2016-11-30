@@ -37,13 +37,10 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String EVENTS_TABLE = "Events";
     private static final String EVENTS_KEY_FIELD_ID = "id";
     private static final String FIELD_NAME = "name";
-    private static final String FIELD_MONTH = "month";
-    private static final String FIELD_DAY = "day";
-    private static final String FIELD_YEAR = "year";
+    private static final String FIELD_START_DATE = "start_date";
+    private static final String FIELD_END_DATE = "end_date";
     private static final String FIELD_DESCRIPTION = "description";
     private static final String FIELD_LOCATION = "location";
-    private static final String FIELD_START_TIME = "start_time";
-    private static final String FIELD_END_TIME = "end_time";
     private static final String FIELD_EVENT_IMAGE_NAME = "image_name";
 
 
@@ -77,13 +74,10 @@ class DBHelper extends SQLiteOpenHelper {
         createQuery = "CREATE TABLE " + EVENTS_TABLE + "("
                 + EVENTS_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + FIELD_NAME + " TEXT, "
-                + FIELD_MONTH + " INTEGER, "
-                + FIELD_DAY + " INTEGER, "
-                + FIELD_YEAR + " INTEGER, "
+                + FIELD_START_DATE + " TEXT, "
+                + FIELD_END_DATE + " TEXT, "
                 + FIELD_DESCRIPTION + " TEXT, "
                 + FIELD_LOCATION + " TEXT, "
-                + FIELD_START_TIME + " TEXT, "
-                + FIELD_END_TIME + " TEXT, "
                 + FIELD_EVENT_IMAGE_NAME + " TEXT" + ")";
         database.execSQL(createQuery);
 
@@ -281,13 +275,10 @@ class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(FIELD_NAME, event.getName());
-        values.put(FIELD_MONTH, event.getMonth());
-        values.put(FIELD_DAY, event.getDay());
-        values.put(FIELD_YEAR, event.getYear());
+        values.put(FIELD_START_DATE, event.getStartDate());
+        values.put(FIELD_END_DATE, event.getEndDate());
         values.put(FIELD_DESCRIPTION, event.getDescription());
         values.put(FIELD_LOCATION, event.getLocation());
-        values.put(FIELD_START_TIME, event.getStartTime());
-        values.put(FIELD_END_TIME, event.getEndTime());
         values.put(FIELD_IMAGE_NAME,event.getImageUri().toString());
 
         db.insert(EVENTS_TABLE, null, values);
@@ -300,8 +291,8 @@ class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
                 EVENTS_TABLE,
-                new String[]{EVENTS_KEY_FIELD_ID, FIELD_NAME, FIELD_MONTH, FIELD_DAY, FIELD_YEAR,
-                        FIELD_DESCRIPTION, FIELD_LOCATION, FIELD_START_TIME, FIELD_END_TIME, FIELD_EVENT_IMAGE_NAME},
+                new String[]{EVENTS_KEY_FIELD_ID, FIELD_NAME, FIELD_START_DATE, FIELD_END_DATE,
+                        FIELD_DESCRIPTION, FIELD_LOCATION, FIELD_EVENT_IMAGE_NAME},
                 EVENTS_KEY_FIELD_ID + "=?",
                 new String[]{String.valueOf(id)},
                 null, null, null, null);
@@ -311,14 +302,11 @@ class DBHelper extends SQLiteOpenHelper {
         Event event =
                 new Event(cursor.getInt(0),
                         cursor.getString(1),
-                        cursor.getInt(2),
-                        cursor.getInt(3),
-                        cursor.getInt(4),
+                        cursor.getString(2),
+                        cursor.getString(3),
                         cursor.getString(5),
                         cursor.getString(6),
-                        cursor.getString(7),
-                        cursor.getString(8),
-                        Uri.parse(cursor.getString(9)));
+                        Uri.parse(cursor.getString(7)));
         cursor.close();
         db.close();
         return event;
@@ -330,8 +318,8 @@ class DBHelper extends SQLiteOpenHelper {
 
         Cursor cursor = database.query(
                 EVENTS_TABLE,
-                new String[]{EVENTS_KEY_FIELD_ID, FIELD_NAME, FIELD_MONTH, FIELD_DAY, FIELD_YEAR,
-                        FIELD_DESCRIPTION, FIELD_LOCATION, FIELD_START_TIME, FIELD_END_TIME, FIELD_EVENT_IMAGE_NAME},
+                new String[]{EVENTS_KEY_FIELD_ID, FIELD_NAME, FIELD_START_DATE, FIELD_END_DATE,
+                        FIELD_DESCRIPTION, FIELD_LOCATION, FIELD_EVENT_IMAGE_NAME},
                 null,
                 null,
                 null, null, null, null);
@@ -342,14 +330,11 @@ class DBHelper extends SQLiteOpenHelper {
                 Event event =
                         new Event (cursor.getInt(0),
                                 cursor.getString(1),
-                                cursor.getInt(2),
-                                cursor.getInt(3),
-                                cursor.getInt(4),
+                                cursor.getString(2),
+                                cursor.getString(3),
                                 cursor.getString(5),
                                 cursor.getString(6),
-                                cursor.getString(7),
-                                cursor.getString(8),
-                                Uri.parse(cursor.getString(9)));
+                                Uri.parse(cursor.getString(7)));
                 eventsList.add(event);
             } while (cursor.moveToNext());
         }
@@ -380,13 +365,10 @@ class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(FIELD_NAME, event.getName());
-        values.put(FIELD_MONTH, event.getMonth());
-        values.put(FIELD_DAY, event.getDay());
-        values.put(FIELD_YEAR, event.getYear());
+        values.put(FIELD_START_DATE, event.getStartDate());
+        values.put(FIELD_END_DATE, event.getEndDate());
         values.put(FIELD_DESCRIPTION, event.getDescription());
         values.put(FIELD_LOCATION, event.getLocation());
-        values.put(FIELD_START_TIME, event.getStartTime());
-        values.put(FIELD_END_TIME, event.getEndTime());
         values.put(FIELD_IMAGE_NAME,event.getImageUri().toString());
 
 
