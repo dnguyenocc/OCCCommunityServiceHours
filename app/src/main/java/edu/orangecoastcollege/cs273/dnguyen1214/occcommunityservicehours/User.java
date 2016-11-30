@@ -1,15 +1,16 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
+
 import android.net.Uri;
 
 /**
- * Created by hho65 on 11/22/2016.
+ * Created by Huy Ho on 11/28/2016.
  */
 
-public class Users {
+public class User {
     private int mId;
-    private String mFirstName;
-    private String mLastName;
+    private String firstName;
+    private String lastName;
     private String mUserName;
     private String mEmail;
     private String mPhoneNum;
@@ -17,13 +18,13 @@ public class Users {
     private Uri mImageUri;
 
 
-    public Users() {
+
+    public User() {
     }
 
-    public Users(int mId, String mFirstName, String mLastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, Uri mImageUri) {
-        this.mId = mId;
-        this.mFirstName = mFirstName;
-        this.mLastName = mLastName;
+    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, Uri mImageUri) {
+        this.firstName = firstName;
+        this.lastName = lastName;
         this.mUserName = mUserName;
         this.mEmail = mEmail;
         this.mPhoneNum = mPhoneNum;
@@ -31,13 +32,31 @@ public class Users {
         this.mImageUri = mImageUri;
     }
 
-
-    public String getmFirstName() {
-        return mFirstName;
+    public User(int mId, String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, Uri mImageUri) {
+        this.mId = mId;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.mUserName = mUserName;
+        this.mEmail = mEmail;
+        this.mPhoneNum = mPhoneNum;
+        this.mPassWord = mPassWord;
+        this.mImageUri = mImageUri;
     }
 
-    public String getmLastName() {
-        return mLastName;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
     }
 
     public String getmUserName() {
@@ -64,13 +83,6 @@ public class Users {
         return mId;
     }
 
-    public void setmFirstName(String mFirstName) {
-        this.mFirstName = mFirstName;
-    }
-
-    public void setmLastName(String mLastName) {
-        this.mLastName = mLastName;
-    }
 
     public void setmUserName(String mUserName) {
         this.mUserName = mUserName;
