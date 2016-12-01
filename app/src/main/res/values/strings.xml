@@ -11,7 +11,7 @@
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
 
-
+    <string name="search">Search</string>
     <!-- Strings related to register-->
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="action_settings">Settings</string>
