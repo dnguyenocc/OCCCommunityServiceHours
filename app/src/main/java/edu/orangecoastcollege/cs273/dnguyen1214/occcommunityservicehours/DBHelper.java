@@ -26,7 +26,7 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String USERS_TABLE = "Courses";
     private static final String USERS_KEY_FIELD_ID = "_id";
     private static final String FIELD_FIRST_NAME = "first_name";
-    private static final String FIELD_LAST_NAME = "first_name";
+    private static final String FIELD_LAST_NAME = "last_name";
     private static final String FIELD_USERNAME = "username";
     private static final String FIELD_EMAIL ="email";
     private static final String FIELD_PHONE_NUMBER = "phone_number";
