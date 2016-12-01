@@ -19,7 +19,7 @@ class DBHelper extends SQLiteOpenHelper {
     private Context mContext;
 
     //TASK: DEFINE THE DATABASE VERSION AND NAME  (DATABASE CONTAINS MULTIPLE TABLES)
-    public static final String DATABASE_NAME = "OCC COMMUNITY SERVICE"; //remember change to public later
+    static final String DATABASE_NAME = "OCC COMMUNITY SERVICE"; //remember change to public later
     private static final int DATABASE_VERSION = 1;
 
     //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE USERS TABLE
@@ -45,13 +45,16 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_EVENT_IMAGE_NAME = "image_name";
 
 
-//
-//    //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE OFFERINGS TABLE
-//    private static final String OFFERINGS_TABLE = "Offerings";
-//    private static final String OFFERINGS_KEY_FIELD_ID = "crn";
-//    private static final String FIELD_SEMESTER_CODE = "semester_code";
-//    private static final String FIELD_COURSE_ID = "course_id";
-//    private static final String FIELD_INSTRUCTOR_ID = "instructor_id";
+
+     // FIELD NAMES FOR THE PARTICIPATIONS TABLE
+    private static final String PARTICIPATIONS_TABLE = "Participations";
+    private static final String PARTICIPATIONS_KEY_FIELD_ID = "id";
+    private static final String FIELD_STATUS_CODE = "status_code";
+    private static final String FIELD_VALIDATION_REQUESTED = "validation_requested";
+    private static final String FIELD_SERVICE_HOURS = "service_hours";
+    private static final String FIELD_RESPONSIBILITIES = "responsibilities";
+    private static final String FIELD_USER_ID = "user_id";
+    private static final String FIELD_EVENT_ID = "event_id";
 
     public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -84,18 +87,19 @@ class DBHelper extends SQLiteOpenHelper {
         database.execSQL(createQuery);
 
 
-//
-//        createQuery = "CREATE TABLE " + OFFERINGS_TABLE + "("
-//                + OFFERINGS_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-//                + FIELD_SEMESTER_CODE + " INTEGER, "
-//                + FIELD_COURSE_ID + " INTEGER, "
-//                + FIELD_INSTRUCTOR_ID + " INTEGER, "
-//                + "FOREIGN KEY(" + FIELD_COURSE_ID + ") REFERENCES "
-//                + COURSES_TABLE + "(" + COURSES_KEY_FIELD_ID + "), "
-//                + "FOREIGN KEY(" + FIELD_INSTRUCTOR_ID + ") REFERENCES "
-//                + INSTRUCTORS_TABLE + "(" + INSTRUCTORS_KEY_FIELD_ID + ")" +
-//                ")";
-//        database.execSQL(createQuery);
+        // Create the Participation table
+        createQuery = "CREATE TABLE " + PARTICIPATIONS_TABLE + "("
+                + PARTICIPATIONS_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + FIELD_STATUS_CODE + " INTEGER, "
+                + FIELD_VALIDATION_REQUESTED + " INTEGER, "
+                + FIELD_SERVICE_HOURS + " REAL, "
+                + FIELD_RESPONSIBILITIES +" TEXT,"
+                + "FOREIGN KEY(" + FIELD_USER_ID + ") REFERENCES "
+                + USERS_TABLE + "(" + USERS_KEY_FIELD_ID + "), "
+                + "FOREIGN KEY(" + FIELD_EVENT_ID + ") REFERENCES "
+                + EVENTS_TABLE + "(" + EVENTS_KEY_FIELD_ID + ")" +
+                ")";
+        database.execSQL(createQuery);
     }
 
     @Override
@@ -104,6 +108,7 @@ class DBHelper extends SQLiteOpenHelper {
                           int newVersion) {
         database.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + EVENTS_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + PARTICIPATIONS_TABLE);
 //        database.execSQL("DROP TABLE IF EXISTS " + INSTRUCTORS_TABLE);
 //        database.execSQL("DROP TABLE IF EXISTS " + OFFERINGS_TABLE);
         onCreate(database);
@@ -434,6 +439,119 @@ class DBHelper extends SQLiteOpenHelper {
                 new String[]{String.valueOf(event.getId())});
         db.close();
     }
+
+    //********** PARTICIPATION TABLE OPERATIONS:  ADD, GETALL, EDIT, DELETE
+
+    public void addParicipation(int statusCode, boolean validationRequested,
+                                float serviceHours, String responsibilities,
+                                int userId, int eventId) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FIELD_STATUS_CODE, statusCode);
+        values.put(FIELD_VALIDATION_REQUESTED, validationRequested);
+        values.put(FIELD_SERVICE_HOURS, serviceHours);
+        values.put(FIELD_RESPONSIBILITIES, responsibilities);
+        values.put(FIELD_USER_ID,userId);
+        values.put(FIELD_EVENT_ID,eventId);
+
+        db.insert(PARTICIPATIONS_TABLE, null, values);
+
+        // CLOSE THE DATABASE CONNECTION
+        db.close();
+    }
+
+    public ArrayList<Participation> getAllParticipations() {
+        ArrayList<Participation> participationsList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        //Cursor cursor = database.rawQuery(queryList, null);
+        Cursor cursor = database.query(
+                PARTICIPATIONS_TABLE,
+                new String[]{PARTICIPATIONS_KEY_FIELD_ID,
+                        FIELD_STATUS_CODE,
+                        FIELD_VALIDATION_REQUESTED,
+                        FIELD_SERVICE_HOURS,
+                        FIELD_RESPONSIBILITIES,
+                        FIELD_USER_ID,
+                        FIELD_EVENT_ID},
+                null,
+                null,
+                null, null, null, null);
+
+        //COLLECT EACH ROW IN THE TABLE
+        if (cursor.moveToFirst()) {
+            do {
+                User user = getUser(cursor.getInt(5));
+                Event event = getEvent(cursor.getInt(6));
+                Participation participation = new Participation(cursor.getInt(0),
+                        cursor.getInt(1), cursor.getInt(2)!=0, cursor.getFloat(3),cursor.getString(4),
+                        user,
+                        event);
+
+                participationsList.add(participation);
+            } while (cursor.moveToNext());
+        }
+        return participationsList;
+    }
+
+    public void deleteParticipation(Participation participation) {
+        SQLiteDatabase db = this.getWritableDatabase();
+
+        // DELETE THE TABLE ROW
+        db.delete(PARTICIPATIONS_TABLE, PARTICIPATIONS_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(participation.getId())});
+        db.close();
+    }
+
+    public void deleteAllParticipations() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(PARTICIPATIONS_TABLE, null, null);
+        db.close();
+    }
+
+    public void updateParticipation(Participation participation) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(PARTICIPATIONS_KEY_FIELD_ID, participation.getId());
+        values.put(FIELD_STATUS_CODE, participation.getStatusCode());
+        values.put(FIELD_VALIDATION_REQUESTED,participation.getValidationRequested());
+        values.put(FIELD_SERVICE_HOURS,participation.getServiceHours());
+        values.put(FIELD_RESPONSIBILITIES,participation.getResponsibilities());
+        values.put(FIELD_USER_ID, participation.getUser().getmId());
+        values.put(FIELD_EVENT_ID, participation.getEvent().getId());
+
+        db.update(PARTICIPATIONS_TABLE, values, PARTICIPATIONS_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(participation.getId())});
+        db.close();
+    }
+
+    public Participation getParticipation(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                PARTICIPATIONS_TABLE,
+                new String[]{PARTICIPATIONS_KEY_FIELD_ID, FIELD_STATUS_CODE, FIELD_VALIDATION_REQUESTED,
+                        FIELD_SERVICE_HOURS, FIELD_RESPONSIBILITIES,FIELD_USER_ID, FIELD_EVENT_ID},
+                PARTICIPATIONS_KEY_FIELD_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        User user = getUser(cursor.getInt(5));
+        Event event = getEvent(cursor.getInt(6));
+        Participation participation = new Participation(cursor.getInt(0),
+                cursor.getInt(1), cursor.getInt(2)!=0, cursor.getFloat(3),cursor.getString(4),
+                user,
+                event);
+
+
+        db.close();
+        return participation;
+    }
+
+
 //
 //    public ArrayList<Instructor> getAllInstructors() {
 //        ArrayList<Instructor> instructorsList = new ArrayList<>();
