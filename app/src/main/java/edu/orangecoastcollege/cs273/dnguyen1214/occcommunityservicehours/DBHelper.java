@@ -337,7 +337,7 @@ class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_END_DATE, event.getEndDate());
         values.put(FIELD_DESCRIPTION, event.getDescription());
         values.put(FIELD_LOCATION, event.getLocation());
-        values.put(FIELD_IMAGE_NAME,event.getImageUri().toString());
+        values.put(FIELD_EVENT_IMAGE_NAME,event.getImageUri().toString());
 
         db.insert(EVENTS_TABLE, null, values);
 
@@ -362,9 +362,9 @@ class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(1),
                         cursor.getString(2),
                         cursor.getString(3),
+                        cursor.getString(4),
                         cursor.getString(5),
-                        cursor.getString(6),
-                        Uri.parse(cursor.getString(7)));
+                        Uri.parse(cursor.getString(6)));
         cursor.close();
         db.close();
         return event;
@@ -390,9 +390,9 @@ class DBHelper extends SQLiteOpenHelper {
                                 cursor.getString(1),
                                 cursor.getString(2),
                                 cursor.getString(3),
+                                cursor.getString(4),
                                 cursor.getString(5),
-                                cursor.getString(6),
-                                Uri.parse(cursor.getString(7)));
+                                Uri.parse(cursor.getString(6)));
                 eventsList.add(event);
             } while (cursor.moveToNext());
         }
@@ -427,7 +427,7 @@ class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_END_DATE, event.getEndDate());
         values.put(FIELD_DESCRIPTION, event.getDescription());
         values.put(FIELD_LOCATION, event.getLocation());
-        values.put(FIELD_IMAGE_NAME,event.getImageUri().toString());
+        values.put(FIELD_EVENT_IMAGE_NAME,event.getImageUri().toString());
 
 
         db.update(EVENTS_TABLE, values, EVENTS_KEY_FIELD_ID + " = ?",
