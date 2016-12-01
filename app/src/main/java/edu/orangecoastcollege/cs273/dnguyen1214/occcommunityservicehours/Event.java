@@ -23,6 +23,16 @@ public class Event {
 
     private SimpleDateFormat dateFormat;
 
+    /**
+     * Event - Default constructor that constructs a new Event object when called.
+     *
+     * @param name  The name of the event.
+     * @param startDate The start date of the event, passed in the format 'MM-dd-yyyy hh:mm aa'
+     * @param endDate   The end date of the event, passed in the format 'MM-dd-yyyy hh:mm aa'
+     * @param description   The description of the event.
+     * @param location  The location of the event
+     * @param imageUri  An image name to go along with the event.
+     */
     public Event(String name,
                  String startDate, String endDate,
                  String description, String location,
@@ -30,6 +40,16 @@ public class Event {
         this(-1, name, startDate, endDate, description, location, imageUri);
     }
 
+    /**
+     * Event - Constructor that constructs a new Event object when called.
+     *
+     * @param name  The name of the event.
+     * @param startDate The start date of the event, passed in the format 'MM-dd-yyyy hh:mm aa'
+     * @param endDate   The end date of the event, passed in the format 'MM-dd-yyyy hh:mm aa'
+     * @param description   The description of the event.
+     * @param location  The location of the event
+     * @param imageUri  An image name to go along with the event.
+     */
     public Event(int id,
                  String name,
                  String startDate, String endDate,
@@ -51,34 +71,74 @@ public class Event {
         mImageUri = imageUri;
     }
 
+    /**
+     * getId - Returns the current id of the event
+     *
+     * @return The event's id
+     */
     public int getId() {
         return mId;
     }
 
+    /**
+     * getName - Returns the name of the event
+     *
+     * @return The event's name.
+     */
     public String getName() {
         return mName;
     }
 
+    /**
+     * setName - Changes the name of the event to the name passed in
+     *
+     * @param name A new name for the event.
+     */
     public void setName(String name) {
         mName = name;
     }
 
+    /**
+     * getDescription - Returns the description of the event
+     *
+     * @return The event's description
+     */
     public String getDescription() {
         return mDescription;
     }
 
+    /**
+     * setDescription - Changes the description of the event to the description passed in
+     *
+     * @param description A new description for the event.
+     */
     public void setDescription(String description) {
         mDescription = description;
     }
 
+    /**
+     * getLocation - Returns the location of the event.
+     *
+     * @return The event's location
+     */
     public String getLocation() {
         return mLocation;
     }
 
+    /**
+     * settLocation - Changes the location of the event to the location passed in
+     *
+     * @param location A new location for the event.
+     */
     public void setLocation(String location) {
         mLocation = location;
     }
 
+    /**
+     * getImageUri - Returns the image name that is linked to the event.
+     *
+     * @return The event's image name in use.
+     */
     public Uri getImageUri() {
         return mImageUri;
     }
