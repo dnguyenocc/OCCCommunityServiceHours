@@ -31,6 +31,7 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_EMAIL ="email";
     private static final String FIELD_PHONE_NUMBER = "phone_number";
     private static final String FIELD_PASSWORD = "password";
+    private static final String FIELD_ROLE = "role";
     private static final String FIELD_IMAGE_NAME = "image_name";
 
     // FIELD NAMES FOR THE EVENTS TABLE
@@ -67,6 +68,7 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_EMAIL + " TEXT, "
                 + FIELD_PHONE_NUMBER + " TEXT, "
                 + FIELD_PASSWORD + " TEXT, "
+                + FIELD_ROLE + " INTEGER, "
                 + FIELD_IMAGE_NAME + " TEXT" + ")";
         database.execSQL(createQuery);
 
@@ -169,6 +171,7 @@ class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_EMAIL,user.getmEmail());
         values.put(FIELD_PHONE_NUMBER,user.getmPhoneNum());
         values.put(FIELD_PASSWORD,user.getmPassWord());
+        values.put(FIELD_ROLE,user.getmRole());
         values.put(FIELD_IMAGE_NAME,user.getmImageUri().toString());
 
         db.insert(USERS_TABLE, null, values);
@@ -183,7 +186,15 @@ class DBHelper extends SQLiteOpenHelper {
         //Cursor cursor = database.rawQuery(queryList, null);
         Cursor cursor = database.query(
                 USERS_TABLE,
-                new String[]{USERS_KEY_FIELD_ID, FIELD_FIRST_NAME, FIELD_LAST_NAME, FIELD_USERNAME,FIELD_EMAIL,FIELD_EMAIL,FIELD_PHONE_NUMBER,FIELD_PASSWORD,FIELD_IMAGE_NAME},
+                new String[]{USERS_KEY_FIELD_ID,
+                        FIELD_FIRST_NAME,
+                        FIELD_LAST_NAME,
+                        FIELD_USERNAME,
+                        FIELD_EMAIL,
+                        FIELD_PHONE_NUMBER,
+                        FIELD_PASSWORD,
+                        FIELD_ROLE,
+                        FIELD_IMAGE_NAME},
                 null,
                 null,
                 null, null, null, null);
@@ -199,7 +210,8 @@ class DBHelper extends SQLiteOpenHelper {
                                 cursor.getString(4),
                                 cursor.getString(5),
                                 cursor.getString(6),
-                                Uri.parse(cursor.getString(7)));
+                                cursor.getInt(7),
+                                Uri.parse(cursor.getString(8)));
                 usersList.add(user);
             } while (cursor.moveToNext());
         }
@@ -228,10 +240,11 @@ class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_FIRST_NAME, user.getFirstName());
         values.put(FIELD_LAST_NAME, user.getLastName());
         values.put(FIELD_USERNAME, user.getmUserName());
-        values.put(FIELD_EMAIL, user.getmEmail());
-        values.put(FIELD_PHONE_NUMBER, user.getmPhoneNum());
-        values.put(FIELD_PASSWORD, user.getmPassWord());
-        values.put(FIELD_IMAGE_NAME, user.getmImageUri().toString());
+        values.put(FIELD_EMAIL,user.getmEmail());
+        values.put(FIELD_PHONE_NUMBER,user.getmPhoneNum());
+        values.put(FIELD_PASSWORD,user.getmPassWord());
+        values.put(FIELD_ROLE,user.getmRole());
+        values.put(FIELD_IMAGE_NAME,user.getmImageUri().toString());
 
 
         db.update(USERS_TABLE, values, USERS_KEY_FIELD_ID + " = ?",
@@ -243,7 +256,15 @@ class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
                 USERS_TABLE,
-                new String[]{USERS_KEY_FIELD_ID, FIELD_FIRST_NAME, FIELD_LAST_NAME, FIELD_USERNAME,FIELD_EMAIL,FIELD_EMAIL,FIELD_PHONE_NUMBER,FIELD_PASSWORD,FIELD_IMAGE_NAME},
+                new String[]{USERS_KEY_FIELD_ID,
+                        FIELD_FIRST_NAME,
+                        FIELD_LAST_NAME,
+                        FIELD_USERNAME,
+                        FIELD_EMAIL,
+                        FIELD_PHONE_NUMBER,
+                        FIELD_PASSWORD,
+                        FIELD_ROLE,
+                        FIELD_IMAGE_NAME},
                 USERS_KEY_FIELD_ID + "=?",
                 new String[]{String.valueOf(id)},
                 null, null, null, null);
@@ -259,7 +280,8 @@ class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(4),
                         cursor.getString(5),
                         cursor.getString(6),
-                        Uri.parse(cursor.getString(7)));
+                        cursor.getInt(7),
+                        Uri.parse(cursor.getString(8)));
 
         cursor.close();
 

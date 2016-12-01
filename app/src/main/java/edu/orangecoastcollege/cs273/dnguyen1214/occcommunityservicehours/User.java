@@ -15,6 +15,7 @@ public class User {
     private String mEmail;
     private String mPhoneNum;
     private String mPassWord;
+    private int mRole; // 1 is admin, 2 is normal user
     private Uri mImageUri;
 
 
@@ -22,26 +23,28 @@ public class User {
     public User() {
     }
 
-    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, Uri mImageUri) {
+    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, int role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.mUserName = mUserName;
         this.mEmail = mEmail;
         this.mPhoneNum = mPhoneNum;
         this.mPassWord = mPassWord;
+        this.mRole = role;
+    }
+
+    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, int role, Uri mImageUri) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.mUserName = mUserName;
+        this.mEmail = mEmail;
+        this.mPhoneNum = mPhoneNum;
+        this.mPassWord = mPassWord;
+        this.mRole = role;
         this.mImageUri = mImageUri;
     }
 
-    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.mUserName = mUserName;
-        this.mEmail = mEmail;
-        this.mPhoneNum = mPhoneNum;
-        this.mPassWord = mPassWord;
-    }
-
-    public User(int mId, String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, Uri mImageUri) {
+    public User(int mId, String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, int role, Uri mImageUri) {
         this.mId = mId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -49,7 +52,16 @@ public class User {
         this.mEmail = mEmail;
         this.mPhoneNum = mPhoneNum;
         this.mPassWord = mPassWord;
+        this.mRole = role;
         this.mImageUri = mImageUri;
+    }
+
+    public void setmRole(int mRole) {
+        this.mRole = mRole;
+    }
+
+    public int getmRole() {
+        return mRole;
     }
 
     public void setFirstName(String firstName) {

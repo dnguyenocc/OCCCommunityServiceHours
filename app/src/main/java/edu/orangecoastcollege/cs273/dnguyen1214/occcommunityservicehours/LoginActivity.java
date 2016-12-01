@@ -44,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
         this.deleteDatabase(DBHelper.DATABASE_NAME);
         db = new DBHelper(this);
-        db.addUser(new User("alex","ho","admin"," "," ","12345",imageURI));
+        db.addUser(new User("alex","ho","admin"," "," ","admin",1,imageURI));
 
 
 
