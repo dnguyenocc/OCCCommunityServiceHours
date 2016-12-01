@@ -12,6 +12,8 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
  */
 
 public class Participation {
+    final static int REGISTERED = 1;
+    final static int VALIDATED = 2;
     private int mId;
     private int mStatusCode;
     private boolean mValidationRequested;
