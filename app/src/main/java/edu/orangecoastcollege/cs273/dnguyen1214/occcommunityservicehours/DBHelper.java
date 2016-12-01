@@ -2,12 +2,19 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.res.AssetManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.net.Uri;
+import android.util.Log;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 /**
  * Created by hho65 on 11/22/2016.
@@ -550,6 +557,40 @@ class DBHelper extends SQLiteOpenHelper {
 
         db.close();
         return participation;
+    }
+
+    public boolean importParticipationsFromCSV(String csvFileName) {
+        AssetManager am = mContext.getAssets();
+        InputStream inStream = null;
+        try {
+            inStream = am.open(csvFileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
+        String line;
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length != 7) {
+                    Log.d("OCC Course Finder", "Skipping Bad CSV Row: " + Arrays.toString(fields));
+                    continue;
+                }
+                int id = Integer.parseInt(fields[0].trim());
+                int statusCode = Integer.parseInt(fields[1].trim());
+                boolean validationRequested = Integer.parseInt(fields[2].trim()) != 0;
+                float serviceHours = Float.parseFloat(fields[3].trim());
+                String responsibilities = fields[4].trim();
+                int userId = Integer.parseInt(fields[5].trim());
+                int eventId = Integer.parseInt(fields[6].trim());
+                addParicipation(statusCode, validationRequested, serviceHours, responsibilities, userId, eventId);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
 
