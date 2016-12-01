@@ -61,16 +61,19 @@ public class LoginActivity extends AppCompatActivity {
     {
         String user = userName.getText().toString();
         String pass = passWord.getText().toString();
-
+        String statusLogin = "";
         //check if username and password in database
         if (validate(user, pass)) {
          User userLogin = db.getUser(user);
-            if(userLogin.getmRole() == 1)
+            if(userLogin.getmRole() == 1) {
+                statusLogin = "admin";
                 startActivity(new Intent(LoginActivity.this, AdminActivity.class));
-            else if(userLogin.getmRole() == 2)
+            }
+            else if(userLogin.getmRole() == 2) {
+                statusLogin = "user";
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
-            sManager.setPreferences(LoginActivity.this,"status","1");
+            }
+            sManager.setPreferences(LoginActivity.this,"status",statusLogin);
             String status =  sManager.getPreferences(LoginActivity.this,"status");
             Log.d("status",status);
         }

@@ -30,7 +30,9 @@ public class SplashActivity extends AppCompatActivity {
                     String status = manager.getPreferences(SplashActivity.this, "status");
                     Log.d("status", status);
 
-                    if (status.equals("1"))
+                    if (status.equals("admin"))
+                        startActivity(new Intent(SplashActivity.this, AdminActivity.class));
+                    else if(status.equals("user"))
                         startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     else
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
@@ -41,7 +43,7 @@ public class SplashActivity extends AppCompatActivity {
 
         //Define the TimeTask to launch media activity
         Timer timer = new Timer();
-        timer.schedule(mediaTask,3000);
+        timer.schedule(mediaTask,1000);
     }
 
     @Override

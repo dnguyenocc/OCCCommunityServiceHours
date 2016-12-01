@@ -148,15 +148,15 @@ public class MainActivity extends AppCompatActivity
 
 
         } else if (id == R.id.nav_attending_events) {
-
+            //TODO put fragment want to be transition here
         } else if (id == R.id.nav_upcoming_events) {
-
+            //TODO put fragment want to be transition here
         } else if (id == R.id.nav_passed_events) {
-
+            //TODO put fragment want to be transition here
         } else if (id == R.id.nav_share) {
-
+            //TODO put fragment want to be transition here
         } else if (id == R.id.nav_help) {
-
+            //TODO put fragment want to be transition here
         }else if (id == R.id.nav_exist) {
             manager.setPreferences(MainActivity.this, "status", "0");
             finish();
