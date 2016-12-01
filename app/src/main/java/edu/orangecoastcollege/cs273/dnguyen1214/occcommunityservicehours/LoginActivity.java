@@ -58,9 +58,13 @@ public class LoginActivity extends AppCompatActivity {
         String pass = passWord.getText().toString();
 
         //check if username and password in database
-        if (validate(user, pass))
-            startActivity(new Intent(LoginActivity.this, MainActivity.class));
-
+        if (validate(user, pass)) {
+         User userLogin = db.getUser(user);
+            if(userLogin.getmRole() == 1)
+                startActivity(new Intent(LoginActivity.this, AdminActivity.class));
+            else if(userLogin.getmRole() == 2)
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        }
 
     }
 

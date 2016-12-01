@@ -2,12 +2,14 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 /**
  * Created by Huy Ho on 11/28/2016.
  */
 
-public class User {
+public class User implements Parcelable{
     private int mId;
     private String firstName;
     private String lastName;
@@ -55,6 +57,48 @@ public class User {
         this.mRole = role;
         this.mImageUri = mImageUri;
     }
+
+    protected User(Parcel in) {
+        mId = in.readInt();
+        firstName = in.readString();
+        lastName = in.readString();
+        mUserName = in.readString();
+        mEmail = in.readString();
+        mPhoneNum = in.readString();
+        mPassWord = in.readString();
+        mRole = in.readInt();
+        mImageUri = in.readParcelable(Uri.class.getClassLoader());
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeString(firstName);
+        dest.writeString(lastName);
+        dest.writeString(mUserName);
+        dest.writeString(mEmail);
+        dest.writeString(mPhoneNum);
+        dest.writeString(mPassWord);
+        dest.writeInt(mRole);
+        dest.writeParcelable(mImageUri, flags);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<User> CREATOR = new Creator<User>() {
+        @Override
+        public User createFromParcel(Parcel in) {
+            return new User(in);
+        }
+
+        @Override
+        public User[] newArray(int size) {
+            return new User[size];
+        }
+    };
 
     public void setmRole(int mRole) {
         this.mRole = mRole;

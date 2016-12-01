@@ -9,6 +9,8 @@ import android.net.Uri;
 
 import java.util.ArrayList;
 
+import static android.R.attr.id;
+
 /**
  * Created by hho65 on 11/22/2016.
  */
@@ -64,7 +66,7 @@ class DBHelper extends SQLiteOpenHelper {
                 + USERS_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + FIELD_FIRST_NAME + " TEXT, "
                 + FIELD_LAST_NAME + " TEXT, "
-                + FIELD_USERNAME + " TEXT, "
+                + FIELD_USERNAME + " TEXT UNIQUE, "
                 + FIELD_EMAIL + " TEXT, "
                 + FIELD_PHONE_NUMBER + " TEXT, "
                 + FIELD_PASSWORD + " TEXT, "
@@ -266,6 +268,42 @@ class DBHelper extends SQLiteOpenHelper {
                         FIELD_ROLE,
                         FIELD_IMAGE_NAME},
                 USERS_KEY_FIELD_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        User user =
+                new User(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getInt(7),
+                        Uri.parse(cursor.getString(8)));
+
+        cursor.close();
+
+        db.close();
+        return user;
+    }
+    public User getUser(String username) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                USERS_TABLE,
+                new String[]{USERS_KEY_FIELD_ID,
+                        FIELD_FIRST_NAME,
+                        FIELD_LAST_NAME,
+                        FIELD_USERNAME,
+                        FIELD_EMAIL,
+                        FIELD_PHONE_NUMBER,
+                        FIELD_PASSWORD,
+                        FIELD_ROLE,
+                        FIELD_IMAGE_NAME},
+                FIELD_USERNAME + "=?",
                 new String[]{String.valueOf(id)},
                 null, null, null, null);
 
