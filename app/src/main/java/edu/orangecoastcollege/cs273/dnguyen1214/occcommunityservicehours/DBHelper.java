@@ -9,8 +9,6 @@ import android.net.Uri;
 
 import java.util.ArrayList;
 
-import static android.R.attr.id;
-
 /**
  * Created by hho65 on 11/22/2016.
  */
@@ -304,7 +302,7 @@ class DBHelper extends SQLiteOpenHelper {
                         FIELD_ROLE,
                         FIELD_IMAGE_NAME},
                 FIELD_USERNAME + "=?",
-                new String[]{String.valueOf(id)},
+                new String[]{username},
                 null, null, null, null);
 
         if (cursor != null)
