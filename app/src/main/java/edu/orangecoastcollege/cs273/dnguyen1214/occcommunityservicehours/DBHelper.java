@@ -19,7 +19,7 @@ class DBHelper extends SQLiteOpenHelper {
     private Context mContext;
 
     //TASK: DEFINE THE DATABASE VERSION AND NAME  (DATABASE CONTAINS MULTIPLE TABLES)
-    private static final String DATABASE_NAME = "OCC COMMUNITY SERVICE";
+    public static final String DATABASE_NAME = "OCC COMMUNITY SERVICE"; //remember change to public later
     private static final int DATABASE_VERSION = 1;
 
     //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE USERS TABLE

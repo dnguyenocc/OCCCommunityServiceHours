@@ -32,6 +32,15 @@ public class User {
         this.mImageUri = mImageUri;
     }
 
+    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.mUserName = mUserName;
+        this.mEmail = mEmail;
+        this.mPhoneNum = mPhoneNum;
+        this.mPassWord = mPassWord;
+    }
+
     public User(int mId, String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, Uri mImageUri) {
         this.mId = mId;
         this.firstName = firstName;
