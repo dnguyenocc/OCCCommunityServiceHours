@@ -146,13 +146,12 @@ public class AdminActivity extends AppCompatActivity
             fragmentClass = MainFragment.class;// transition fragment
             transitionFragment(fragment,fragmentClass);
 
-
         } else if (id == R.id.nav_attending_events) {
-
+            //TODO put attending fragment here
         } else if (id == R.id.nav_upcoming_events) {
-
+            //TODO put upcoming fragment here
         } else if (id == R.id.nav_passed_events) {
-
+            //TODO put passed fragment here
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_help) {
@@ -181,6 +180,7 @@ public class AdminActivity extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 
