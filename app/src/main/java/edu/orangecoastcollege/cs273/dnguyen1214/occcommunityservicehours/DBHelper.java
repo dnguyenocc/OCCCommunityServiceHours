@@ -94,6 +94,8 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_VALIDATION_REQUESTED + " INTEGER, "
                 + FIELD_SERVICE_HOURS + " REAL, "
                 + FIELD_RESPONSIBILITIES +" TEXT,"
+                + FIELD_USER_ID + " INTEGER, "
+                + FIELD_EVENT_ID + " INTEGER, "
                 + "FOREIGN KEY(" + FIELD_USER_ID + ") REFERENCES "
                 + USERS_TABLE + "(" + USERS_KEY_FIELD_ID + "), "
                 + "FOREIGN KEY(" + FIELD_EVENT_ID + ") REFERENCES "
