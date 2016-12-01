@@ -45,6 +45,7 @@
         </activity>
         <activity android:name=".RegisterActivity" />
         <activity android:name=".EventDetailActivity" />
+        <activity android:name=".AdminActivity"></activity>
     </application>
 
 </manifest>
