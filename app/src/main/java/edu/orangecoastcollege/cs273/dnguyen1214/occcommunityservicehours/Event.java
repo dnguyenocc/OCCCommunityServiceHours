@@ -9,7 +9,9 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by bijanfazeli on 11/24/16.
+ * Event class - Creates an event object when called
+ *
+ * Created by Bijan Fazeli on 11/24/16.
  */
 
 public class Event {
@@ -143,10 +145,20 @@ public class Event {
         return mImageUri;
     }
 
+    /**
+     * setImageUri - Changes the image name to the image passed in
+     *
+     * @param imageUri A new imageUri to be set for the event
+     */
     public void setImageUri(Uri imageUri) {
         mImageUri = imageUri;
     }
 
+    /**
+     * getStartDate - Returns a String of the event's start date
+     *
+     * @return The start date of the event
+     */
     public String getStartDate() {
         return mStartDate.toString();
     }
@@ -161,6 +173,11 @@ public class Event {
         }
     }
 
+    /**
+     * getEndDate - Returns a String of the event's end date
+     *
+     * @return The end date of the event.
+     */
     public String getEndDate() {
         return mEndDate.toString();
     }
@@ -175,6 +192,11 @@ public class Event {
         }
     }
 
+    /**
+     * eventPassed - Checks to see if an event has passed and returns either True or False
+     *
+     * @return True if the event has passed, otherwise false
+     */
     public boolean eventPassed()
     {
         Date now = new Date(Calendar.getInstance().getTimeInMillis());
