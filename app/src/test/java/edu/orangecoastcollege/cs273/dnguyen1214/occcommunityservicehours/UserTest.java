@@ -6,6 +6,7 @@ import org.junit.Test;
  * Created by Alex Ho on 11/30/2016.
  */
 public class UserTest {
+
     @Test
     public void setFirstName() throws Exception {
 
