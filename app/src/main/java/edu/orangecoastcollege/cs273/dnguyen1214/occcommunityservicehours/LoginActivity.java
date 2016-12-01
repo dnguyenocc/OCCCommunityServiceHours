@@ -11,6 +11,7 @@ import android.support.annotation.AnyRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -29,6 +30,8 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout usernameInputLayout;
     private TextInputLayout passwordInputLayout;
 
+    SessionManager sManager;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +45,12 @@ public class LoginActivity extends AppCompatActivity {
         usernameInputLayout =(TextInputLayout) findViewById(R.id.usernameInputLayout);
         passwordInputLayout = (TextInputLayout) findViewById(R.id.passwordInputLayout);
 
+        sManager = new SessionManager();
+
         this.deleteDatabase(DBHelper.DATABASE_NAME);
         db = new DBHelper(this);
         db.addUser(new User("alex","ho","admin"," "," ","admin",1,imageURI));
-
+        db.addUser(new User("ola","ho","user"," "," ","user",2,imageURI));
 
 
 
@@ -64,6 +69,10 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(new Intent(LoginActivity.this, AdminActivity.class));
             else if(userLogin.getmRole() == 2)
                 startActivity(new Intent(LoginActivity.this, MainActivity.class));
+
+            sManager.setPreferences(LoginActivity.this,"status","1");
+            String status =  sManager.getPreferences(LoginActivity.this,"status");
+            Log.d("status",status);
         }
 
     }
@@ -116,5 +125,16 @@ public class LoginActivity extends AppCompatActivity {
                 +'/'+ res.getResourceTypeName(resId)
                 + '/' +res.getResourceEntryName(resId)
         );
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.addCategory(Intent.CATEGORY_HOME);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+        startActivity(intent);
+        finish();
+        System.exit(0);
     }
 }

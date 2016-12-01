@@ -3,6 +3,7 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MainFragment.OnFragmentInteractionListener {
 
-
+    SessionManager manager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity
         //Hide the title on app bar for Search View
         getSupportActionBar().setDisplayShowTitleEnabled(false);
 
+        manager = new SessionManager();
         //Set the main fragment
         if (savedInstanceState == null) {
             Fragment fragment = null;
@@ -77,6 +79,12 @@ public class MainActivity extends AppCompatActivity
             drawer.closeDrawer(GravityCompat.START);
         } else {
             super.onBackPressed();
+            Intent intent = new Intent(Intent.ACTION_MAIN);
+            intent.addCategory(Intent.CATEGORY_HOME);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+            startActivity(intent);
+            finish();
+            System.exit(0);
         }
     }
 
@@ -136,6 +144,7 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
             fragmentClass = MainFragment.class;// transition fragment
+            transitionFragment(fragment,fragmentClass);
 
 
         } else if (id == R.id.nav_attending_events) {
@@ -146,28 +155,29 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_help) {
 
-        }else if (id == R.id.nav_help) {
+        }else if (id == R.id.nav_exist) {
+            manager.setPreferences(MainActivity.this, "status", "0");
+            finish();
+            startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
         }
-
-        try {
-            fragment = (Fragment) fragmentClass.newInstance();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-
+    public void transitionFragment(Fragment fragment, Class fragmentClass)
+    {
+        try {
+            fragment = (Fragment) fragmentClass.newInstance();
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getSupportFragmentManager();
+            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     public void onFragmentInteraction(Uri uri) {
 
