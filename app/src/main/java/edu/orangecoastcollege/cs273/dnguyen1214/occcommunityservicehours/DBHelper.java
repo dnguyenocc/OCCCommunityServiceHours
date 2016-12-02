@@ -53,7 +53,7 @@ class DBHelper extends SQLiteOpenHelper {
 
 
 
-     // FIELD NAMES FOR THE PARTICIPATIONS TABLE
+    // FIELD NAMES FOR THE PARTICIPATIONS TABLE
     private static final String PARTICIPATIONS_TABLE = "Participations";
     private static final String PARTICIPATIONS_KEY_FIELD_ID = "id";
     private static final String FIELD_STATUS_CODE = "status_code";
@@ -559,6 +559,84 @@ class DBHelper extends SQLiteOpenHelper {
         return participation;
     }
 
+    public boolean importUsersFromCSV(String csvFileName) {
+        AssetManager manager = mContext.getAssets();
+        InputStream inStream;
+        try {
+            inStream = manager.open(csvFileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
+        String line;
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length != 8) {
+                    Log.d("OCC Service Hours", "Skipping Bad CSV Row: " + Arrays.toString(fields));
+                    continue;
+                }
+                int id = Integer.parseInt(fields[0].trim());
+                String firstName = fields[1].trim();
+                String lastName = fields[2].trim();
+                String username = fields[3].trim();
+                String email = fields[4].trim();
+                String phoneNumber = fields[5].trim();
+                String password = fields[6].trim();
+                int role = Integer.parseInt(fields[7].trim());
+                //TODO image URI later
+                Uri imageURI = LoginActivity.getUriToResource(mContext,R.drawable.default_avatar);
+                addUser(new User(id, firstName, lastName, username,email,phoneNumber,password,role,imageURI));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
+    public boolean importEventsFromCSV(String csvFileName) {
+        AssetManager manager = mContext.getAssets();
+        InputStream inStream;
+        try {
+            inStream = manager.open(csvFileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
+        String line;
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length != 7) {
+                    Log.d("OCC Service Hours", "Skipping Bad CSV Row: " + Arrays.toString(fields));
+                    continue;
+                }
+                int id = Integer.parseInt(fields[0].trim());
+                String eventName = fields[1].trim();
+                String startDate = fields[2].trim();
+                String endDate = fields[3].trim();
+                String description = fields[4].trim();
+                String location = fields[5].trim();
+                //TODO change image name later
+                //String imageName = fields[6].trim();
+
+                Uri imageURI = LoginActivity.getUriToResource(mContext,R.drawable.occpirate);
+                addEvent(new Event(id, eventName, startDate, endDate,description,location,imageURI));
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+
     public boolean importParticipationsFromCSV(String csvFileName) {
         AssetManager am = mContext.getAssets();
         InputStream inStream = null;
@@ -574,7 +652,7 @@ class DBHelper extends SQLiteOpenHelper {
             while ((line = buffer.readLine()) != null) {
                 String[] fields = line.split(",");
                 if (fields.length != 7) {
-                    Log.d("OCC Course Finder", "Skipping Bad CSV Row: " + Arrays.toString(fields));
+                    Log.d("OCC Service Hours", "Skipping Bad CSV Row: " + Arrays.toString(fields));
                     continue;
                 }
                 int id = Integer.parseInt(fields[0].trim());
