@@ -1,6 +1,7 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 import android.net.Uri;
+import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -191,7 +192,7 @@ public class Event {
      */
     public boolean eventPassed()
     {
-        dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm aa", Locale.US);
+        dateFormat = new SimpleDateFormat("MM-dd-yy hh:mm aa", Locale.US);
 
         try {
             mStart = dateFormat.parse(mStartDate);
@@ -200,7 +201,9 @@ public class Event {
             e.printStackTrace();
         }
 
+
         Date now = new Date(Calendar.getInstance().getTimeInMillis());
+
         return now.after(mEnd);
     }
 
