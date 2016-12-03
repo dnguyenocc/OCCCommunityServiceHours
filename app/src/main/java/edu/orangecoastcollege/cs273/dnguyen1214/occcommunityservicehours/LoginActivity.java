@@ -47,11 +47,11 @@ public class LoginActivity extends AppCompatActivity {
 
         sManager = new SessionManager();
 
-        this.deleteDatabase(DBHelper.DATABASE_NAME);
+        //   this.deleteDatabase(DBHelper.DATABASE_NAME);
         db = new DBHelper(this);
-        db.importUsersFromCSV("User.csv");
-        db.importEventsFromCSV("Events.csv");
-        db.importParticipationsFromCSV("participations.csv");
+        //   db.importUsersFromCSV("User.csv");
+        //   db.importEventsFromCSV("Events.csv");
+        //   db.importParticipationsFromCSV("participations.csv");
 
 
 
@@ -65,7 +65,7 @@ public class LoginActivity extends AppCompatActivity {
         String statusLogin = "";
         //check if username and password in database
         if (validate(user, pass)) {
-         User userLogin = db.getUser(user);
+            User userLogin = db.getUser(user);
             db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
 
             if(userLogin.getmRole() == 1) {

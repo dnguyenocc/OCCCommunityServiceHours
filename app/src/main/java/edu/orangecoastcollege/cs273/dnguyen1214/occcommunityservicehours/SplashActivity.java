@@ -24,34 +24,40 @@ public class SplashActivity extends AppCompatActivity {
         bar = (ProgressBar) findViewById(R.id.progressBar);
         bar.setProgress(0);
         imageURI = LoginActivity.getUriToResource(this,R.drawable.default_avatar);
+        this.deleteDatabase(DBHelper.DATABASE_NAME);
+        db = new DBHelper(this);
+        db.importUsersFromCSV("User.csv");
+        db.importEventsFromCSV("Events.csv");
+        db.importParticipationsFromCSV("participations.csv");
+
 
 
 
         manager = new SessionManager();
 
 
-            TimerTask mediaTask = new TimerTask() {
-                @Override
-                public void run() {
+        TimerTask mediaTask = new TimerTask() {
+            @Override
+            public void run() {
 
-                    String status = manager.getPreferences(SplashActivity.this, "status");
-                    Log.d("status", status);
+                String status = manager.getPreferences(SplashActivity.this, "status");
+                Log.d("status", status);
 
-                    if (status.equals("admin"))
-                    {
-                        startActivity(new Intent(SplashActivity.this, AdminActivity.class));
-                    }
-                    else if(status.equals("user"))
-                    {
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
-                    }
-                    else {
-
-                        startActivity(new Intent(SplashActivity.this, LoginActivity.class));
-                    }
-                    finish();
+                if (status.equals("admin"))
+                {
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
                 }
-            };
+                else if(status.equals("user"))
+                {
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                }
+                else {
+
+                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                }
+                finish();
+            }
+        };
 
         //Define the TimeTask to launch media activity
         Timer timer = new Timer();

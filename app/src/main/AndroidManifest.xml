@@ -44,11 +44,10 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".RegisterActivity" />
-
-        <activity android:name=".AdminActivity"
-            android:theme="@style/AppTheme.NoActionBar">
-
-        </activity>
+        <activity
+            android:name=".AdminActivity"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".EventDetailsActivity"></activity>
     </application>
 
 </manifest>

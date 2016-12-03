@@ -2,17 +2,20 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 
@@ -33,7 +36,7 @@ public class AllEventListFragment extends Fragment {
     private ListView eventsListView;
 
     private EventListAdapter eventsListAdapter;
-   Context context;
+    Context context;
 
 
     public AllEventListFragment() {
@@ -49,11 +52,10 @@ public class AllEventListFragment extends Fragment {
         View view =
                 inflater.inflate(R.layout.fragment_all_event_list, container, false);
         // Inflate the layout for this fragment
-      /*
+
         db = new DBHelper(context);
-        db.importEventsFromCSV("Events.csv");
         allEventsList =db.getAllEvents();
-       */
+      /*
         Uri imageURI = LoginActivity.getUriToResource(context,R.drawable.occpirate);
         allEventsList = new ArrayList<>();
         allEventsList.add(new Event(1,"Book drive","12-14-16 07:45 am","12-14-16 10:45 am",
@@ -62,7 +64,7 @@ public class AllEventListFragment extends Fragment {
                 "Need volunteers to clean beach.","Newport beach",imageURI));
         allEventsList.add(new Event(3,"Blood Donation","12-01-16 07:45 am","12-01-16 10:45 am",
                 "Need volunteers to donate blood.","OCC Watson Hall",imageURI));
-
+        */
         filteredEventsList = new ArrayList<>(allEventsList);
 
         eventNameEditText = (EditText) view.findViewById(R.id.eventNameEditText);
@@ -150,6 +152,8 @@ public class AllEventListFragment extends Fragment {
             parent.setSelection(0);
         }
     };
+
+
 
 
 }

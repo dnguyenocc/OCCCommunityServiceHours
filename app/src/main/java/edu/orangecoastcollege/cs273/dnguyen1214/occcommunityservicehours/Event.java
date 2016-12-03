@@ -1,6 +1,8 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.util.Log;
 
 import java.text.ParseException;
@@ -22,7 +24,7 @@ import java.util.concurrent.TimeUnit;
  * Created by Bijan Fazeli on 11/24/16.
  */
 
-public class Event {
+public class Event implements Parcelable {
 
     // Declare private fields
     private int mId;
@@ -76,6 +78,28 @@ public class Event {
         mLocation = location;
         mImageUri = imageUri;
     }
+
+    protected Event(Parcel in) {
+        mId = in.readInt();
+        mName = in.readString();
+        mStartDate = in.readString();
+        mEndDate = in.readString();
+        mDescription = in.readString();
+        mLocation = in.readString();
+        mImageUri = in.readParcelable(Uri.class.getClassLoader());
+    }
+
+    public static final Creator<Event> CREATOR = new Creator<Event>() {
+        @Override
+        public Event createFromParcel(Parcel in) {
+            return new Event(in);
+        }
+
+        @Override
+        public Event[] newArray(int size) {
+            return new Event[size];
+        }
+    };
 
     /**
      * getId - Returns the current id of the event
@@ -235,6 +259,22 @@ public class Event {
         } catch (ParseException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeString(mName);
+        dest.writeString(mStartDate);
+        dest.writeString(mEndDate);
+        dest.writeString(mDescription);
+        dest.writeString(mLocation);
+        dest.writeParcelable(mImageUri, flags);
     }
 
     /*

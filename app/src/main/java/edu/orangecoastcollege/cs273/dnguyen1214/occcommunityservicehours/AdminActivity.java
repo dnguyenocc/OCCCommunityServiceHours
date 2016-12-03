@@ -18,10 +18,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class AdminActivity extends AppCompatActivity
@@ -49,7 +51,7 @@ public class AdminActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             Fragment fragment = null;
             Class fragmentClass = null;
-            fragmentClass = MainFragment.class; // change here
+            fragmentClass = AllEventListFragment.class; // change here
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
             } catch (Exception e) {
@@ -163,6 +165,7 @@ public class AdminActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_attending_events) {
             //TODO put attending fragment here
+
         } else if (id == R.id.nav_upcoming_events) {
             //TODO put upcoming fragment here
         } else if (id == R.id.nav_passed_events) {
@@ -199,5 +202,15 @@ public class AdminActivity extends AppCompatActivity
     @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+    public void viewEventDetails(View view) {
+        if (view instanceof LinearLayout) {
+            LinearLayout selectedLayout = (LinearLayout) view;
+            Event selectedEvent = (Event) selectedLayout.getTag();
+            Log.i("OCC Community Service", selectedEvent.toString());
+            Intent detailsIntent = new Intent(this, EventDetailsActivity.class);
+            detailsIntent.putExtra("SelectedEvent",selectedEvent);
+            startActivity(detailsIntent);
+        }
     }
 }

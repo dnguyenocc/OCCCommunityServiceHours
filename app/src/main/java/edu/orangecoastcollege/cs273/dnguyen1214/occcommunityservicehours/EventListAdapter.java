@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -63,13 +64,13 @@ public class EventListAdapter extends ArrayAdapter<Event> {
                 (TextView) view.findViewById(R.id.eventListTimeTextView);
         TextView eventListLocationTextView = (TextView) view.findViewById(R.id.eventListLocationTextView);
 
-        //TODO:  Make a reference to the offeringListCRNTextView and set the text accordingly.
-
+        ImageView eventListImageView = (ImageView) view.findViewById(R.id.eventListImageView);
         eventListLinearLayout.setTag(selectedEvent);
 
         eventListNameTextView.setText(selectedEvent.getName());
         eventListTimeTextView.setText(selectedEvent.getStartDate() + " - " + selectedEvent.getEndDate());
         eventListLocationTextView.setText(selectedEvent.getLocation());
+        eventListImageView.setImageURI(selectedEvent.getImageUri());
 
         return view;
     }
