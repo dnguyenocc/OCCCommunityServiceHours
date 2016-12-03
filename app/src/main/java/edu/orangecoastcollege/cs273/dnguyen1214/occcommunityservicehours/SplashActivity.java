@@ -13,7 +13,7 @@ public class SplashActivity extends AppCompatActivity {
     private ProgressBar bar;
     DBHelper db;
     SessionManager manager;
-
+    private User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,12 +34,26 @@ public class SplashActivity extends AppCompatActivity {
                 public void run() {
 
                     String status = manager.getPreferences(SplashActivity.this, "status");
+                    int userIdPref = manager.getIdPreferences(SplashActivity.this, "id");
+
+
                     Log.d("status", status);
 
                     if (status.equals("admin"))
-                        startActivity(new Intent(SplashActivity.this, AdminActivity.class));
+                    {
+                       user = db.getUser(userIdPref);
+                        Intent intentAdmin = new Intent(SplashActivity.this, AdminActivity.class);
+                        intentAdmin.putExtra("selectedUser",user);
+                        startActivity(intentAdmin);
+
+                    }
                     else if(status.equals("user"))
-                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
+                    {
+                        user = db.getUser(userIdPref);
+                        Intent intentUser = new Intent(SplashActivity.this, MainActivity.class);
+                        intentUser.putExtra("selectedUser",user);
+                        startActivity(intentUser);
+                    }
                     else
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));
 

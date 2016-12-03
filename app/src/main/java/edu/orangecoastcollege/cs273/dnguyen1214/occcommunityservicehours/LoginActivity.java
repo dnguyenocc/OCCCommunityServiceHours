@@ -81,6 +81,8 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             sManager.setPreferences(LoginActivity.this,"status",statusLogin);
+            sManager.setIdPreferences(LoginActivity.this,"id",userLogin.getmId());
+
             String status =  sManager.getPreferences(LoginActivity.this,"status");
             Log.d("status",status);
         }

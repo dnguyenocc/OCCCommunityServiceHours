@@ -18,6 +18,21 @@ public class SessionManager {
         editor.commit();
 
     }
+    public void setIdPreferences(Context context, String key, int id) {
+
+        SharedPreferences.Editor editor = context.getSharedPreferences("OCC", Context.MODE_PRIVATE).edit();
+        editor.putInt(key, id);
+
+        editor.commit();
+
+    }
+
+    public int getIdPreferences(Context context, String key) {
+
+        SharedPreferences prefs = context.getSharedPreferences("OCC", Context.MODE_PRIVATE);
+        int id = prefs.getInt(key,0);
+        return id;
+    }
 
 
     public String getPreferences(Context context, String key) {
