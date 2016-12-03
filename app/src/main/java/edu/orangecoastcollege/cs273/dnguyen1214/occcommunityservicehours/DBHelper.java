@@ -620,7 +620,6 @@ class DBHelper extends SQLiteOpenHelper {
                 user,
                 event);
 
-
         db.close();
         return participation;
     }
