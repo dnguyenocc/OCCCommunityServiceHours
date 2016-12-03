@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity
     DBHelper db;
     SessionManager manager;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,8 +39,12 @@ public class MainActivity extends AppCompatActivity
         //Hide the title on app bar for Search View
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         db = new DBHelper(this);
-
         manager = new SessionManager();
+
+
+
+
+
         //Set the main fragment
         if (savedInstanceState == null) {
             Fragment fragment = null;
