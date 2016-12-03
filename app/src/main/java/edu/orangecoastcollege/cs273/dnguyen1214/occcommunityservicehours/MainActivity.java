@@ -21,7 +21,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -41,7 +40,9 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         db = new DBHelper(this);
         manager = new SessionManager();
+        //TODO get user from Login table
         User user = db.getLoginUser();
+
 
         //TODO Set the main fragment
         if (savedInstanceState == null) {
@@ -75,9 +76,9 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
 
-        View headerView =  navigationView.getHeaderView(0);
-        TextView usernameAccountTextView = (TextView)headerView.findViewById(R.id.usernameAccountTextView);
-        usernameAccountTextView.setText(user.getmUserName());
+//        View headerView =  navigationView.getHeaderView(0);
+//        TextView usernameAccountTextView = (TextView)headerView.findViewById(R.id.usernameAccountTextView);
+//        usernameAccountTextView.setText(user.getmUserName());
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -170,6 +171,8 @@ public class MainActivity extends AppCompatActivity
             manager.setPreferences(MainActivity.this, "status", "0");
             finish();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
+            db.logout();
+
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

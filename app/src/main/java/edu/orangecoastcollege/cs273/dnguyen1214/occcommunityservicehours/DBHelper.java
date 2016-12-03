@@ -45,8 +45,10 @@ class DBHelper extends SQLiteOpenHelper {
     //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE USERS TABLE
     private static final String LOGIN_TABLE = "Login";
     private static final String LOGIN_KEY_FIELD_ID = "_id";
-    private static final String FIELD_USER_LOGIN_ID = "user_id";
-    private static final String FIELD_USER_LOGIN_ROLE = "role";
+    private static final String FIELD_LOGIN_USER_ID = "user_id";
+    private static final String FIELD_LOGIN_USER_ROLE = "role";
+
+
 
     // FIELD NAMES FOR THE EVENTS TABLE
     private static final String EVENTS_TABLE = "Events";
@@ -92,8 +94,8 @@ class DBHelper extends SQLiteOpenHelper {
         // Create the Events table
         createQuery = "CREATE TABLE " + LOGIN_TABLE + "("
                 + LOGIN_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + FIELD_USER_LOGIN_ID + " INTEGER, "
-                + FIELD_USER_LOGIN_ROLE + " INTEGER" + ")";
+                + FIELD_LOGIN_USER_ID + " INTEGER, "
+                + FIELD_LOGIN_USER_ROLE + " INTEGER" + ")";
         database.execSQL(createQuery);
 
         // Create the Events table
@@ -140,12 +142,12 @@ class DBHelper extends SQLiteOpenHelper {
 
     //********** LOGIN TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
 
-    public void addLoginUser(User user) {
+    public void addLoginUser(int id, int role) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(FIELD_USER_LOGIN_ID, user.getmId());
-        values.put(FIELD_USER_LOGIN_ROLE,user.getmRole());
+        values.put(FIELD_LOGIN_USER_ID, id);
+        values.put(FIELD_LOGIN_USER_ROLE, role);
 
         db.insert(LOGIN_TABLE, null, values);
 
@@ -158,8 +160,8 @@ class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(
                 LOGIN_TABLE,
                 new String[]{LOGIN_KEY_FIELD_ID,
-                        FIELD_USER_LOGIN_ID,
-                        FIELD_USER_LOGIN_ROLE},
+                        FIELD_LOGIN_USER_ID,
+                        FIELD_LOGIN_USER_ROLE},
                 null,
                 null,
                 null, null, null, null);
@@ -167,37 +169,9 @@ class DBHelper extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
 
-        int id = cursor.getInt(cursor.getColumnIndex(FIELD_USER_LOGIN_ID));
+        int id = cursor.getInt(1);
 
-
-        Cursor cursorUser = db.query(
-                USERS_TABLE,
-                new String[]{USERS_KEY_FIELD_ID,
-                        FIELD_FIRST_NAME,
-                        FIELD_LAST_NAME,
-                        FIELD_USERNAME,
-                        FIELD_EMAIL,
-                        FIELD_PHONE_NUMBER,
-                        FIELD_PASSWORD,
-                        FIELD_ROLE,
-                        FIELD_IMAGE_NAME},
-                USERS_KEY_FIELD_ID + "=?",
-                new String[]{String.valueOf(id)},
-                null, null, null, null);
-
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        User user =
-                new User(cursorUser.getInt(0),
-                        cursorUser.getString(1),
-                        cursorUser.getString(2),
-                        cursorUser.getString(3),
-                        cursorUser.getString(4),
-                        cursorUser.getString(5),
-                        cursorUser.getString(6),
-                        cursorUser.getInt(7),
-                        Uri.parse(cursorUser.getString(8)));
+        User user = getUser(id);
 
         cursor.close();
 
@@ -205,6 +179,11 @@ class DBHelper extends SQLiteOpenHelper {
         return user;
     }
 
+    public void logout() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.delete(LOGIN_TABLE, null, null);
+        db.close();
+    }
     //********** USER TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
 
 

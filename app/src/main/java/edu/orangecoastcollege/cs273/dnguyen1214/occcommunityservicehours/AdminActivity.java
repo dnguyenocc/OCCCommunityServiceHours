@@ -27,6 +27,7 @@ public class AdminActivity extends AppCompatActivity
         MainFragment.OnFragmentInteractionListener {
 
     SessionManager manager;
+    DBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,8 +37,12 @@ public class AdminActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         //Hide the title on app bar for Search View
         getSupportActionBar().setDisplayShowTitleEnabled(false);
-
         manager = new SessionManager();
+        db = new DBHelper(this);
+        //TODO get user from Login table
+        User user = db.getLoginUser();
+
+
         //Set the main fragment
         if (savedInstanceState == null) {
             Fragment fragment = null;
@@ -160,7 +165,7 @@ public class AdminActivity extends AppCompatActivity
             manager.setPreferences(AdminActivity.this, "status", "0");
             finish();
             startActivity(new Intent(AdminActivity.this, LoginActivity.class));
-
+            db.logout();
         }
 
 

@@ -49,8 +49,9 @@ public class LoginActivity extends AppCompatActivity {
 
         this.deleteDatabase(DBHelper.DATABASE_NAME);
         db = new DBHelper(this);
-        db.addUser(new User("alex","ho","admin"," "," ","admin",1,imageURI));
-        db.addUser(new User("ola","ho","user"," "," ","user",2,imageURI));
+        db.importUsersFromCSV("User.csv");
+        db.importEventsFromCSV("Events.csv");
+        db.importParticipationsFromCSV("participations.csv");
 
 
 
@@ -65,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         //check if username and password in database
         if (validate(user, pass)) {
          User userLogin = db.getUser(user);
-            db.addloginUser(userLogin);
+            db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
 
             if(userLogin.getmRole() == 1) {
                 statusLogin = "admin";
@@ -123,7 +124,7 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
     }
 
-    public static Uri getUriToResource(@NonNull Context context, @AnyRes int resId) throws Resources.NotFoundException{
+    public static final Uri getUriToResource(@NonNull Context context, @AnyRes int resId) throws Resources.NotFoundException{
         Resources res = context.getResources();
 
         return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
