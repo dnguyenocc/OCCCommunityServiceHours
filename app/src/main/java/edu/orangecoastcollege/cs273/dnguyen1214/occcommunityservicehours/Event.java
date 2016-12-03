@@ -5,9 +5,16 @@ import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
+import java.util.EnumSet;
+import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Event class - Creates an event object when called
@@ -185,12 +192,40 @@ public class Event {
         mEndDate = endDate;
     }
 
+    public String getDuration() {
+        setDates();
+
+        long diffInMillies = mEnd.getTime() - mStart.getTime();
+        List<TimeUnit> units = new ArrayList<TimeUnit>(EnumSet.allOf(TimeUnit.class));
+        Collections.reverse(units);
+        Map<TimeUnit,Long> result = new LinkedHashMap<TimeUnit, Long>();
+        long milliesRest = diffInMillies;
+        for ( TimeUnit unit : units ) {
+            long diff = unit.convert(milliesRest,TimeUnit.MILLISECONDS);
+            long diffInMilliesForUnit = unit.toMillis(diff);
+            milliesRest = milliesRest - diffInMilliesForUnit;
+            result.put(unit,diff);
+        }
+        return result.get(TimeUnit.DAYS).toString() + " day, " +
+                result.get(TimeUnit.HOURS).toString() + " hours and " +
+                result.get(TimeUnit.MINUTES).toString() + " minutes";
+    }
+
     /**
      * eventPassed - Checks to see if an event has passed and returns either True or False
      *
      * @return True if the event has passed, otherwise false
      */
     public boolean eventPassed()
+    {
+        setDates();
+
+        Date now = new Date(Calendar.getInstance().getTimeInMillis());
+
+        return now.after(mEnd);
+    }
+
+    private void setDates()
     {
         dateFormat = new SimpleDateFormat("MM-dd-yy hh:mm aa", Locale.US);
 
@@ -200,11 +235,6 @@ public class Event {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
-
-        Date now = new Date(Calendar.getInstance().getTimeInMillis());
-
-        return now.after(mEnd);
     }
 
     /*
