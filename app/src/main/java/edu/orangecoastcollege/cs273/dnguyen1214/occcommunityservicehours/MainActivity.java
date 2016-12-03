@@ -42,10 +42,7 @@ public class MainActivity extends AppCompatActivity
         manager = new SessionManager();
 
 
-
-
-
-        //Set the main fragment
+        //TODO Set the main fragment
         if (savedInstanceState == null) {
             Fragment fragment = null;
             Class fragmentClass = null;

@@ -65,24 +65,18 @@ public class LoginActivity extends AppCompatActivity {
         //check if username and password in database
         if (validate(user, pass)) {
          User userLogin = db.getUser(user);
+            db.addloginUser(userLogin);
 
             if(userLogin.getmRole() == 1) {
                 statusLogin = "admin";
-                Intent intentAdmin = new Intent(this, AdminActivity.class);
-                intentAdmin.putExtra("selectedUser",userLogin);
-                startActivity(intentAdmin);
-
+                startActivity(new Intent(LoginActivity.this,AdminActivity.class));
             }
             else if(userLogin.getmRole() == 2) {
                 statusLogin = "user";
-                Intent intentUser = new Intent(this, MainActivity.class);
-                intentUser.putExtra("selectedUser",userLogin);
-                startActivity(intentUser);
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
             }
 
             sManager.setPreferences(LoginActivity.this,"status",statusLogin);
-            sManager.setIdPreferences(LoginActivity.this,"id",userLogin.getmId());
-
             String status =  sManager.getPreferences(LoginActivity.this,"status");
             Log.d("status",status);
         }

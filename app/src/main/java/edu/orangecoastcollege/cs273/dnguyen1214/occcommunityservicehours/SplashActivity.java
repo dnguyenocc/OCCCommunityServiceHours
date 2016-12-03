@@ -34,25 +34,18 @@ public class SplashActivity extends AppCompatActivity {
                 public void run() {
 
                     String status = manager.getPreferences(SplashActivity.this, "status");
-                    int userIdPref = manager.getIdPreferences(SplashActivity.this, "id");
+
 
 
                     Log.d("status", status);
 
                     if (status.equals("admin"))
                     {
-                       user = db.getUser(userIdPref);
-                        Intent intentAdmin = new Intent(SplashActivity.this, AdminActivity.class);
-                        intentAdmin.putExtra("selectedUser",user);
-                        startActivity(intentAdmin);
-
+                        startActivity(new Intent(SplashActivity.this, AdminActivity.class));
                     }
                     else if(status.equals("user"))
                     {
-                        user = db.getUser(userIdPref);
-                        Intent intentUser = new Intent(SplashActivity.this, MainActivity.class);
-                        intentUser.putExtra("selectedUser",user);
-                        startActivity(intentUser);
+                        startActivity(new Intent(SplashActivity.this, MainActivity.class));
                     }
                     else
                         startActivity(new Intent(SplashActivity.this, LoginActivity.class));

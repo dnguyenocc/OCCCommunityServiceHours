@@ -41,6 +41,12 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_ROLE = "role";
     private static final String FIELD_IMAGE_NAME = "image_name";
 
+
+    //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE USERS TABLE
+    private static final String LOGIN_TABLE = "Login";
+    private static final String LOGIN_KEY_FIELD_ID = "_id";
+    private static final String FIELD_USER_LOGIN_ID = "user_id";
+
     // FIELD NAMES FOR THE EVENTS TABLE
     private static final String EVENTS_TABLE = "Events";
     private static final String EVENTS_KEY_FIELD_ID = "id";
@@ -83,6 +89,13 @@ class DBHelper extends SQLiteOpenHelper {
         database.execSQL(createQuery);
 
         // Create the Events table
+        createQuery = "CREATE TABLE " + LOGIN_TABLE + "("
+                + LOGIN_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + FIELD_USER_LOGIN_ID + " INTEGER"+ ")";
+
+        database.execSQL(createQuery);
+
+        // Create the Events table
         createQuery = "CREATE TABLE " + EVENTS_TABLE + "("
                 + EVENTS_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + FIELD_NAME + " TEXT, "
@@ -116,10 +129,74 @@ class DBHelper extends SQLiteOpenHelper {
                           int oldVersion,
                           int newVersion) {
         database.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + LOGIN_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + EVENTS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + PARTICIPATIONS_TABLE);
 
         onCreate(database);
+    }
+
+
+    //********** LOGIN TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
+
+    public void addloginUser(User user) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FIELD_USER_ID, user.getmId());
+
+        db.insert(LOGIN_TABLE, null, values);
+
+        // CLOSE THE DATABASE CONNECTION
+        db.close();
+    }
+
+    public User getLoginUser() {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                LOGIN_TABLE,
+                new String[]{LOGIN_KEY_FIELD_ID,
+                        FIELD_USER_ID},
+                null,
+                new String[]{},
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+        int id = cursor.getInt(1);
+
+
+        Cursor cursorUser = db.query(
+                USERS_TABLE,
+                new String[]{USERS_KEY_FIELD_ID,
+                        FIELD_FIRST_NAME,
+                        FIELD_LAST_NAME,
+                        FIELD_USERNAME,
+                        FIELD_EMAIL,
+                        FIELD_PHONE_NUMBER,
+                        FIELD_PASSWORD,
+                        FIELD_ROLE,
+                        FIELD_IMAGE_NAME},
+                USERS_KEY_FIELD_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+
+        User user =
+                new User(cursorUser.getInt(0),
+                        cursorUser.getString(1),
+                        cursorUser.getString(2),
+                        cursorUser.getString(3),
+                        cursorUser.getString(4),
+                        cursorUser.getString(5),
+                        cursorUser.getString(6),
+                        cursorUser.getInt(7),
+                        Uri.parse(cursorUser.getString(8)));
+
+        cursor.close();
+
+        db.close();
+        return user;
     }
 
     //********** USER TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
@@ -213,6 +290,7 @@ class DBHelper extends SQLiteOpenHelper {
                 null,
                 null, null, null, null);
 
+
         //COLLECT EACH ROW IN THE TABLE
         if (cursor.moveToFirst()) {
             do {
@@ -302,6 +380,8 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
         return user;
     }
+
+
     public User getUser(String username) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
