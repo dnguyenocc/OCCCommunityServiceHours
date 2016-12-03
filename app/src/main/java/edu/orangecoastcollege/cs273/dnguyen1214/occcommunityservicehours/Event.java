@@ -19,7 +19,8 @@ public class Event {
     // Declare private fields
     private int mId;
     private String mName;
-    private Date mStartDate, mEndDate;
+    private String mStartDate, mEndDate;
+    private Date mStart, mEnd;
     private String mDescription, mLocation;
     private Uri mImageUri;
 
@@ -57,16 +58,11 @@ public class Event {
                  String startDate, String endDate,
                  String description, String location, Uri imageUri) {
 
-        dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm aa", Locale.US);
         mId = id;
         mName = name;
 
-        try {
-            mStartDate = dateFormat.parse(startDate);
-            mEndDate = dateFormat.parse(endDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        mStartDate = startDate;
+        mEndDate = endDate;
 
         mDescription = description;
         mLocation = location;
@@ -160,17 +156,15 @@ public class Event {
      * @return The start date of the event
      */
     public String getStartDate() {
-        return mStartDate.toString();
+        return mStartDate;
     }
 
+    /**
+     * setStartDate - Changes the current start date to the parameter passed in
+     * @param startDate A string in the form 'MM-dd-yyyy hh:mm aa'
+     */
     public void setStartDate(String startDate) {
-        dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm aa", Locale.US);
-
-        try {
-            mStartDate = dateFormat.parse(startDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        mStartDate = startDate;
     }
 
     /**
@@ -179,17 +173,15 @@ public class Event {
      * @return The end date of the event.
      */
     public String getEndDate() {
-        return mEndDate.toString();
+        return mEndDate;
     }
 
+    /**
+     * setStartDate - Changes the current end date to the parameter passed in
+     * @param endDate A string in the form 'MM-dd-yyyy hh:mm aa'
+     */
     public void setEndDate(String endDate) {
-        dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm aa", Locale.US);
-
-        try {
-            mEndDate = dateFormat.parse(endDate);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        mEndDate = endDate;
     }
 
     /**
@@ -199,8 +191,17 @@ public class Event {
      */
     public boolean eventPassed()
     {
+        dateFormat = new SimpleDateFormat("MM-dd-yyyy hh:mm aa", Locale.US);
+
+        try {
+            mStart = dateFormat.parse(mStartDate);
+            mEnd = dateFormat.parse(mEndDate);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
         Date now = new Date(Calendar.getInstance().getTimeInMillis());
-        return now.after(mEndDate);
+        return now.after(mEnd);
     }
 
     /*
