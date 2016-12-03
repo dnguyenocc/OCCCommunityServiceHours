@@ -14,6 +14,7 @@ public class SessionManager {
 
         SharedPreferences.Editor editor = context.getSharedPreferences("OCC", Context.MODE_PRIVATE).edit();
         editor.putString(key, value);
+
         editor.commit();
 
     }

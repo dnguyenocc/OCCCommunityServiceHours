@@ -193,6 +193,7 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+
     public ArrayList<User> getAllUser() {
         ArrayList<User> usersList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
