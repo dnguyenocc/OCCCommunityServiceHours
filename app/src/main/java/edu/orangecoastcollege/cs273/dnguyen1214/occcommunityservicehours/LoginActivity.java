@@ -70,6 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                 statusLogin = "admin";
                 Intent intentAdmin = new Intent(this, AdminActivity.class);
                 intentAdmin.putExtra("selectedUser",userLogin);
+                startActivity(intentAdmin);
 
             }
             else if(userLogin.getmRole() == 2) {
