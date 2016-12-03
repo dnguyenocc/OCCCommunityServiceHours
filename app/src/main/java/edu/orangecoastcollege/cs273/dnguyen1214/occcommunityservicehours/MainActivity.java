@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
         MainFragment.OnFragmentInteractionListener {
 
+    DBHelper db;
     SessionManager manager;
 
     @Override
@@ -36,6 +37,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
         //Hide the title on app bar for Search View
         getSupportActionBar().setDisplayShowTitleEnabled(false);
+        db = new DBHelper(this);
 
         manager = new SessionManager();
         //Set the main fragment

@@ -11,7 +11,7 @@ import java.util.TimerTask;
 
 public class SplashActivity extends AppCompatActivity {
     private ProgressBar bar;
-
+    DBHelper db;
     SessionManager manager;
 
     @Override
@@ -20,6 +20,12 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         bar = (ProgressBar) findViewById(R.id.progressBar);
         bar.setProgress(0);
+
+        this.deleteDatabase(DBHelper.DATABASE_NAME);
+        db = new DBHelper(this);
+        db.importUsersFromCSV("User.csv");
+        db.importEventsFromCSV("Events.csv");
+        db.importParticipationsFromCSV("participations.csv");
 
         manager = new SessionManager();
 
