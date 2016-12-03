@@ -21,6 +21,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -40,7 +41,7 @@ public class MainActivity extends AppCompatActivity
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         db = new DBHelper(this);
         manager = new SessionManager();
-
+        User user = db.getLoginUser();
 
         //TODO Set the main fragment
         if (savedInstanceState == null) {
@@ -73,6 +74,10 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        View headerView =  navigationView.getHeaderView(0);
+        TextView usernameAccountTextView = (TextView)headerView.findViewById(R.id.usernameAccountTextView);
+        usernameAccountTextView.setText(user.getmUserName());
         navigationView.setNavigationItemSelectedListener(this);
     }
 

@@ -164,7 +164,7 @@ class DBHelper extends SQLiteOpenHelper {
         if (cursor != null)
             cursor.moveToFirst();
         int id = cursor.getInt(1);
-
+        cursor.close();
 
         Cursor cursorUser = db.query(
                 USERS_TABLE,
@@ -180,7 +180,8 @@ class DBHelper extends SQLiteOpenHelper {
                 USERS_KEY_FIELD_ID + "=?",
                 new String[]{String.valueOf(id)},
                 null, null, null, null);
-
+        if (cursorUser != null)
+            cursorUser.moveToFirst();
 
         User user =
                 new User(cursorUser.getInt(0),
@@ -193,7 +194,7 @@ class DBHelper extends SQLiteOpenHelper {
                         cursorUser.getInt(7),
                         Uri.parse(cursorUser.getString(8)));
 
-        cursor.close();
+        cursorUser.close();
 
         db.close();
         return user;
