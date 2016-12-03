@@ -46,6 +46,7 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String LOGIN_TABLE = "Login";
     private static final String LOGIN_KEY_FIELD_ID = "_id";
     private static final String FIELD_USER_LOGIN_ID = "user_id";
+    private static final String FIELD_USER_LOGIN_ROLE = "role";
 
     // FIELD NAMES FOR THE EVENTS TABLE
     private static final String EVENTS_TABLE = "Events";
@@ -91,8 +92,8 @@ class DBHelper extends SQLiteOpenHelper {
         // Create the Events table
         createQuery = "CREATE TABLE " + LOGIN_TABLE + "("
                 + LOGIN_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
-                + FIELD_USER_LOGIN_ID + " INTEGER"+ ")";
-
+                + FIELD_USER_LOGIN_ID + " INTEGER, "
+                + FIELD_USER_LOGIN_ROLE + " INTEGER" + ")";
         database.execSQL(createQuery);
 
         // Create the Events table
@@ -139,11 +140,12 @@ class DBHelper extends SQLiteOpenHelper {
 
     //********** LOGIN TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
 
-    public void addloginUser(User user) {
+    public void addLoginUser(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
 
-        values.put(FIELD_USER_ID, user.getmId());
+        values.put(FIELD_USER_LOGIN_ID, user.getmId());
+        values.put(FIELD_USER_LOGIN_ROLE,user.getmRole());
 
         db.insert(LOGIN_TABLE, null, values);
 
@@ -156,15 +158,17 @@ class DBHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(
                 LOGIN_TABLE,
                 new String[]{LOGIN_KEY_FIELD_ID,
-                        FIELD_USER_ID},
+                        FIELD_USER_LOGIN_ID,
+                        FIELD_USER_LOGIN_ROLE},
                 null,
-                new String[]{},
+                null,
                 null, null, null, null);
 
         if (cursor != null)
             cursor.moveToFirst();
-        int id = cursor.getInt(1);
-        cursor.close();
+
+        int id = cursor.getInt(cursor.getColumnIndex(FIELD_USER_LOGIN_ID));
+
 
         Cursor cursorUser = db.query(
                 USERS_TABLE,
@@ -180,8 +184,9 @@ class DBHelper extends SQLiteOpenHelper {
                 USERS_KEY_FIELD_ID + "=?",
                 new String[]{String.valueOf(id)},
                 null, null, null, null);
-        if (cursorUser != null)
-            cursorUser.moveToFirst();
+
+        if (cursor != null)
+            cursor.moveToFirst();
 
         User user =
                 new User(cursorUser.getInt(0),
@@ -194,7 +199,7 @@ class DBHelper extends SQLiteOpenHelper {
                         cursorUser.getInt(7),
                         Uri.parse(cursorUser.getString(8)));
 
-        cursorUser.close();
+        cursor.close();
 
         db.close();
         return user;
