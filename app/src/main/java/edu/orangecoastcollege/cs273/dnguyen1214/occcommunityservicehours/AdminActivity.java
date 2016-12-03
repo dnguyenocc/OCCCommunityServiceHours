@@ -21,6 +21,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 public class AdminActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -73,7 +75,15 @@ public class AdminActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+
+        //TODO update the header navigation by user interface
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view_admin);
+        View headerView =  navigationView.getHeaderView(0);
+        TextView usernameAccountTextView = (TextView)headerView.findViewById(R.id.usernameHeaderTextView);
+        ImageView profileImageView = (ImageView) headerView.findViewById(R.id.profileHeaderImageView);
+        profileImageView.setImageURI(user.getmImageUri());
+        usernameAccountTextView.setText(user.getmUserName());
+
         navigationView.setNavigationItemSelectedListener(this);
     }
 

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-    android:background="@drawable/side_nav_bar"
+    android:background="@drawable/header_cover"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
@@ -13,11 +13,13 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <ImageView
-        android:id="@+id/profileImageView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:id="@+id/profileHeaderImageView"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
-        app:srcCompat="@android:drawable/sym_def_app_icon" />
+        app:srcCompat="@android:drawable/sym_def_app_icon"
+        android:adjustViewBounds="true"
+        android:cropToPadding="true"
+        android:layout_width="60dp"
+        android:layout_height="60dp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -25,10 +27,13 @@
         android:paddingTop="@dimen/nav_header_vertical_spacing"
         android:text="Android Studio"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
-        android:id="@+id/usernameAccountTextView" />
+        android:id="@+id/usernameHeaderTextView"
+        android:textStyle="normal|bold"
+        android:textAlignment="viewStart"
+        android:textSize="16sp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/hoursPointHeaderTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="android.studio@android.com" />

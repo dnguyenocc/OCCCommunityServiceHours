@@ -38,11 +38,12 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_EMAIL ="email";
     private static final String FIELD_PHONE_NUMBER = "phone_number";
     private static final String FIELD_PASSWORD = "password";
+    private static final String FIELD_HOURS = "hours";
     private static final String FIELD_ROLE = "role";
     private static final String FIELD_IMAGE_NAME = "image_name";
 
 
-    //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE USERS TABLE
+    //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE LOGIN TABLE
     private static final String LOGIN_TABLE = "Login";
     private static final String LOGIN_KEY_FIELD_ID = "_id";
     private static final String FIELD_LOGIN_USER_ID = "user_id";
@@ -87,6 +88,7 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_EMAIL + " TEXT, "
                 + FIELD_PHONE_NUMBER + " TEXT, "
                 + FIELD_PASSWORD + " TEXT, "
+                + FIELD_HOURS + " REAL, "
                 + FIELD_ROLE + " INTEGER, "
                 + FIELD_IMAGE_NAME + " TEXT" + ")";
         database.execSQL(createQuery);
@@ -246,6 +248,7 @@ class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_EMAIL,user.getmEmail());
         values.put(FIELD_PHONE_NUMBER,user.getmPhoneNum());
         values.put(FIELD_PASSWORD,user.getmPassWord());
+        values.put(FIELD_HOURS,user.getmHours());
         values.put(FIELD_ROLE,user.getmRole());
         values.put(FIELD_IMAGE_NAME,user.getmImageUri().toString());
 
@@ -269,6 +272,7 @@ class DBHelper extends SQLiteOpenHelper {
                         FIELD_EMAIL,
                         FIELD_PHONE_NUMBER,
                         FIELD_PASSWORD,
+                        FIELD_HOURS,
                         FIELD_ROLE,
                         FIELD_IMAGE_NAME},
                 null,
@@ -287,8 +291,9 @@ class DBHelper extends SQLiteOpenHelper {
                                 cursor.getString(4),
                                 cursor.getString(5),
                                 cursor.getString(6),
-                                cursor.getInt(7),
-                                Uri.parse(cursor.getString(8)));
+                                cursor.getDouble(7),
+                                cursor.getInt(8),
+                                Uri.parse(cursor.getString(9)));
                 usersList.add(user);
             } while (cursor.moveToNext());
         }
@@ -320,6 +325,7 @@ class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_EMAIL,user.getmEmail());
         values.put(FIELD_PHONE_NUMBER,user.getmPhoneNum());
         values.put(FIELD_PASSWORD,user.getmPassWord());
+        values.put(FIELD_HOURS,user.getmHours());
         values.put(FIELD_ROLE,user.getmRole());
         values.put(FIELD_IMAGE_NAME,user.getmImageUri().toString());
 
@@ -340,6 +346,7 @@ class DBHelper extends SQLiteOpenHelper {
                         FIELD_EMAIL,
                         FIELD_PHONE_NUMBER,
                         FIELD_PASSWORD,
+                        FIELD_HOURS,
                         FIELD_ROLE,
                         FIELD_IMAGE_NAME},
                 USERS_KEY_FIELD_ID + "=?",
@@ -357,8 +364,9 @@ class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(4),
                         cursor.getString(5),
                         cursor.getString(6),
-                        cursor.getInt(7),
-                        Uri.parse(cursor.getString(8)));
+                        cursor.getDouble(7),
+                        cursor.getInt(8),
+                        Uri.parse(cursor.getString(9)));
 
         cursor.close();
 
@@ -378,6 +386,7 @@ class DBHelper extends SQLiteOpenHelper {
                         FIELD_EMAIL,
                         FIELD_PHONE_NUMBER,
                         FIELD_PASSWORD,
+                        FIELD_HOURS,
                         FIELD_ROLE,
                         FIELD_IMAGE_NAME},
                 FIELD_USERNAME + "=?",
@@ -395,8 +404,9 @@ class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(4),
                         cursor.getString(5),
                         cursor.getString(6),
-                        cursor.getInt(7),
-                        Uri.parse(cursor.getString(8)));
+                        cursor.getDouble(7),
+                        cursor.getInt(8),
+                        Uri.parse(cursor.getString(9)));
 
         cursor.close();
 
@@ -639,7 +649,7 @@ class DBHelper extends SQLiteOpenHelper {
         try {
             while ((line = buffer.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length != 8) {
+                if (fields.length != 9) {
                     Log.d("OCC Service Hours", "Skipping Bad CSV Row: " + Arrays.toString(fields));
                     continue;
                 }
@@ -650,10 +660,11 @@ class DBHelper extends SQLiteOpenHelper {
                 String email = fields[4].trim();
                 String phoneNumber = fields[5].trim();
                 String password = fields[6].trim();
-                int role = Integer.parseInt(fields[7].trim());
+                Double hour = Double.valueOf(fields[7].trim());
+                int role = Integer.parseInt(fields[8].trim());
                 //TODO image URI later
                 Uri imageURI = LoginActivity.getUriToResource(mContext,R.drawable.default_avatar);
-                addUser(new User(id, firstName, lastName, username,email,phoneNumber,password,role,imageURI));
+                addUser(new User(id, firstName, lastName, username,email,phoneNumber,password,hour,role,imageURI));
             }
         } catch (IOException e) {
             e.printStackTrace();

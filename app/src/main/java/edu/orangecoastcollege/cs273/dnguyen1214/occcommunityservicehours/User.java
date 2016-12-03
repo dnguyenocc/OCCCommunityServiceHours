@@ -17,6 +17,7 @@ public class User implements Parcelable{
     private String mEmail;
     private String mPhoneNum;
     private String mPassWord;
+    private double mHours;
     private int mRole; // 1 is admin, 2 is normal user
     private Uri mImageUri;
 
@@ -25,28 +26,30 @@ public class User implements Parcelable{
     public User() {
     }
 
-    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, int role) {
+    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, double mHours, int mRole) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.mUserName = mUserName;
         this.mEmail = mEmail;
         this.mPhoneNum = mPhoneNum;
         this.mPassWord = mPassWord;
-        this.mRole = role;
+        this.mHours = mHours;
+        this.mRole = mRole;
     }
 
-    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, int role, Uri mImageUri) {
+    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, double mHours, int mRole, Uri mImageUri) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.mUserName = mUserName;
         this.mEmail = mEmail;
         this.mPhoneNum = mPhoneNum;
         this.mPassWord = mPassWord;
-        this.mRole = role;
+        this.mHours = mHours;
+        this.mRole = mRole;
         this.mImageUri = mImageUri;
     }
 
-    public User(int mId, String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, int role, Uri mImageUri) {
+    public User(int mId, String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, double mHours, int mRole, Uri mImageUri) {
         this.mId = mId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -54,7 +57,8 @@ public class User implements Parcelable{
         this.mEmail = mEmail;
         this.mPhoneNum = mPhoneNum;
         this.mPassWord = mPassWord;
-        this.mRole = role;
+        this.mHours = mHours;
+        this.mRole = mRole;
         this.mImageUri = mImageUri;
     }
 
@@ -66,9 +70,11 @@ public class User implements Parcelable{
         mEmail = in.readString();
         mPhoneNum = in.readString();
         mPassWord = in.readString();
+        mHours = in.readDouble();
         mRole = in.readInt();
         mImageUri = in.readParcelable(Uri.class.getClassLoader());
     }
+
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
@@ -79,6 +85,7 @@ public class User implements Parcelable{
         dest.writeString(mEmail);
         dest.writeString(mPhoneNum);
         dest.writeString(mPassWord);
+        dest.writeDouble(mHours);
         dest.writeInt(mRole);
         dest.writeParcelable(mImageUri, flags);
     }
@@ -99,6 +106,15 @@ public class User implements Parcelable{
             return new User[size];
         }
     };
+
+
+    public double getmHours() {
+        return mHours;
+    }
+
+    public void setmHours(double mHours) {
+        this.mHours = mHours;
+    }
 
     public void setmRole(int mRole) {
         this.mRole = mRole;

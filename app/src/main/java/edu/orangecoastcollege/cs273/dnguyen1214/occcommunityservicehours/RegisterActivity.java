@@ -78,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(validate(fname,lname,email,userName,pass))
         {
 
-            User user = new User(fname,lname,userName,email," ",pass,2,imageURI);// set 2 for role because this is normal user
+            User user = new User(fname,lname,userName,email," ",pass,0.0,2,imageURI);// set 2 for role because this is normal user
 //            petListAdapter.add(pet);
             db.addUser(user);
 
