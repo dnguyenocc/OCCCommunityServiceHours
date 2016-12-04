@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.AccountDetailsFragment"
+    android:orientation="vertical"
+    android:weightSum="10" android:background="@android:color/holo_orange_light">
+
+
+    <TextView
+        android:text="@string/service_hours"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" android:id="@+id/textViewServiceHours"
+        android:textAlignment="center" android:textSize="24sp" android:textStyle="normal|bold"
+        android:layout_marginLeft="100dp" android:layout_marginRight="100dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/back" android:layout_weight="1" android:gravity="center"/>
+    <ImageView
+        android:layout_width="match_parent"
+        app:srcCompat="@mipmap/ic_launcher"
+        android:id="@+id/imageViewProfilePic" android:adjustViewBounds="true"
+        android:scaleType="fitCenter" android:layout_weight="3" android:layout_height="0dp"
+        android:layout_marginTop="20dp" android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp" android:clickable="true"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" android:weightSum="4"
+        android:layout_marginTop="10dp" android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" android:layout_weight="1">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/editTextName"
+            android:clickable="false" android:focusable="false" android:focusableInTouchMode="false"
+            android:cursorVisible="false" android:layout_weight="3"
+            android:background="@android:color/background_light"
+        />
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/imageViewEdit" android:layout_weight="1" android:clickable="true"
+            android:onClick="editName" android:background="@android:color/background_light"
+            android:adjustViewBounds="true" android:scaleType="fitEnd"/>
+    </LinearLayout>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" android:id="@+id/textViewUserName"
+        android:layout_weight="1"
+        android:textSize="18sp" android:layout_marginLeft="10dp" android:layout_marginRight="10dp"
+        android:gravity="center_vertical" android:layout_marginTop="10dp"
+        android:background="@android:color/background_light"/>
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" android:id="@+id/textView3" android:layout_weight="1"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" android:textSize="18sp" android:layout_marginTop="10dp"
+        android:background="@android:color/background_light" android:gravity="center_vertical"/>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" android:weightSum="4"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" android:layout_weight="1" android:layout_marginTop="10dp">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/editText2"
+            android:clickable="false" android:focusable="false" android:focusableInTouchMode="false"
+            android:cursorVisible="false" android:layout_weight="3"
+            android:background="@android:color/background_light"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/imageView3" android:layout_weight="1" android:clickable="true"
+            android:onClick="editName" android:background="@android:color/background_light"
+            android:adjustViewBounds="true" android:scaleType="fitEnd"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" android:weightSum="4"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp" android:layout_weight="1" android:layout_marginTop="10dp">
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:text="Name"
+            android:ems="10"
+            android:id="@+id/editText3"
+            android:clickable="false" android:focusable="false" android:focusableInTouchMode="false"
+            android:cursorVisible="false" android:layout_weight="3"
+            android:background="@android:color/background_light"/>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/imageView4" android:layout_weight="1" android:clickable="true"
+            android:onClick="editName" android:background="@android:color/background_light"
+            android:adjustViewBounds="true" android:scaleType="fitEnd"/>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:elevation="18dp" android:clipToPadding="false" android:layout_weight="1"
+        android:layout_marginTop="20dp" android:layout_marginBottom="20dp">
+
+        <Button
+            android:text="Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" android:id="@+id/button" android:layout_weight="1"
+            android:elevation="4dp"
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/holo_blue_dark"/>
+    </RelativeLayout>
+</LinearLayout>
