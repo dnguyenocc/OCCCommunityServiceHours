@@ -14,7 +14,7 @@
 
     <ImageView
         android:layout_width="wrap_content"
-        android:id="@+id/eventImageView"
+        android:id="@+id/requestEventImageView"
         android:layout_weight="1"
         android:layout_height="0dp"
         android:scaleType="fitCenter"
@@ -32,7 +32,7 @@
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/eventNameTextView"
+            android:id="@+id/requestEventNameTextView"
 
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
@@ -40,14 +40,14 @@
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/eventTimeTextView"
+            android:id="@+id/requestEventTimeTextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <TextView
             android:text="TextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/eventLocationTextView"
+            android:id="@+id/requestEventLocationTextView"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
 
         <LinearLayout
@@ -96,7 +96,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/requestValidationButton"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:onClick="sendRequestValidation" />
 
     </LinearLayout>
 

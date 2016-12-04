@@ -61,9 +61,10 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     public void requestValidation(View view) {
         if (view instanceof Button) {
-            db.addParicipation(Participation.REGISTERED,false,0.0f,"",loginUser.getmId(),selectedEvent.getId());
-            updateButton();
-            updateStatus();
+            Participation participation = db.getParticipation(loginUser.getmId(),selectedEvent.getId());
+            Intent detailsIntent = new Intent(this, requestValidationActivity.class);
+            detailsIntent.putExtra("SelectedParticipation",participation);
+            startActivity(detailsIntent);
         }
     }
 
@@ -105,6 +106,8 @@ public class EventDetailsActivity extends AppCompatActivity {
                 else
                     buttonLinearLayouts[2].setVisibility(View.VISIBLE);
             }
+            else if (participation.getStatusCode()==Participation.VALIDATION_DENY)
+                buttonLinearLayouts[2].setVisibility(View.VISIBLE);
         }
         else {
            buttonLinearLayouts[0].setVisibility(View.VISIBLE);

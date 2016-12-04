@@ -1,5 +1,8 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * The <code>Participation</code> class represents a single participation that user involved in an event,
  * including its id(partipation id), status (REGISTERED, VALIDATED), request_validation: (YES/NO),
@@ -11,9 +14,11 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
  * Created by duyng on 11/27/2016.
  */
 
-public class Participation {
+public class Participation implements Parcelable {
     final static int REGISTERED = 1;
     final static int VALIDATED = 2;
+    final static int VALIDATION_DENY = 3;
+
     private int mId;
     private int mStatusCode;
     private boolean mValidationRequested;
@@ -57,6 +62,28 @@ public class Participation {
 
     }
 
+    protected Participation(Parcel in) {
+        mId = in.readInt();
+        mStatusCode = in.readInt();
+        mValidationRequested = in.readByte() != 0;
+        mServiceHours = in.readFloat();
+        mResponsibilities = in.readString();
+        mUser = in.readParcelable(User.class.getClassLoader());
+        mEvent = in.readParcelable(Event.class.getClassLoader());
+    }
+
+    public static final Creator<Participation> CREATOR = new Creator<Participation>() {
+        @Override
+        public Participation createFromParcel(Parcel in) {
+            return new Participation(in);
+        }
+
+        @Override
+        public Participation[] newArray(int size) {
+            return new Participation[size];
+        }
+    };
+
     public int getId() {return mId;}
 
     public int getStatusCode() {return mStatusCode;}
@@ -89,5 +116,21 @@ public class Participation {
     @Override
     public String toString() {
         return super.toString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(mId);
+        dest.writeInt(mStatusCode);
+        dest.writeByte((byte) (mValidationRequested ? 1 : 0));
+        dest.writeFloat(mServiceHours);
+        dest.writeString(mResponsibilities);
+        dest.writeParcelable(mUser, flags);
+        dest.writeParcelable(mEvent, flags);
     }
 }
