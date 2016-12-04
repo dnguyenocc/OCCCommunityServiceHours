@@ -578,6 +578,25 @@ class DBHelper extends SQLiteOpenHelper {
         return participationsList;
     }
 
+
+    public boolean checkParticipation(int userId, int eventId)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] selectionArgs = new String[]{String.valueOf(userId),String.valueOf(eventId)};
+
+
+        Cursor  c = db.rawQuery("select * from "+PARTICIPATIONS_TABLE+ " where " +FIELD_USER_ID+ " =? "
+                +" AND " +FIELD_EVENT_ID+" =? ", selectionArgs);
+        c.moveToFirst();
+        if(c.getCount() <= 0){
+            c.close();
+            return false;
+        }
+        c.close();
+        return true;
+    }
+
     public void deleteParticipation(Participation participation) {
         SQLiteDatabase db = this.getWritableDatabase();
 
@@ -633,6 +652,31 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
         return participation;
     }
+
+    public Participation getParticipation(int userId, int eventId) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                PARTICIPATIONS_TABLE,
+                new String[]{PARTICIPATIONS_KEY_FIELD_ID, FIELD_STATUS_CODE, FIELD_VALIDATION_REQUESTED,
+                        FIELD_SERVICE_HOURS, FIELD_RESPONSIBILITIES,FIELD_USER_ID, FIELD_EVENT_ID},
+                FIELD_USER_ID + "=?" + " AND " + FIELD_EVENT_ID +" =? ",
+                new String[]{String.valueOf(userId),String.valueOf(eventId)},
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        User user = getUser(cursor.getInt(5));
+        Event event = getEvent(cursor.getInt(6));
+        Participation participation = new Participation(cursor.getInt(0),
+                cursor.getInt(1), cursor.getInt(2)!=0, cursor.getFloat(3),cursor.getString(4),
+                user,
+                event);
+
+        db.close();
+        return participation;
+    }
+
 
     public boolean importUsersFromCSV(String csvFileName) {
         AssetManager manager = mContext.getAssets();

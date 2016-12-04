@@ -28,6 +28,13 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="reset_button_text">Reset</string>
+
+    <!-- String related to Event buttons-->
+    <string name="request_for_validation">Request Validation</string>
+    <string name="register">register</string>
+    <string name="registered">registered</string>
+    <string name="validated">validated</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
