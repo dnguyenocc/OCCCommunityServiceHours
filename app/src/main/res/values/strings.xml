@@ -34,7 +34,13 @@
     <string name="register">register</string>
     <string name="registered">registered</string>
     <string name="validated">validated</string>
+    <string name="cancel">Cancel</string>
 
+    <!-- String related to Request Validation -->
+    <string name="hours_volunteered">Hours volunteered: </string>
+    <string name="responsibilities">Responsibilities: </string>
+    <string name="briefly_responsibilities">Briefly describe your responsibilities</string>
+    <string name="send_request">Send request</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

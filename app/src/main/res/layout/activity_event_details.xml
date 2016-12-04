@@ -60,13 +60,62 @@
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:layout_weight="1" />
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/eventDetailsRegisterLinearLayout">
     <Button
-        android:text="Button"
+        android:text="@string/register"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/eventDetailsButton"
-        android:layout_weight="1"
+
         android:layout_gravity="center_horizontal"
-        android:onClick="eventDetailsButtonOnClick" />
+        android:onClick="eventRegister" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/eventDetailsRequestLinearLayout">
+        <Button
+            android:text="@string/request_for_validation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/eventDetailsRequestButton"
+
+            android:layout_gravity="center_horizontal"
+            android:onClick="requestValidation" />
+
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:id="@+id/eventDetailsCancelLinearLayout">
+        <Button
+            android:text="@string/cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/eventDetailsCancelButton"
+
+            android:layout_gravity="center_horizontal"
+            android:onClick="cancelEvent" />
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="Medium Text"
+        android:id="@+id/eventDetailsStatusTextView"
+        android:layout_gravity="bottom|center_horizontal"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"/>
 
 </LinearLayout>
