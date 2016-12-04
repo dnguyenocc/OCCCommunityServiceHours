@@ -46,8 +46,9 @@
         <activity android:name=".RegisterActivity" />
         <activity
             android:name=".AdminActivity"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
-        <activity android:name=".EventDetailsActivity"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".EventDetailsActivity" />
+        <activity android:name=".requestValidationActivity"></activity>
     </application>
 
 </manifest>
