@@ -51,7 +51,7 @@ public class AdminActivity extends AppCompatActivity
         if (savedInstanceState == null) {
             Fragment fragment = null;
             Class fragmentClass = null;
-            fragmentClass = AllEventListFragment.class; // change here
+            fragmentClass = ValidationRequestListFragment.class; // change here
             try {
                 fragment = (Fragment) fragmentClass.newInstance();
             } catch (Exception e) {

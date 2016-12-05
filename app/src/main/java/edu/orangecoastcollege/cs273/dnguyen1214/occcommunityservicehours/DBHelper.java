@@ -526,7 +526,7 @@ class DBHelper extends SQLiteOpenHelper {
 
     //********** PARTICIPATION TABLE OPERATIONS:  ADD, GETALL, EDIT, DELETE
 
-    public void addParicipation(int statusCode, boolean validationRequested,
+    public void addParticipation(int statusCode, boolean validationRequested,
                                 float serviceHours, String responsibilities,
                                 int userId, int eventId) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -578,6 +578,64 @@ class DBHelper extends SQLiteOpenHelper {
         return participationsList;
     }
 
+    public ArrayList<Participation> getValidatedParticipationsByUserId(int userId) {
+        ArrayList<Participation> participationsList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        //Cursor cursor = database.rawQuery(queryList, null);
+        Cursor cursor = db.query(
+                PARTICIPATIONS_TABLE,
+                new String[]{PARTICIPATIONS_KEY_FIELD_ID, FIELD_STATUS_CODE, FIELD_VALIDATION_REQUESTED,
+                        FIELD_SERVICE_HOURS, FIELD_RESPONSIBILITIES,FIELD_USER_ID, FIELD_EVENT_ID},
+                FIELD_USER_ID + "=?" + " AND " + FIELD_STATUS_CODE +" =? ",
+                new String[]{String.valueOf(userId),String.valueOf(Participation.VALIDATED)},
+                null, null, null, null);
+
+
+        //COLLECT EACH ROW IN THE TABLE
+        if (cursor.moveToFirst()) {
+            do {
+                User user = getUser(cursor.getInt(5));
+                Event event = getEvent(cursor.getInt(6));
+                Participation participation = new Participation(cursor.getInt(0),
+                        cursor.getInt(1), cursor.getInt(2)!=0, cursor.getFloat(3),cursor.getString(4),
+                        user,
+                        event);
+
+                participationsList.add(participation);
+            } while (cursor.moveToNext());
+        }
+        return participationsList;
+    }
+
+
+    public ArrayList<Participation> getRequestParticipations() {
+        ArrayList<Participation> participationsList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        //Cursor cursor = database.rawQuery(queryList, null);
+        Cursor cursor = db.query(
+                PARTICIPATIONS_TABLE,
+                new String[]{PARTICIPATIONS_KEY_FIELD_ID, FIELD_STATUS_CODE, FIELD_VALIDATION_REQUESTED,
+                        FIELD_SERVICE_HOURS, FIELD_RESPONSIBILITIES,FIELD_USER_ID, FIELD_EVENT_ID},
+                FIELD_VALIDATION_REQUESTED + "=?",
+                new String[]{String.valueOf(1)},
+                null, null, null, null);
+
+
+        //COLLECT EACH ROW IN THE TABLE
+        if (cursor.moveToFirst()) {
+            do {
+                User user = getUser(cursor.getInt(5));
+                Event event = getEvent(cursor.getInt(6));
+                Participation participation = new Participation(cursor.getInt(0),
+                        cursor.getInt(1), cursor.getInt(2)!=0, cursor.getFloat(3),cursor.getString(4),
+                        user,
+                        event);
+
+                participationsList.add(participation);
+            } while (cursor.moveToNext());
+        }
+        return participationsList;
+    }
 
     public boolean checkParticipation(int userId, int eventId)
     {
@@ -782,7 +840,7 @@ class DBHelper extends SQLiteOpenHelper {
                 String responsibilities = fields[4].trim();
                 int userId = Integer.parseInt(fields[5].trim());
                 int eventId = Integer.parseInt(fields[6].trim());
-                addParicipation(statusCode, validationRequested, serviceHours, responsibilities, userId, eventId);
+                addParticipation(statusCode, validationRequested, serviceHours, responsibilities, userId, eventId);
             }
         } catch (IOException e) {
             e.printStackTrace();

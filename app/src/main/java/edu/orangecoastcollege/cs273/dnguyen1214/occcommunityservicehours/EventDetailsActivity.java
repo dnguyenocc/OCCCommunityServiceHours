@@ -53,7 +53,7 @@ public class EventDetailsActivity extends AppCompatActivity {
 
     public void eventRegister(View view) {
         if (view instanceof Button) {
-            db.addParicipation(Participation.REGISTERED,false,0.0f,"",loginUser.getmId(),selectedEvent.getId());
+            db.addParticipation(Participation.REGISTERED,false,0.0f,"",loginUser.getmId(),selectedEvent.getId());
             updateButton();
             updateStatus();
         }
@@ -84,8 +84,12 @@ public class EventDetailsActivity extends AppCompatActivity {
 
         if (db.checkParticipation(loginUser.getmId(), selectedEvent.getId())) {
             Participation participation = db.getParticipation(loginUser.getmId(),selectedEvent.getId());
-            if (participation.getStatusCode() == Participation.REGISTERED)
+            if (participation.getStatusCode() == Participation.REGISTERED) {
+                if (participation.getValidationRequested())
+                    eventDetailsStatusTextView.setText(R.string.validation_request_sent);
+                else
                 eventDetailsStatusTextView.setText(R.string.registered);
+            }
             else if (participation.getStatusCode()==Participation.VALIDATED)
                 eventDetailsStatusTextView.setText(R.string.validated);
         }

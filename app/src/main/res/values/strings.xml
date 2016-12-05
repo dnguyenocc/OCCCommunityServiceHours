@@ -34,6 +34,7 @@
     <string name="register">register</string>
     <string name="registered">registered</string>
     <string name="validated">validated</string>
+    <string name="validation_request_sent">Validation request sent\n Waiting for approval</string>
     <string name="cancel">Cancel</string>
 
     <!-- String related to Request Validation -->
@@ -50,6 +51,8 @@
     <string name="profile_image_desc">A profile image.</string>
     <string name="submit">Submit</string>
 
+    <!--String related to Request List-->
+    <string name="number_of_request">Number of request: </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
