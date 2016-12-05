@@ -53,6 +53,8 @@
 
     <!--String related to Request List-->
     <string name="number_of_request">Number of request: </string>
+    <string name="accept">Accept</string>
+    <string name="deny">Deny</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

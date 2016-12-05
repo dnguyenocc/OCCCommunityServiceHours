@@ -213,4 +213,14 @@ public class AdminActivity extends AppCompatActivity
             startActivity(detailsIntent);
         }
     }
+    public void viewRequestDetails(View view) {
+        if (view instanceof LinearLayout) {
+            LinearLayout selectedLayout = (LinearLayout) view;
+            Participation selectedParticipation = (Participation) selectedLayout.getTag();
+            Log.i("OCC Community Service", selectedParticipation.toString());
+            Intent detailsIntent = new Intent(this, ParticipationValidationActivity.class);
+            detailsIntent.putExtra("SelectedParticipation",selectedParticipation);
+            startActivity(detailsIntent);
+        }
+    }
 }
