@@ -160,7 +160,7 @@ public class MainActivity extends AppCompatActivity
         Class fragmentClass = null;
 
         if (id == R.id.nav_profile) {
-            fragmentClass = MainFragment.class;// transition fragment
+            fragmentClass = AccountDetailsFragment.class;// transition fragment
             transitionFragment(fragment,fragmentClass);
 
 

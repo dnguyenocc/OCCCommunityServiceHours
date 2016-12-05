@@ -13,13 +13,13 @@
     <TextView
         android:text="@string/service_hours"
         android:layout_width="match_parent"
-        android:layout_height="0dp" android:id="@+id/textViewServiceHours"
+        android:layout_height="0dp" android:id="@+id/serviceHoursTextView"
         android:textAlignment="center" android:textSize="24sp" android:textStyle="normal|bold"
         android:background="@drawable/back" android:layout_weight="1" android:gravity="center"/>
     <ImageView
         android:layout_width="match_parent"
         app:srcCompat="@mipmap/ic_launcher"
-        android:id="@+id/imageViewProfilePic" android:adjustViewBounds="true"
+        android:id="@+id/profileImageView" android:adjustViewBounds="true"
         android:scaleType="fitCenter" android:layout_weight="3" android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:clickable="true"
@@ -28,7 +28,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp" android:weightSum="4"
+        android:layout_height="0dp" android:weightSum="12"
         android:layout_marginTop="10dp"
         android:layout_weight="1">
         <EditText
@@ -36,17 +36,37 @@
             android:layout_height="match_parent"
             android:inputType="textPersonName"
             android:ems="10"
-            android:id="@+id/nameEditText"
+            android:id="@+id/lastNameEditText" android:layout_weight="4"
+            android:background="@drawable/back"
+            android:clickable="false"
+            android:cursorVisible="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+        />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/textView6"
+            android:layout_weight="1"/>
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/firstNameEditText"
             android:clickable="false" android:focusable="false" android:focusableInTouchMode="false"
-            android:cursorVisible="false" android:layout_weight="3"
-            android:background="@android:color/background_light"
+            android:cursorVisible="false" android:layout_weight="4"
+            android:background="@drawable/back"
             tools:ignore="NestedWeights"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content" android:id="@+id/textView7"
+            android:layout_weight="1"/>
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher"
-            android:id="@+id/editNameImageView" android:layout_weight="1" android:clickable="true"
-            android:onClick="editName" android:background="@android:color/background_light"
-            android:adjustViewBounds="true" android:scaleType="fitEnd"
+            android:layout_height="match_parent" app:srcCompat="@mipmap/ic_launcher"
+            android:id="@+id/editNameImageView" android:layout_weight="2" android:clickable="true"
+            android:background="@android:color/background_light"
+            android:adjustViewBounds="true" android:scaleType="fitCenter"
             android:contentDescription="@string/edit_icon_desc"/>
     </LinearLayout>
 
@@ -60,7 +80,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp" android:weightSum="4"
+        android:layout_height="0dp" android:weightSum="7"
         android:layout_marginTop="10dp"
         android:layout_weight="1">
         <EditText
@@ -70,29 +90,29 @@
             android:ems="10"
             android:id="@+id/emailEditText"
             android:clickable="false" android:focusable="false" android:focusableInTouchMode="false"
-            android:cursorVisible="false" android:layout_weight="3"
+            android:cursorVisible="false" android:layout_weight="6"
             android:background="@android:color/background_light"
             tools:ignore="NestedWeights"/>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher"
             android:id="@+id/editEmailImageView" android:layout_weight="1" android:clickable="true"
-            android:onClick="editEmail" android:background="@android:color/background_light"
-            android:adjustViewBounds="true" android:scaleType="fitEnd"
+            android:background="@android:color/background_light"
+            android:adjustViewBounds="true" android:scaleType="fitCenter"
             android:contentDescription="@string/edit_icon_desc"/>
     </LinearLayout>
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp" android:weightSum="4"
+        android:layout_height="0dp" android:weightSum="7"
         android:layout_weight="1" android:layout_marginTop="10dp">
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:inputType="phone"
             android:ems="10"
-            android:id="@+id/numberEditText" android:layout_weight="3"
+            android:id="@+id/numberEditText" android:layout_weight="6"
             android:background="@android:color/background_light"
             android:clickable="false"
             android:cursorVisible="false"
@@ -102,8 +122,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher"
             android:id="@+id/editNumberImageView" android:layout_weight="1" android:clickable="true"
-            android:onClick="editName" android:background="@android:color/background_light"
-            android:adjustViewBounds="true" android:scaleType="fitEnd"
+            android:background="@android:color/background_light"
+            android:adjustViewBounds="true" android:scaleType="fitCenter"
             android:contentDescription="@string/edit_icon_desc"/>
     </LinearLayout>
 
@@ -133,11 +153,10 @@
         </android.support.design.widget.TextInputLayout>
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content" app:srcCompat="@mipmap/ic_launcher"
+            android:layout_height="match_parent" app:srcCompat="@mipmap/ic_launcher"
             android:id="@+id/editPasswordImageView" android:layout_weight="1" android:clickable="true"
             android:background="@android:color/background_light"
-            android:adjustViewBounds="true" android:scaleType="fitEnd"
-            android:onClick="editPassword"
+            android:adjustViewBounds="true" android:scaleType="fitCenter"
             android:contentDescription="@string/edit_icon_desc"/>
     </LinearLayout>
 
@@ -148,5 +167,6 @@
         android:elevation="4dp"
         android:background="@android:color/holo_blue_dark" android:enabled="false"
         android:layout_gravity="center"
-        android:gravity="center" android:layout_marginTop="10dp" android:minHeight="0dp"/>
+        android:gravity="center" android:layout_marginTop="10dp" android:minHeight="0dp"
+    />
 </LinearLayout>
