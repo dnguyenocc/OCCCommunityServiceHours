@@ -12,6 +12,10 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,13 +42,20 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
     private TextView serviceHoursTextView, userNameTextView;
     private EditText lastNameEditText, firstNameEditText,
             emailEditText, numberEditText, passwordEditText;
-    private ImageView profileImageView, editNameImageView, editEmailImageView,
-            editNumberImageView, editPasswordImageView;
+    private ImageView profileImageView, editLastNameImageView, editFirstNameImageView,
+            editEmailImageView, editNumberImageView, editPasswordImageView;
     private Context mContext;
 
     private User loginUser;
     private DBHelper db;
     private Uri imageUri;
+
+    private boolean lNameValid = false, fNameValid = false,
+            emailValid = false, numberValid = false, passwordValid = false;
+
+    private String lName, fName, email, number, password,
+            ogEmail, ogNumber;
+
 
     public AccountDetailsFragment() {
         // Required empty public constructor
@@ -67,12 +78,28 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         // Display the User's info
         setUp (v, loginUser);
 
+        // Set up image onClickListeners
+        profileImageView.setOnClickListener(this);
+        editLastNameImageView.setOnClickListener(this);
+        editFirstNameImageView.setOnClickListener(this);
+        editEmailImageView.setOnClickListener(this);
+        editNumberImageView.setOnClickListener(this);
+        editPasswordImageView.setOnClickListener(this);
+        submitButton.setOnClickListener(this);
+
+        // Set up textWatchers for the edit text fields
+
+        lastNameEditText.addTextChangedListener(lNameChangedListener);
+        firstNameEditText.addTextChangedListener(fNameChangedListener);
+        emailEditText.addTextChangedListener(emailChangedListener);
+        numberEditText.addTextChangedListener(numberChangedListener);
+        passwordEditText.addTextChangedListener(passwordChangedListener);
+
         return v;
     }
 
     private void hookUpWidgets(View v)
     {
-        submitButton = (Button) v.findViewById(R.id.submitButton);
         serviceHoursTextView = (TextView) v.findViewById(R.id.serviceHoursTextView);
         userNameTextView = (TextView) v.findViewById(R.id.userNameTextView);
         lastNameEditText = (EditText) v.findViewById(R.id.lastNameEditText);
@@ -81,17 +108,13 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         numberEditText = (EditText) v.findViewById(R.id.numberEditText);
         passwordEditText = (EditText) v.findViewById(R.id.passwordEditText);
         profileImageView = (ImageView) v.findViewById(R.id.profileImageView);
-        editNameImageView = (ImageView) v.findViewById(R.id.editNameImageView);
+        editLastNameImageView = (ImageView) v.findViewById(R.id.editLastNameImageView);
+        editFirstNameImageView = (ImageView) v.findViewById(R.id.editFirstNameImageView);
         editEmailImageView = (ImageView) v.findViewById(R.id.editEmailImageView);
         editNumberImageView = (ImageView) v.findViewById(R.id.editNumberImageView);
         editPasswordImageView = (ImageView) v.findViewById(R.id.editPasswordImageView);
+        submitButton = (Button) v.findViewById(R.id.submitButton);
 
-        // Set up image onClickListeners
-        profileImageView.setOnClickListener(this);
-        editNameImageView.setOnClickListener(this);
-        editEmailImageView.setOnClickListener(this);
-        editNumberImageView.setOnClickListener(this);
-        editPasswordImageView.setOnClickListener(this);
     }
 
     private void setUp (View v, User user) {
@@ -105,6 +128,9 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         emailEditText.setText(user.getmEmail());
         numberEditText.setText(user.getmPhoneNum());
         passwordEditText.setText(user.getmPassWord());
+
+        ogEmail = user.getmEmail();
+        ogNumber = user.getmPhoneNum();
     }
 
     private void selectProfileImage(View v) {
@@ -150,6 +176,174 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         }
     }
 
+    private void edit(EditText field)
+    {
+        field.setClickable(true);
+        field.setCursorVisible(true);
+        field.setFocusable(true);
+        field.setFocusableInTouchMode(true);
+    }
+
+    private TextWatcher lNameChangedListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            lName = lastNameEditText.getText().toString();
+
+            if (lName.isEmpty() || lName.length() < 2)
+            {
+                lastNameEditText.setError("at least 2 characters");
+                lNameValid = false;
+                submitButton.setEnabled(false);
+            } else {
+                lastNameEditText.setError(null);
+                lNameValid = true;
+                loginUser.setLastName(lName);
+                submitButton.setEnabled(true);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    private TextWatcher fNameChangedListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            fName = firstNameEditText.getText().toString();
+
+            if (fName.isEmpty() || fName.length() < 2) {
+                firstNameEditText.setError("at least 2 characters");
+                fNameValid = false;
+                submitButton.setEnabled(false);
+            } else {
+                firstNameEditText.setError(null);
+                fNameValid = true;
+                loginUser.setFirstName(fName);
+                submitButton.setEnabled(true);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    private TextWatcher emailChangedListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            email = emailEditText.getText().toString();
+
+            if (email.isEmpty() || !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+                emailEditText.setError("enter a valid email address");
+                emailValid = false;
+                submitButton.setEnabled(false);
+            } else if (!(ogEmail.equals(email)) && (db.checkEmail(email))) {
+                Log.i("ogEmail", ogEmail);
+                Log.i("Email", email);
+                emailEditText.setError("Email has been used by other user");
+                emailValid = false;
+                submitButton.setEnabled(false);
+            } else {
+                emailEditText.setError(null);
+                emailValid = true;
+                loginUser.setmEmail(email);
+                submitButton.setEnabled(true);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    private TextWatcher numberChangedListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            number = numberEditText.getText().toString();
+
+            if (number.isEmpty() || !android.util.Patterns.PHONE.matcher(number).matches()) {
+                numberEditText.setError("enter a valid phone number");
+                numberValid = false;
+                submitButton.setEnabled(false);
+            /*}  WAIT FOR ALEX TO IMPLEMENT checkNumber
+            else if ((ogNumber != number)
+                    && (db.checkNumber(number))) {
+                numberEditText.setError("Phone number has been used by other user");
+                numberValid = false;
+                */
+            } else {
+                numberEditText.setError(null);
+                numberValid = true;
+                loginUser.setmPhoneNum(number);
+                submitButton.setEnabled(true);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+    private TextWatcher passwordChangedListener = new TextWatcher() {
+        @Override
+        public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+        }
+
+        @Override
+        public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            password = passwordEditText.getText().toString();
+
+            if (password.isEmpty() || password.length() < 4 || password.length() > 10) {
+                passwordEditText.setError("between 4 and 10 alphanumeric characters");
+                passwordValid = false;
+                submitButton.setEnabled(false);
+            }
+            else {
+                passwordEditText.setError(null);
+                passwordValid = true;
+                loginUser.setmPassWord(password);
+                submitButton.setEnabled(true);
+            }
+        }
+
+        @Override
+        public void afterTextChanged(Editable editable) {
+
+        }
+    };
+
+
     /**
      * Receive the result from a previous call to
      * {@link #startActivityForResult(Intent, int)}.  This follows the
@@ -181,6 +375,25 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
             case R.id.profileImageView:
                 selectProfileImage(v);
                 break;
+            case R.id.editLastNameImageView:
+                edit(lastNameEditText);
+                break;
+            case R.id.editFirstNameImageView:
+                edit(firstNameEditText);
+                break;
+            case R.id.editEmailImageView:
+                edit(emailEditText);
+                break;
+            case R.id.editNumberImageView:
+                edit(numberEditText);
+                break;
+            case R.id.editPasswordImageView:
+                edit(passwordEditText);
+                break;
+            case R.id.submitButton:
+                db.updateUser(loginUser);
+                Toast.makeText(getContext(), "Account updated", Toast.LENGTH_SHORT).show();
+                submitButton.setEnabled(false);
         }
     }
 }

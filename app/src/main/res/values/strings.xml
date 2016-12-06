@@ -49,7 +49,7 @@
     <string name="edit_name">Name</string>
     <string name="edit_icon_desc">An icon of a pencil used to indicate an editable field.</string>
     <string name="profile_image_desc">A profile image.</string>
-    <string name="submit">Submit</string>
+    <string name="update">Update Account</string>
 
     <!--String related to Request List-->
     <string name="number_of_request">Number of request: </string>
