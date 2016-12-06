@@ -169,6 +169,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_upcoming_events) {
             //TODO put fragment want to be transition here
         } else if (id == R.id.nav_passed_events) {
+            fragmentClass = AttendedEventListFragment.class;
+            transitionFragment(fragment,fragmentClass);
             //TODO put fragment want to be transition here
         } else if (id == R.id.nav_share) {
             //TODO put fragment want to be transition here

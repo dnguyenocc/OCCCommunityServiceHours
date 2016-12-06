@@ -6,7 +6,7 @@
     <!-- Strings related to login -->
     <string name="prompt_username">Username</string>
     <string name="prompt_password">Password</string>
-    <string name="action_sign_in">LOGIN </string>
+    <string name="action_sign_in">LOGIN</string>
     <string name="action_sign_up">No account yet? Create one</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
@@ -38,8 +38,8 @@
     <string name="cancel">Cancel</string>
 
     <!-- String related to Request Validation -->
-    <string name="hours_volunteered">Hours volunteered: </string>
-    <string name="responsibilities">Responsibilities: </string>
+    <string name="hours_volunteered">Hours volunteered:</string>
+    <string name="responsibilities">Responsibilities:</string>
     <string name="briefly_responsibilities">Briefly describe your responsibilities</string>
     <string name="send_request">Send request</string>
 
@@ -52,7 +52,7 @@
     <string name="update">Update Account</string>
 
     <!--String related to Request List-->
-    <string name="number_of_request">Number of request: </string>
+    <string name="number_of_request">Number of request:</string>
     <string name="accept">Accept</string>
     <string name="deny">Deny</string>
     <!-- TODO: Remove or change this placeholder text -->
