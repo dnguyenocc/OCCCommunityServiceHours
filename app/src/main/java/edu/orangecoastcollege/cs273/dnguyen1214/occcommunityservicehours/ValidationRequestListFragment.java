@@ -32,6 +32,20 @@ public class ValidationRequestListFragment extends Fragment {
 
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        allrequestParticipation =db.getRequestParticipations();
+        numberRequestTextView.setText(String.valueOf(allrequestParticipation.size()));
+        participationListAdapter = new ParticipationListAdapter(context, R.layout.request_list_item,allrequestParticipation);
+        participationsListView.setAdapter(participationListAdapter);
+
+
+
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
@@ -44,8 +58,6 @@ public class ValidationRequestListFragment extends Fragment {
         numberRequestTextView.setText(String.valueOf(allrequestParticipation.size()));
 
         participationsListView = (ListView) view.findViewById(R.id.allValidationRequestListView);
-        participationListAdapter = new ParticipationListAdapter(context, R.layout.request_list_item,allrequestParticipation);
-        participationsListView.setAdapter(participationListAdapter);
 
 
         return view;

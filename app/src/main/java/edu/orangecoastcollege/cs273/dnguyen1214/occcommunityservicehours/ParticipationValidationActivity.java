@@ -53,6 +53,7 @@ public class ParticipationValidationActivity extends AppCompatActivity {
             selectedParticipation.setStatusCode(Participation.VALIDATED);
             selectedParticipation.setValidationRequested(false);
             db.updateParticipation(selectedParticipation);
+            super.onBackPressed();
         }
     }
     public void denyRequest(View view)
@@ -62,6 +63,7 @@ public class ParticipationValidationActivity extends AppCompatActivity {
             selectedParticipation.setStatusCode(Participation.VALIDATION_DENY);
             selectedParticipation.setValidationRequested(false);
             db.updateParticipation(selectedParticipation);
+            super.onBackPressed();
         }
     }
 
