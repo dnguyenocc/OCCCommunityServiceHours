@@ -47,11 +47,11 @@ public class LoginActivity extends AppCompatActivity {
 
         sManager = new SessionManager();
 
-        //   this.deleteDatabase(DBHelper.DATABASE_NAME);
-        db = new DBHelper(this);
-        //   db.importUsersFromCSV("User.csv");
-        //   db.importEventsFromCSV("Events.csv");
-        //   db.importParticipationsFromCSV("participations.csv");
+           this.deleteDatabase(DBHelper.DATABASE_NAME);
+           db = new DBHelper(this);
+           db.importUsersFromCSV("User.csv");
+           db.importEventsFromCSV("Events.csv");
+           db.importParticipationsFromCSV("participations.csv");
 
 
 

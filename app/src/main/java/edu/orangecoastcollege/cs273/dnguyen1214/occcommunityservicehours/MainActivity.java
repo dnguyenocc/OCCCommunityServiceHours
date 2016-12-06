@@ -177,11 +177,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_help) {
             //TODO put fragment want to be transition here
         }else if (id == R.id.nav_exist) {
+
+            db.logout(db.getLoginUser());
             manager.setPreferences(MainActivity.this, "status", "0");
             finish();
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
-            db.logout();
-
 
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

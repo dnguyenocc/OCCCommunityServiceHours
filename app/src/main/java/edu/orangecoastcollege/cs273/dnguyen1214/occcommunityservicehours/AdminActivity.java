@@ -175,10 +175,10 @@ public class AdminActivity extends AppCompatActivity
         } else if (id == R.id.nav_help) {
 
         }else if (id == R.id.nav_exist) {
+            db.logout(db.getLoginUser());
             manager.setPreferences(AdminActivity.this, "status", "0");
             finish();
             startActivity(new Intent(AdminActivity.this, LoginActivity.class));
-            db.logout();
         }
 
 

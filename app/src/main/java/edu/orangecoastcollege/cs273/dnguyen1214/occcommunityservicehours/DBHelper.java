@@ -16,8 +16,6 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static android.R.attr.password;
-
 /**
  * Created by hho65 on 11/22/2016.
  */
@@ -50,6 +48,17 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String LOGIN_KEY_FIELD_ID = "_id";
     private static final String FIELD_LOGIN_USER_ID = "user_id";
     private static final String FIELD_LOGIN_USER_ROLE = "role";
+
+    //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE RECOVERY TABLE
+    private static final String RECOVERY_TABLE = "Recovery";
+    private static final String RECOVERY_KEY_FIELD_ID = "_id";
+    private static final String FIELD_RECOVERY_USER_ID = "user_id";
+    private static final String FIELD_RECOVERY_USER_QUESTION_1 = "question1";
+    private static final String FIELD_RECOVERY_USER_QUESTION_2 = "question2";
+    private static final String FIELD_RECOVERY_USER_ANSWER_1 = "answer1";
+    private static final String FIELD_RECOVERY_USER_ANSWER_2 = "answer2";
+    private static final String FIELD_RECOVERY_USER_TIMES = "times";
+
 
 
 
@@ -102,6 +111,17 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_LOGIN_USER_ROLE + " INTEGER" + ")";
         database.execSQL(createQuery);
 
+        // Create the Recovery table
+        createQuery = "CREATE TABLE " + RECOVERY_TABLE + "("
+                + RECOVERY_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + FIELD_RECOVERY_USER_ID + " INTEGER, "
+                + FIELD_RECOVERY_USER_QUESTION_1 + " TEXT, "
+                + FIELD_RECOVERY_USER_QUESTION_2 + " TEXT, "
+                + FIELD_RECOVERY_USER_ANSWER_1 + " TEXT, "
+                + FIELD_RECOVERY_USER_ANSWER_2 + " TEXT, "
+                + FIELD_RECOVERY_USER_TIMES + " INTEGER" + ")";
+        database.execSQL(createQuery);
+
         // Create the Events table
         createQuery = "CREATE TABLE " + EVENTS_TABLE + "("
                 + EVENTS_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -112,6 +132,7 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_LOCATION + " TEXT, "
                 + FIELD_EVENT_IMAGE_NAME + " TEXT" + ")";
         database.execSQL(createQuery);
+
 
 
         // Create the Participation table
@@ -137,6 +158,7 @@ class DBHelper extends SQLiteOpenHelper {
                           int newVersion) {
         database.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + LOGIN_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + RECOVERY_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + EVENTS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + PARTICIPATIONS_TABLE);
 
@@ -144,7 +166,83 @@ class DBHelper extends SQLiteOpenHelper {
     }
 
 
+    //********** RECOVERY TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
+
+    public void addRecoveryUser(Recovery recovery) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FIELD_RECOVERY_USER_ID, recovery.getUserId());
+        values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion1());
+        values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion2());
+        values.put(FIELD_RECOVERY_USER_ANSWER_1, recovery.getAnswer1());
+        values.put(FIELD_RECOVERY_USER_ANSWER_2, recovery.getAnswer2());
+        values.put(FIELD_RECOVERY_USER_TIMES, 0);
+        db.insert(RECOVERY_TABLE, null, values);
+
+        // CLOSE THE DATABASE CONNECTION
+        db.close();
+    }
+
+    public Recovery getRecoveryUser(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        int id = getUserIdByEmail(email);
+        Cursor cursor = db.query(
+                USERS_TABLE,
+                new String[]{RECOVERY_KEY_FIELD_ID,
+                        FIELD_RECOVERY_USER_ID,
+                        FIELD_RECOVERY_USER_QUESTION_1,
+                        FIELD_RECOVERY_USER_QUESTION_2,
+                        FIELD_RECOVERY_USER_ANSWER_1,
+                        FIELD_RECOVERY_USER_ANSWER_2,
+                        FIELD_RECOVERY_USER_TIMES},
+                FIELD_RECOVERY_USER_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Recovery recovery =
+                new Recovery(cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getInt(6));
+        cursor.close();
+        db.close();
+        return recovery;
+    }
+
     //********** LOGIN TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
+    private int getUserIdByEmail(String email) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                USERS_TABLE,
+                new String[]{USERS_KEY_FIELD_ID,
+                        FIELD_FIRST_NAME,
+                        FIELD_LAST_NAME,
+                        FIELD_USERNAME,
+                        FIELD_EMAIL,
+                        FIELD_PHONE_NUMBER,
+                        FIELD_PASSWORD,
+                        FIELD_HOURS,
+                        FIELD_ROLE,
+                        FIELD_IMAGE_NAME},
+                FIELD_EMAIL + "=?",
+                new String[]{email},
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+        int userid = cursor.getInt(4);
+
+        cursor.close();
+        db.close();
+        return userid;
+    }
 
     public void addLoginUser(int id, int role) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -183,11 +281,17 @@ class DBHelper extends SQLiteOpenHelper {
         return user;
     }
 
-    public void logout() {
+
+    public void logout(User user) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(LOGIN_TABLE, null, null);
+
+        // DELETE THE TABLE ROW
+        db.delete(LOGIN_TABLE, FIELD_LOGIN_USER_ID + " = ?",
+                new String[]{String.valueOf(user.getmId())});
         db.close();
     }
+
+
     //********** USER TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
 
     public boolean checkPhoneNumber(String phoneNumber)
