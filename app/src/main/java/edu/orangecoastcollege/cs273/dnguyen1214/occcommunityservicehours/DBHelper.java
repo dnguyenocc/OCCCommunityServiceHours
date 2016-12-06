@@ -607,6 +607,35 @@ class DBHelper extends SQLiteOpenHelper {
         return participationsList;
     }
 
+    public ArrayList<Participation> getAllParticipationsByUserId(int userId) {
+        ArrayList<Participation> participationsList = new ArrayList<>();
+        SQLiteDatabase db = this.getReadableDatabase();
+        //Cursor cursor = database.rawQuery(queryList, null);
+        Cursor cursor = db.query(
+                PARTICIPATIONS_TABLE,
+                new String[]{PARTICIPATIONS_KEY_FIELD_ID, FIELD_STATUS_CODE, FIELD_VALIDATION_REQUESTED,
+                        FIELD_SERVICE_HOURS, FIELD_RESPONSIBILITIES,FIELD_USER_ID, FIELD_EVENT_ID},
+                FIELD_USER_ID + "=?",
+                new String[]{String.valueOf(userId)},
+                null, null, null, null);
+
+
+        //COLLECT EACH ROW IN THE TABLE
+        if (cursor.moveToFirst()) {
+            do {
+                User user = getUser(cursor.getInt(5));
+                Event event = getEvent(cursor.getInt(6));
+                Participation participation = new Participation(cursor.getInt(0),
+                        cursor.getInt(1), cursor.getInt(2)!=0, cursor.getFloat(3),cursor.getString(4),
+                        user,
+                        event);
+
+                participationsList.add(participation);
+            } while (cursor.moveToNext());
+        }
+        return participationsList;
+    }
+
 
     public ArrayList<Participation> getRequestParticipations() {
         ArrayList<Participation> participationsList = new ArrayList<>();
