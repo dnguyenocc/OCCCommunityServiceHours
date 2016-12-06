@@ -16,6 +16,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import static android.R.attr.password;
+
 /**
  * Created by hho65 on 11/22/2016.
  */
@@ -188,6 +190,22 @@ class DBHelper extends SQLiteOpenHelper {
     }
     //********** USER TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
 
+    public boolean checkPhoneNumber(String phoneNumber)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] selectionArgs = new String[]{phoneNumber};
+
+
+        Cursor  c = db.rawQuery("select * from "+USERS_TABLE+ " where " +FIELD_PHONE_NUMBER+ " =? ", selectionArgs);
+        c.moveToFirst();
+        if(c.getCount() <= 0){
+            c.close();
+            return false;
+        }
+        c.close();
+        return true;
+    }
 
     public boolean checkLogin(String username,String password)
     {
