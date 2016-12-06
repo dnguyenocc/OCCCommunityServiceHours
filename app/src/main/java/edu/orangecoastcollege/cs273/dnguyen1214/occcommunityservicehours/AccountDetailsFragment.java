@@ -123,6 +123,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
                 + );
          */
         profileImageView.setImageURI(user.getmImageUri());
+        userNameTextView.setText(user.getmUserName());
         lastNameEditText.setText(user.getLastName());
         firstNameEditText.setText(user.getFirstName());
         emailEditText.setText(user.getmEmail());
