@@ -3,6 +3,7 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 import android.app.ProgressDialog;
 import android.content.ContentResolver;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
@@ -79,9 +80,10 @@ public class RegisterActivity extends AppCompatActivity {
         {
 
             User user = new User(fname,lname,userName,email," ",pass,0.0,2,imageURI);// set 2 for role because this is normal user
-//            petListAdapter.add(pet);
-            db.addUser(user);
-
+            Intent intent = new Intent(this,SecurityQuestionsActivity.class );
+            intent.putExtra("User",user);
+            startActivity(intent);
+            //db.addUser(user);
 
             firstNameEditText.setText("");
             lastNameEditText.setText("");
