@@ -217,7 +217,7 @@ class DBHelper extends SQLiteOpenHelper {
     }
 
     //********** LOGIN TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
-    private int getUserIdByEmail(String email) {
+    public int getUserIdByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
                 USERS_TABLE,
@@ -237,11 +237,11 @@ class DBHelper extends SQLiteOpenHelper {
 
         if (cursor != null)
             cursor.moveToFirst();
-        int userid = cursor.getInt(4);
+        int userId = cursor.getInt(4);
 
         cursor.close();
         db.close();
-        return userid;
+        return userId;
     }
 
     public void addLoginUser(int id, int role) {
