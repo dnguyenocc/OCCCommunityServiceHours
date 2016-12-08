@@ -120,29 +120,33 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
+                    android:layout_height="match_parent"
+                    android:id="@+id/question1Input">
 
                     <EditText
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:hint="@string/security_question_1" />
+                        android:hint="@string/security_question_1"
+                        android:id="@+id/question1EditText" />
                 </android.support.design.widget.TextInputLayout>
 
                 <Spinner
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:id="@+id/spinner3" />
+                    android:id="@+id/question1Spinner" />
 
             </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/answer1Input">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/security_answer_1" />
+                    android:hint="@string/security_answer_1"
+                    android:id="@+id/answer1EditText" />
             </android.support.design.widget.TextInputLayout>
 
             <LinearLayout
@@ -152,29 +156,34 @@
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/security_question_2" />
+                    android:layout_height="match_parent"
+                    android:id="@+id/question2Input">
 
                     <Spinner
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:id="@+id/spinner4"
+                        android:id="@+id/question2Spinner"
                         android:layout_weight="1" />
+
+                    <EditText
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/security_question_2"
+                        android:id="@+id/question2EditText" />
+
                 </android.support.design.widget.TextInputLayout>
             </LinearLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:id="@+id/answer2Input">
 
                 <EditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="@string/security_answer_2" />
+                    android:hint="@string/security_answer_2"
+                    android:id="@+id/answer2EditText" />
             </android.support.design.widget.TextInputLayout>
             <Button
                 android:layout_width="match_parent"

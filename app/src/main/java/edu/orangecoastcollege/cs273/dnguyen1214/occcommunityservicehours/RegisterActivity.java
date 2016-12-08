@@ -24,11 +24,22 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText passwordEditText;
     private EditText userNameEditText;
 
+    private EditText question1EditText;
+    private EditText question2EditText;
+    private EditText answer1EditText;
+    private EditText answer2EditText;
+
     private TextInputLayout firstNameInput;
     private TextInputLayout lastNameInput;
     private TextInputLayout usernameInput;
     private TextInputLayout emailInput;
     private TextInputLayout passwordInput;
+
+    private TextInputLayout question1Input;
+    private TextInputLayout question2Input;
+    private TextInputLayout answwer1Input;
+    private TextInputLayout answer2Input;
+
 
     private DBHelper db;
     private Uri imageURI;
@@ -43,6 +54,17 @@ public class RegisterActivity extends AppCompatActivity {
         emailEditText = (EditText) findViewById(R.id.emailEditText);
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         userNameEditText = (EditText) findViewById(R.id.userNameEditText);
+
+        question1EditText = (EditText)findViewById(R.id.question1EditText);
+        question2EditText= (EditText) findViewById(R.id.question2EditText);
+        answer1EditText = (EditText) findViewById(R.id.answer1EditText);
+        answer2EditText = (EditText) findViewById(R.id.answer2EditText);
+
+        question1Input = (TextInputLayout) findViewById(R.id.question1Input);
+        question2Input = (TextInputLayout) findViewById(R.id.question2Input);
+        answwer1Input = (TextInputLayout) findViewById(R.id.answer1Input);
+        answer2Input = (TextInputLayout) findViewById(R.id.answer2Input);
+
 
         firstNameInput = (TextInputLayout) findViewById(R.id.firstNameInput);
         lastNameInput = (TextInputLayout) findViewById(R.id.lastNameInput);
@@ -75,33 +97,72 @@ public class RegisterActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString();
         String userName = userNameEditText.getText().toString();
         String pass = passwordEditText.getText().toString();
+        String question1 = question1EditText.getText().toString();
+        String question2 = question2EditText.getText().toString();
+        String answer1 = answer1EditText.getText().toString();
+        String answer2 = answer2EditText.getText().toString();
 
-        if(validate(fname,lname,email,userName,pass))
+
+        if(validate(fname,lname,email,userName,pass,question1,question2,answer1,answer2))
         {
 
             User user = new User(fname,lname,userName,email," ",pass,0.0,2,imageURI);// set 2 for role because this is normal user
-            Intent intent = new Intent(this,SecurityQuestionsActivity.class );
-            intent.putExtra("User",user);
-            startActivity(intent);
-            //db.addUser(user);
+            Recovery recovery = new Recovery(user.getmId(),question1,question2,answer1,answer2,0);
+            db.addRecoveryUser(recovery);
+            db.addUser(user);
 
             firstNameEditText.setText("");
             lastNameEditText.setText("");
             emailEditText.setText("");
             userNameEditText.setText("");
             passwordEditText.setText("");
+            question1EditText.setText("");
+            question2EditText.setText("");
+            answer1EditText.setText("");
+            answer2EditText.setText("");
 
             setResult(RESULT_OK, null);
             finish();
-            //startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
+            startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
         }
         progressDialog.dismiss();
     }
 
 
 
-    public boolean validate(String first,String last, String email,String userName, String pass) {
+    public boolean validate(String first,String last, String email,String userName, String pass,
+    String q1, String q2, String a1, String a2 ) {
         boolean valid = true;
+
+        if (q1.isEmpty() || q1.length() < 1) {
+            question1Input.setError("at least 1 characters");
+            valid = false;
+            question1EditText.setText("");
+        }else {
+            question1Input.setError(null);
+        }
+        if (q2.isEmpty() || q2.length() < 1) {
+            question2Input.setError("at least 1 characters");
+            valid = false;
+            question2EditText.setText("");
+        }else {
+            question2Input.setError(null);
+        }
+        if (a1.isEmpty() || a1.length() < 1) {
+            answwer1Input.setError("at least 1 characters");
+            valid = false;
+            answer1EditText.setText("");
+        }else {
+            answwer1Input.setError(null);
+        }
+
+        if (a2.isEmpty() || a2.length() < 1) {
+            answer2Input.setError("at least 1 characters");
+            valid = false;
+            answer2EditText.setText("");
+        }else {
+            answer2Input.setError(null);
+        }
 
         if (userName.isEmpty() || userName.length() < 5) {
             usernameInput.setError("at least 5 characters");

@@ -24,11 +24,11 @@ public class SplashActivity extends AppCompatActivity {
         bar = (ProgressBar) findViewById(R.id.progressBar);
         bar.setProgress(0);
         imageURI = LoginActivity.getUriToResource(this,R.drawable.default_avatar);
-        this.deleteDatabase(DBHelper.DATABASE_NAME);
-        db = new DBHelper(this);
-        db.importUsersFromCSV("User.csv");
-        db.importEventsFromCSV("Events.csv");
-        db.importParticipationsFromCSV("participations.csv");
+//        this.deleteDatabase(DBHelper.DATABASE_NAME);
+//        db = new DBHelper(this);
+//        db.importUsersFromCSV("User.csv");
+//        db.importEventsFromCSV("Events.csv");
+//        db.importParticipationsFromCSV("participations.csv");
 
 
 
@@ -45,11 +45,11 @@ public class SplashActivity extends AppCompatActivity {
 
                 if (status.equals("admin"))
                 {
-                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    startActivity(new Intent(SplashActivity.this, AdminActivity.class));
                 }
                 else if(status.equals("user"))
                 {
-                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+                    startActivity(new Intent(SplashActivity.this, MainActivity.class));
                 }
                 else {
 

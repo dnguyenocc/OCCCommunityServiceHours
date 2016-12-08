@@ -57,6 +57,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void forgotPassword(View view)
+    {
+        startActivity(new Intent(LoginActivity.this,RecoveryActivity.class));
+    }
+
 
     public void signIn(View view)
     {
