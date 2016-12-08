@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.MainFragment">
+    tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.AskEmailRecoveryFragment">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
