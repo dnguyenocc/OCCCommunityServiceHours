@@ -49,6 +49,12 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_LOGIN_USER_ID = "user_id";
     private static final String FIELD_LOGIN_USER_ROLE = "role";
 
+    //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE QUESTION TABLE
+    private static final String QUESTIONS_TABLE = "Question";
+    private static final String QUESTION_KEY_FIELD_ID = "_id";
+    private static final String QUESTION_1 = "question1";
+    private static final String QUESTION_2 = "question2";
+
     //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE RECOVERY TABLE
     private static final String RECOVERY_TABLE = "Recovery";
     private static final String RECOVERY_KEY_FIELD_ID = "_id";
@@ -102,6 +108,13 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_HOURS + " REAL, "
                 + FIELD_ROLE + " INTEGER, "
                 + FIELD_IMAGE_NAME + " TEXT" + ")";
+        database.execSQL(createQuery);
+
+        // Create the Events table
+        createQuery = "CREATE TABLE " + QUESTIONS_TABLE + "("
+                + QUESTION_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + QUESTION_1 + " TEXT, "
+                + QUESTION_2 + " TEXT" + ")";
         database.execSQL(createQuery);
 
         // Create the Events table
@@ -159,10 +172,57 @@ class DBHelper extends SQLiteOpenHelper {
         database.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + LOGIN_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + RECOVERY_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + QUESTIONS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + EVENTS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + PARTICIPATIONS_TABLE);
 
         onCreate(database);
+    }
+
+    //********** QUESTION TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
+    public void addQuestion(String q1,String q2) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(QUESTION_1, q1);
+        values.put(QUESTION_2, q2);
+        db.insert(RECOVERY_TABLE, null, values);
+
+        // CLOSE THE DATABASE CONNECTION
+        db.close();
+    }
+    public ArrayList<String> getAllQuestions() {
+        ArrayList<String> questionList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = database.query(
+                QUESTIONS_TABLE,
+                new String[]{QUESTION_KEY_FIELD_ID,
+                        QUESTION_1,
+                        QUESTION_2},
+                null,
+                null,
+                null, null, null, null);
+
+//        int index;
+//        if(typeQuestion == 1){
+//            index = 1;
+//        }
+//        else {
+//            index = 2;
+//        }
+        //COLLECT EACH ROW IN THE TABLE
+        if (cursor.moveToFirst()) {
+
+            do {
+
+                String q1 = cursor.getString(1);
+                String q2 = cursor.getString(1);
+                questionList.add(q1);
+                questionList.add(q2);
+            } while (cursor.moveToNext());
+        }
+        return questionList;
     }
 
 
@@ -215,7 +275,22 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
         return recovery;
     }
+    public void updateRecoveryUser(Recovery recovery) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        values.put(FIELD_RECOVERY_USER_ID, recovery.getUserId());
+        values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion1());
+        values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion2());
+        values.put(FIELD_RECOVERY_USER_ANSWER_1, recovery.getAnswer1());
+        values.put(FIELD_RECOVERY_USER_ANSWER_2, recovery.getAnswer2());
+        values.put(FIELD_RECOVERY_USER_TIMES, recovery.getTimes()+1);
+
+
+        db.update(RECOVERY_TABLE, values, RECOVERY_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(recovery.getId())});
+        db.close();
+    }
     //********** LOGIN TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
     public int getUserIdByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -1005,5 +1080,35 @@ class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean importQuestionsFromCSV(String csvFileName) {
+        AssetManager manager = mContext.getAssets();
+        InputStream inStream;
+        try {
+            inStream = manager.open(csvFileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
+        String line;
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length != 2) {
+                    Log.d("OCC Service Hours", "Skipping Bad CSV Row: " + Arrays.toString(fields));
+                    continue;
+                }
+                String q1 = fields[0].trim();
+                String q2 = fields[1].trim();
+
+                addQuestion(q1,q2);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
 
 }

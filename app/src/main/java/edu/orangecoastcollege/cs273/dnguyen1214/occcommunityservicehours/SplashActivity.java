@@ -30,7 +30,7 @@ public class SplashActivity extends AppCompatActivity {
         db.importUsersFromCSV("User.csv");
         db.importEventsFromCSV("Events.csv");
         db.importParticipationsFromCSV("participations.csv");
-
+        db.importQuestionsFromCSV("Questions.csv");
 
         manager = new SessionManager();
 

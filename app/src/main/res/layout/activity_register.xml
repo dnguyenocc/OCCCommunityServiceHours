@@ -110,32 +110,15 @@
                     android:layout_weight="1"
                     android:paddingBottom="15dp"
                     android:paddingTop="15dp" />
+
             </android.support.design.widget.TextInputLayout>
 
 
-            <LinearLayout
-                android:orientation="vertical"
+            <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/question1Input">
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/security_question_1"
-                        android:id="@+id/question1EditText" />
-                </android.support.design.widget.TextInputLayout>
-
-                <Spinner
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/question1Spinner" />
-
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:id="@+id/question1Spinner"
+                android:layout_weight="0" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -149,30 +132,11 @@
                     android:id="@+id/answer1EditText" />
             </android.support.design.widget.TextInputLayout>
 
-            <LinearLayout
-                android:orientation="vertical"
+            <Spinner
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <android.support.design.widget.TextInputLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:id="@+id/question2Input">
-
-                    <Spinner
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:id="@+id/question2Spinner"
-                        android:layout_weight="1" />
-
-                    <EditText
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/security_question_2"
-                        android:id="@+id/question2EditText" />
-
-                </android.support.design.widget.TextInputLayout>
-            </LinearLayout>
+                android:layout_height="wrap_content"
+                android:id="@+id/question2Spinner"
+                android:layout_weight="0" />
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"

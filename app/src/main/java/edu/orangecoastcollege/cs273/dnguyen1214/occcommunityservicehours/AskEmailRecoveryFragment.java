@@ -55,7 +55,6 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
                         .commit();
             }
 
-
     }
 
 
