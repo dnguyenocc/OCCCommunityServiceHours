@@ -47,8 +47,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //TODO Set the main fragment
-        Class fragmentClass = AllEventListFragment.class;
-        transitionFragment(fragmentClass);
+        transitionFragment(AllEventListFragment.class);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -145,19 +144,18 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Class fragmentClass = null;
 
         if (id == R.id.nav_profile) {
-            fragmentClass = AccountDetailsFragment.class;// transition fragment
-            transitionFragment(fragmentClass);
+            // transition fragment
+            transitionFragment(AccountDetailsFragment.class);
 
         } else if (id == R.id.nav_attending_events) {
             //TODO put fragment want to be transition here
         } else if (id == R.id.nav_upcoming_events) {
             //TODO put fragment want to be transition here
         } else if (id == R.id.nav_passed_events) {
-            fragmentClass = AttendedEventListFragment.class;
-            transitionFragment(fragmentClass);
+
+            transitionFragment(AttendedEventListFragment.class);
             //TODO put fragment want to be transition here
         } else if (id == R.id.nav_share) {
             //TODO put fragment want to be transition here

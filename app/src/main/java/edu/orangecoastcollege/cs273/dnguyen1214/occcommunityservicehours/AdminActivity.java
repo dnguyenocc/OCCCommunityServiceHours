@@ -46,8 +46,7 @@ public class AdminActivity extends AppCompatActivity
 
 
         //Set the main fragment
-        Class fragmentClass = ValidationRequestListFragment.class;// transition fragment
-        transitionFragment(fragmentClass);
+        transitionFragment(ValidationRequestListFragment.class);
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -144,11 +143,11 @@ public class AdminActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Class fragmentClass = null;
+
 
         if (id == R.id.nav_profile) {
-            fragmentClass = AllEventListFragment.class;// transition fragment
-            transitionFragment(fragmentClass);
+            // transition fragment
+            transitionFragment(AccountDetailsFragment.class);
 
         } else if (id == R.id.nav_create_events) {
             //TODO put attending fragment here
@@ -157,8 +156,8 @@ public class AdminActivity extends AppCompatActivity
             //TODO put upcoming fragment here
         } else if (id == R.id.nav_passed_events) {
             //TODO put passed fragment here
-            fragmentClass = AttendedEventListFragment.class;
-            transitionFragment(fragmentClass);
+
+            transitionFragment(AttendedEventListFragment.class);
 
         } else if (id == R.id.nav_share) {
 

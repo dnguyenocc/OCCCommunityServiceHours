@@ -62,4 +62,8 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="forgot_password">Forgot your password?</string>
+    <string name="security_answer">Answer</string>
+    <string name="email_security">Enter your email address</string>
+    <string name="submit">Submit</string>
+    <string name="ask_email_description">Enter the email address associated to your account</string>
 </resources>
