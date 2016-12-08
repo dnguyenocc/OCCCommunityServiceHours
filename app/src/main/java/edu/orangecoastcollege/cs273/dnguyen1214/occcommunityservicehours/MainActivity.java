@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity
             Fragment fragment = (Fragment) fragmentClass.newInstance();
             // Insert the fragment by replacing any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
