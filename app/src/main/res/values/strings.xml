@@ -36,6 +36,10 @@
     <string name="validated">validated</string>
     <string name="validation_request_sent">Validation request sent\n Waiting for approval</string>
     <string name="cancel">Cancel</string>
+    <string name="security_question_1">Question 1</string>y
+    <string name="security_question_2">Question 2</string>
+    <string name="security_answer_1">Answer 1</string>
+    <string name="security_answer_2">Answer 2</string>
 
     <!-- String related to Request Validation -->
     <string name="hours_volunteered">Hours volunteered:</string>
