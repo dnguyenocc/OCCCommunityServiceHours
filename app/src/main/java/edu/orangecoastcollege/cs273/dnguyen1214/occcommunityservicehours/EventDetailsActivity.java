@@ -9,7 +9,16 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-public class EventDetailsActivity extends AppCompatActivity {
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class EventDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private TextView eventDetailsNameTextView;
     private TextView eventDetailsTimeTextView;
@@ -21,6 +30,7 @@ public class EventDetailsActivity extends AppCompatActivity {
     private Event selectedEvent;
     private User loginUser;
     private DBHelper db;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +46,11 @@ public class EventDetailsActivity extends AppCompatActivity {
         buttonLinearLayouts[0] = (LinearLayout) findViewById(R.id.eventDetailsRegisterLinearLayout);
         buttonLinearLayouts[1] = (LinearLayout) findViewById(R.id.eventDetailsRequestLinearLayout);
         buttonLinearLayouts[2] = (LinearLayout) findViewById(R.id.eventDetailsCancelLinearLayout);
+        // Hook up our support map fragment to this activity
+        SupportMapFragment caffeineMapFragment = (SupportMapFragment)
+                getSupportFragmentManager().findFragmentById(R.id.eventMapFragment);
+
+        caffeineMapFragment.getMapAsync(this);
 
 
         db = new DBHelper(this);
@@ -116,5 +131,23 @@ public class EventDetailsActivity extends AppCompatActivity {
         else {
            buttonLinearLayouts[0].setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
+
+        // Loop through each Location
+
+        LatLng coordinate = new LatLng(33.671028, -117.911305);
+            // Add a marker at that coordinate
+        mMap.addMarker(new MarkerOptions().position(coordinate).title(selectedEvent.getName()));
+
+
+        // Change the camera view to our current position:
+        LatLng currentPosition = new LatLng(33.671028, -117.911305);
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(currentPosition).zoom(14.0f).build();
+        CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
+        mMap.moveCamera(cameraUpdate);
     }
 }
