@@ -21,8 +21,7 @@ import java.util.List;
 
 
 public class RegisterActivity extends AppCompatActivity {
-    private List<String> allQuestionList1;
-    private List<String> allQuestionList2;
+    private List<String> allQuestionList;
     private EditText firstNameEditText;
     private EditText lastNameEditText;
     private EditText emailEditText;
@@ -39,13 +38,12 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout emailInput;
     private TextInputLayout passwordInput;
 
-    private TextInputLayout answwer1Input;
+    private TextInputLayout answer1Input;
     private TextInputLayout answer2Input;
 
     private Spinner question1Spinner;
     private Spinner question2Spinner;
-    private String question1;
-    private String question2;
+
 
     private DBHelper db;
     private Uri imageURI;
@@ -57,14 +55,14 @@ public class RegisterActivity extends AppCompatActivity {
         db = new DBHelper(this);
 
         question1Spinner = (Spinner) findViewById(R.id.question1Spinner);
-        ArrayAdapter<String> question1Adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,db.getAllQuestions());
+        ArrayAdapter<String> question1Adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,getAllQuestions(1));
         question1Spinner.setAdapter(question1Adapter);
-//        question1Spinner.setOnItemSelectedListener(question1SpinnerListener);
+
 
         question2Spinner = (Spinner) findViewById(R.id.question2Spinner);
-        ArrayAdapter<String> question2Adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, db.getAllQuestions());
+        ArrayAdapter<String> question2Adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, getAllQuestions(2));
         question2Spinner.setAdapter(question2Adapter);
-//        question2Spinner.setOnItemSelectedListener(question2SpinnerListener);
+
 
 
 
@@ -78,7 +76,7 @@ public class RegisterActivity extends AppCompatActivity {
         answer1EditText = (EditText) findViewById(R.id.answer1EditText);
         answer2EditText = (EditText) findViewById(R.id.answer2EditText);
 
-        answwer1Input = (TextInputLayout) findViewById(R.id.answer1Input);
+        answer1Input = (TextInputLayout) findViewById(R.id.answer1Input);
         answer2Input = (TextInputLayout) findViewById(R.id.answer2Input);
 
 
@@ -89,65 +87,34 @@ public class RegisterActivity extends AppCompatActivity {
         passwordInput = (TextInputLayout) findViewById(R.id.passwordInput);
 
 
-        //this.deleteDatabase(DBHelper.DATABASE_NAME);
-
-//        allQuestionList1 = db.getAllQuestions(1);
-//        allQuestionList2 = db.getAllQuestions(2);
         imageURI = getUriToResource(this,R.drawable.default_avatar);
     }
 
 
-    private String[] getAllQuestions()
+    private String[] getAllQuestions(int typeNumber)
     {
-//        ArrayList<String> allQuestions;
-//
-//        String [] questions;
-//        if(typeNumber == 1)
-//        {
-//            allQuestions = db.getAllQuestions(1);
-//            questions = new String[allQuestions.size()+1];
-//            questions[0] = "[Select Question 1]";
-//        }
-//        else
-//        {
-//            allQuestions = db.getAllQuestions(2);
-//            questions = new String[allQuestions.size()+1];
-//            questions[0] = "[Select Question 2]";
-//        }
+        String [] questions;
+        if(typeNumber == 1)
+        {
+            allQuestionList = db.getAllQuestions(typeNumber);
+            questions = new String[allQuestionList.size()+1];
+            questions[0] = "[Select Question 1]";
+        }
+        else
+        {
+            allQuestionList = db.getAllQuestions(typeNumber);
+            questions = new String[allQuestionList.size()+1];
+            questions[0] = "[Select Question 2]";
+        }
 
-        String [] questions = new String[allQuestionList1.size()+1];
-        questions[0] = "[Select Question 1]";
         for (int i = 1;  i< questions.length; i++)
         {
-            questions[i]= allQuestionList1.get(i-1);
+            questions[i]= allQuestionList.get(i-1);
         }
         return questions;
     }
 
 
-//    public AdapterView.OnItemSelectedListener question1SpinnerListener = new AdapterView.OnItemSelectedListener() {
-//        @Override
-//        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//             question1 = parent.getItemAtPosition(position).toString();
-//        }
-//
-//        @Override
-//        public void onNothingSelected(AdapterView<?> parent) {
-//
-//        }
-//    };
-//
-//    public AdapterView.OnItemSelectedListener question2SpinnerListener = new AdapterView.OnItemSelectedListener() {
-//        @Override
-//        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//            question2 = parent.getItemAtPosition(position).toString();
-//        }
-//
-//        @Override
-//        public void onNothingSelected(AdapterView<?> parent) {
-//
-//        }
-//    };
 
 
     public void backToLogin(View view)
@@ -164,8 +131,8 @@ public class RegisterActivity extends AppCompatActivity {
         progressDialog.show();
 
 
-        String fname = firstNameEditText.getText().toString();
-        String lname = lastNameEditText.getText().toString();
+        String firstName = firstNameEditText.getText().toString();
+        String lastName = lastNameEditText.getText().toString();
         String email = emailEditText.getText().toString();
         String userName = userNameEditText.getText().toString();
         String pass = passwordEditText.getText().toString();
@@ -175,10 +142,10 @@ public class RegisterActivity extends AppCompatActivity {
         String answer2 = answer2EditText.getText().toString();
 
 
-        if(validate(fname,lname,email,userName,pass,question1,question2,answer1,answer2))
+        if(validate(firstName,lastName,email,userName,pass,question1,question2,answer1,answer2))
         {
 
-            User user = new User(fname,lname,userName,email," ",pass,0.0,2,imageURI);// set 2 for role because this is normal user
+            User user = new User(firstName,lastName,userName,email," ",pass,0.0,2,imageURI);// set 2 for role because this is normal user
             Recovery recovery = new Recovery(user.getmId(),question1,question2,answer1,answer2,0);
             db.addRecoveryUser(recovery);
             db.addUser(user);
@@ -214,11 +181,11 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (a1.isEmpty() || a1.length() < 1) {
-            answwer1Input.setError("at least 5 characters");
+            answer1Input.setError("at least 5 characters");
             valid = false;
             answer1EditText.setText("");
         }else {
-            answwer1Input.setError(null);
+            answer1Input.setError(null);
         }
 
         if (a2.isEmpty() || a2.length() < 1) {

@@ -186,12 +186,12 @@ class DBHelper extends SQLiteOpenHelper {
 
         values.put(QUESTION_1, q1);
         values.put(QUESTION_2, q2);
-        db.insert(RECOVERY_TABLE, null, values);
+        db.insert(QUESTIONS_TABLE, null, values);
 
         // CLOSE THE DATABASE CONNECTION
         db.close();
     }
-    public ArrayList<String> getAllQuestions() {
+    public ArrayList<String> getAllQuestions(int typeNumberQuestion) {
         ArrayList<String> questionList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
 
@@ -204,22 +204,21 @@ class DBHelper extends SQLiteOpenHelper {
                 null,
                 null, null, null, null);
 
-//        int index;
-//        if(typeQuestion == 1){
-//            index = 1;
-//        }
-//        else {
-//            index = 2;
-//        }
+        int index;
+        if(typeNumberQuestion == 1){
+            index = 1;
+        }
+        else {
+            index = 2;
+        }
         //COLLECT EACH ROW IN THE TABLE
         if (cursor.moveToFirst()) {
 
             do {
 
-                String q1 = cursor.getString(1);
-                String q2 = cursor.getString(1);
-                questionList.add(q1);
-                questionList.add(q2);
+                String q = cursor.getString(index);
+                questionList.add(q);
+
             } while (cursor.moveToNext());
         }
         return questionList;
