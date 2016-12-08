@@ -12,20 +12,24 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+import java.util.List;
 
 
 public class RegisterActivity extends AppCompatActivity {
-
-
+    private List<String> allQuestionList1;
+    private List<String> allQuestionList2;
     private EditText firstNameEditText;
     private EditText lastNameEditText;
     private EditText emailEditText;
     private EditText passwordEditText;
     private EditText userNameEditText;
 
-    private EditText question1EditText;
-    private EditText question2EditText;
+
     private EditText answer1EditText;
     private EditText answer2EditText;
 
@@ -35,11 +39,13 @@ public class RegisterActivity extends AppCompatActivity {
     private TextInputLayout emailInput;
     private TextInputLayout passwordInput;
 
-    private TextInputLayout question1Input;
-    private TextInputLayout question2Input;
     private TextInputLayout answwer1Input;
     private TextInputLayout answer2Input;
 
+    private Spinner question1Spinner;
+    private Spinner question2Spinner;
+    private String question1;
+    private String question2;
 
     private DBHelper db;
     private Uri imageURI;
@@ -48,6 +54,19 @@ public class RegisterActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+        db = new DBHelper(this);
+
+        question1Spinner = (Spinner) findViewById(R.id.question1Spinner);
+        ArrayAdapter<String> question1Adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item,db.getAllQuestions());
+        question1Spinner.setAdapter(question1Adapter);
+//        question1Spinner.setOnItemSelectedListener(question1SpinnerListener);
+
+        question2Spinner = (Spinner) findViewById(R.id.question2Spinner);
+        ArrayAdapter<String> question2Adapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_dropdown_item, db.getAllQuestions());
+        question2Spinner.setAdapter(question2Adapter);
+//        question2Spinner.setOnItemSelectedListener(question2SpinnerListener);
+
+
 
         firstNameEditText = (EditText) findViewById(R.id.firstNameEditText);
         lastNameEditText =(EditText) findViewById(R.id.lastNameEditText);
@@ -55,13 +74,10 @@ public class RegisterActivity extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.passwordEditText);
         userNameEditText = (EditText) findViewById(R.id.userNameEditText);
 
-        question1EditText = (EditText)findViewById(R.id.question1EditText);
-        question2EditText= (EditText) findViewById(R.id.question2EditText);
+
         answer1EditText = (EditText) findViewById(R.id.answer1EditText);
         answer2EditText = (EditText) findViewById(R.id.answer2EditText);
 
-        question1Input = (TextInputLayout) findViewById(R.id.question1Input);
-        question2Input = (TextInputLayout) findViewById(R.id.question2Input);
         answwer1Input = (TextInputLayout) findViewById(R.id.answer1Input);
         answer2Input = (TextInputLayout) findViewById(R.id.answer2Input);
 
@@ -74,9 +90,65 @@ public class RegisterActivity extends AppCompatActivity {
 
 
         //this.deleteDatabase(DBHelper.DATABASE_NAME);
-        db = new DBHelper(this);
+
+//        allQuestionList1 = db.getAllQuestions(1);
+//        allQuestionList2 = db.getAllQuestions(2);
         imageURI = getUriToResource(this,R.drawable.default_avatar);
     }
+
+
+    private String[] getAllQuestions()
+    {
+//        ArrayList<String> allQuestions;
+//
+//        String [] questions;
+//        if(typeNumber == 1)
+//        {
+//            allQuestions = db.getAllQuestions(1);
+//            questions = new String[allQuestions.size()+1];
+//            questions[0] = "[Select Question 1]";
+//        }
+//        else
+//        {
+//            allQuestions = db.getAllQuestions(2);
+//            questions = new String[allQuestions.size()+1];
+//            questions[0] = "[Select Question 2]";
+//        }
+
+        String [] questions = new String[allQuestionList1.size()+1];
+        questions[0] = "[Select Question 1]";
+        for (int i = 1;  i< questions.length; i++)
+        {
+            questions[i]= allQuestionList1.get(i-1);
+        }
+        return questions;
+    }
+
+
+//    public AdapterView.OnItemSelectedListener question1SpinnerListener = new AdapterView.OnItemSelectedListener() {
+//        @Override
+//        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//             question1 = parent.getItemAtPosition(position).toString();
+//        }
+//
+//        @Override
+//        public void onNothingSelected(AdapterView<?> parent) {
+//
+//        }
+//    };
+//
+//    public AdapterView.OnItemSelectedListener question2SpinnerListener = new AdapterView.OnItemSelectedListener() {
+//        @Override
+//        public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//            question2 = parent.getItemAtPosition(position).toString();
+//        }
+//
+//        @Override
+//        public void onNothingSelected(AdapterView<?> parent) {
+//
+//        }
+//    };
+
 
     public void backToLogin(View view)
     {
@@ -97,8 +169,8 @@ public class RegisterActivity extends AppCompatActivity {
         String email = emailEditText.getText().toString();
         String userName = userNameEditText.getText().toString();
         String pass = passwordEditText.getText().toString();
-        String question1 = question1EditText.getText().toString();
-        String question2 = question2EditText.getText().toString();
+        String question1 = question1Spinner.getSelectedItem().toString();
+        String question2 = question2Spinner.getSelectedItem().toString();
         String answer1 = answer1EditText.getText().toString();
         String answer2 = answer2EditText.getText().toString();
 
@@ -116,8 +188,6 @@ public class RegisterActivity extends AppCompatActivity {
             emailEditText.setText("");
             userNameEditText.setText("");
             passwordEditText.setText("");
-            question1EditText.setText("");
-            question2EditText.setText("");
             answer1EditText.setText("");
             answer2EditText.setText("");
 
@@ -134,22 +204,17 @@ public class RegisterActivity extends AppCompatActivity {
     String q1, String q2, String a1, String a2 ) {
         boolean valid = true;
 
-        if (q1.isEmpty() || q1.length() < 1) {
-            question1Input.setError("at least 1 characters");
+        if (q1.equals("[Select Question 1]")) {
+            Toast.makeText(this,"Please pick a question in Question 1", Toast.LENGTH_LONG).show();
             valid = false;
-            question1EditText.setText("");
-        }else {
-            question1Input.setError(null);
         }
-        if (q2.isEmpty() || q2.length() < 1) {
-            question2Input.setError("at least 1 characters");
+        if (q2.equals("[Select Question 2]")) {
+            Toast.makeText(this,"Please pick a question in Question 2", Toast.LENGTH_LONG).show();
             valid = false;
-            question2EditText.setText("");
-        }else {
-            question2Input.setError(null);
         }
+
         if (a1.isEmpty() || a1.length() < 1) {
-            answwer1Input.setError("at least 1 characters");
+            answwer1Input.setError("at least 5 characters");
             valid = false;
             answer1EditText.setText("");
         }else {
@@ -157,7 +222,7 @@ public class RegisterActivity extends AppCompatActivity {
         }
 
         if (a2.isEmpty() || a2.length() < 1) {
-            answer2Input.setError("at least 1 characters");
+            answer2Input.setError("at least 5 characters");
             valid = false;
             answer2EditText.setText("");
         }else {

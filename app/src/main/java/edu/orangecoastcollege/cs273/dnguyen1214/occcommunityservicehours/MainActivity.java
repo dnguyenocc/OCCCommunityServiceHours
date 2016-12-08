@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -27,8 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        MainFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     DBHelper db;
     SessionManager manager;
@@ -49,8 +47,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //TODO Set the main fragment
-        Class fragmentClass = AllEventListFragment.class;
-        transitionFragment(fragmentClass);
+        transitionFragment(AllEventListFragment.class);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -147,20 +144,20 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Class fragmentClass = null;
 
         if (id == R.id.nav_profile) {
-            fragmentClass = AccountDetailsFragment.class;// transition fragment
-            transitionFragment(fragmentClass);
+            // transition fragment
+            transitionFragment(AccountDetailsFragment.class);
 
         } else if (id == R.id.nav_attending_events) {
             //TODO put fragment want to be transition here
+            transitionFragment(AttendingEventListFragment.class);
         } else if (id == R.id.nav_upcoming_events) {
             //TODO put fragment want to be transition here
-        } else if (id == R.id.nav_passed_events) {
-            fragmentClass = AttendedEventListFragment.class;
-            transitionFragment(fragmentClass);
+            transitionFragment(UpcommingEventsListActivityFragment.class);
+        } else if (id == R.id.nav_attended_events) {
             //TODO put fragment want to be transition here
+            transitionFragment(AttendedEventListFragment.class);
         } else if (id == R.id.nav_share) {
             //TODO put fragment want to be transition here
         } else if (id == R.id.nav_help) {
@@ -185,7 +182,7 @@ public class MainActivity extends AppCompatActivity
             Fragment fragment = (Fragment) fragmentClass.newInstance();
             // Insert the fragment by replacing any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -212,8 +209,5 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
-    }
 }

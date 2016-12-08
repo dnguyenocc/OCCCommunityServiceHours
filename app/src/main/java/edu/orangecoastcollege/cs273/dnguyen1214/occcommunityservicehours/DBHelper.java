@@ -49,6 +49,12 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_LOGIN_USER_ID = "user_id";
     private static final String FIELD_LOGIN_USER_ROLE = "role";
 
+    //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE QUESTION TABLE
+    private static final String QUESTIONS_TABLE = "Question";
+    private static final String QUESTION_KEY_FIELD_ID = "_id";
+    private static final String QUESTION_1 = "question1";
+    private static final String QUESTION_2 = "question2";
+
     //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE RECOVERY TABLE
     private static final String RECOVERY_TABLE = "Recovery";
     private static final String RECOVERY_KEY_FIELD_ID = "_id";
@@ -102,6 +108,13 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_HOURS + " REAL, "
                 + FIELD_ROLE + " INTEGER, "
                 + FIELD_IMAGE_NAME + " TEXT" + ")";
+        database.execSQL(createQuery);
+
+        // Create the Events table
+        createQuery = "CREATE TABLE " + QUESTIONS_TABLE + "("
+                + QUESTION_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + QUESTION_1 + " TEXT, "
+                + QUESTION_2 + " TEXT" + ")";
         database.execSQL(createQuery);
 
         // Create the Events table
@@ -159,10 +172,57 @@ class DBHelper extends SQLiteOpenHelper {
         database.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + LOGIN_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + RECOVERY_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + QUESTIONS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + EVENTS_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + PARTICIPATIONS_TABLE);
 
         onCreate(database);
+    }
+
+    //********** QUESTION TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
+    public void addQuestion(String q1,String q2) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(QUESTION_1, q1);
+        values.put(QUESTION_2, q2);
+        db.insert(RECOVERY_TABLE, null, values);
+
+        // CLOSE THE DATABASE CONNECTION
+        db.close();
+    }
+    public ArrayList<String> getAllQuestions() {
+        ArrayList<String> questionList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = database.query(
+                QUESTIONS_TABLE,
+                new String[]{QUESTION_KEY_FIELD_ID,
+                        QUESTION_1,
+                        QUESTION_2},
+                null,
+                null,
+                null, null, null, null);
+
+//        int index;
+//        if(typeQuestion == 1){
+//            index = 1;
+//        }
+//        else {
+//            index = 2;
+//        }
+        //COLLECT EACH ROW IN THE TABLE
+        if (cursor.moveToFirst()) {
+
+            do {
+
+                String q1 = cursor.getString(1);
+                String q2 = cursor.getString(1);
+                questionList.add(q1);
+                questionList.add(q2);
+            } while (cursor.moveToNext());
+        }
+        return questionList;
     }
 
 
@@ -215,7 +275,22 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
         return recovery;
     }
+    public void updateRecoveryUser(Recovery recovery) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
 
+        values.put(FIELD_RECOVERY_USER_ID, recovery.getUserId());
+        values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion1());
+        values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion2());
+        values.put(FIELD_RECOVERY_USER_ANSWER_1, recovery.getAnswer1());
+        values.put(FIELD_RECOVERY_USER_ANSWER_2, recovery.getAnswer2());
+        values.put(FIELD_RECOVERY_USER_TIMES, recovery.getTimes()+1);
+
+
+        db.update(RECOVERY_TABLE, values, RECOVERY_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(recovery.getId())});
+        db.close();
+    }
     //********** LOGIN TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
     public int getUserIdByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
@@ -765,8 +840,13 @@ class DBHelper extends SQLiteOpenHelper {
         //Cursor cursor = database.rawQuery(queryList, null);
         Cursor cursor = db.query(
                 PARTICIPATIONS_TABLE,
-                new String[]{PARTICIPATIONS_KEY_FIELD_ID, FIELD_STATUS_CODE, FIELD_VALIDATION_REQUESTED,
-                        FIELD_SERVICE_HOURS, FIELD_RESPONSIBILITIES,FIELD_USER_ID, FIELD_EVENT_ID},
+                new String[]{PARTICIPATIONS_KEY_FIELD_ID,
+                        FIELD_STATUS_CODE,
+                        FIELD_VALIDATION_REQUESTED,
+                        FIELD_SERVICE_HOURS,
+                        FIELD_RESPONSIBILITIES,
+                        FIELD_USER_ID,
+                        FIELD_EVENT_ID},
                 FIELD_VALIDATION_REQUESTED + "=?",
                 new String[]{String.valueOf(1)},
                 null, null, null, null);
@@ -1000,281 +1080,35 @@ class DBHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean importQuestionsFromCSV(String csvFileName) {
+        AssetManager manager = mContext.getAssets();
+        InputStream inStream;
+        try {
+            inStream = manager.open(csvFileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
 
-//
-//    public ArrayList<Instructor> getAllInstructors() {
-//        ArrayList<Instructor> instructorsList = new ArrayList<>();
-//        SQLiteDatabase database = this.getReadableDatabase();
-//        Cursor cursor = database.query(
-//                INSTRUCTORS_TABLE,
-//                new String[]{INSTRUCTORS_KEY_FIELD_ID, FIELD_LAST_NAME, FIELD_FIRST_NAME, FIELD_EMAIL},
-//                null,
-//                null,
-//                null, null, null, null);
-//
-//        //COLLECT EACH ROW IN THE TABLE
-//        if (cursor.moveToFirst()) {
-//            do {
-//                Instructor instructor =
-//                        new Instructor(cursor.getInt(0),
-//                                cursor.getString(1),
-//                                cursor.getString(2),
-//                                cursor.getString(3));
-//                instructorsList.add(instructor);
-//            } while (cursor.moveToNext());
-//        }
-//        return instructorsList;
-//    }
-//
-//    public void deleteInstructor(Instructor instructor) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//
-//        // DELETE THE TABLE ROW
-//        db.delete(INSTRUCTORS_TABLE, INSTRUCTORS_KEY_FIELD_ID + " = ?",
-//                new String[]{String.valueOf(instructor.getId())});
-//        db.close();
-//    }
-//
-//    public void deleteAllInstructors() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.delete(INSTRUCTORS_TABLE, null, null);
-//        db.close();
-//    }
-//
-//    public void updateInstructor(Instructor instructor) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//
-//        values.put(FIELD_FIRST_NAME, instructor.getFirstName());
-//        values.put(FIELD_LAST_NAME, instructor.getLastName());
-//        values.put(FIELD_EMAIL, instructor.getEmail());
-//
-//        db.update(INSTRUCTORS_TABLE, values, INSTRUCTORS_KEY_FIELD_ID + " = ?",
-//                new String[]{String.valueOf(instructor.getId())});
-//        db.close();
-//    }
-//
-//    public Instructor getInstructor(int id) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.query(
-//                INSTRUCTORS_TABLE,
-//                new String[]{INSTRUCTORS_KEY_FIELD_ID, FIELD_LAST_NAME, FIELD_FIRST_NAME, FIELD_EMAIL},
-//                INSTRUCTORS_KEY_FIELD_ID + "=?",
-//                new String[]{String.valueOf(id)},
-//                null, null, null, null);
-//
-//        if (cursor != null)
-//            cursor.moveToFirst();
-//
-//        Instructor instructor = new Instructor(
-//                cursor.getInt(0),
-//                cursor.getString(1),
-//                cursor.getString(2),
-//                cursor.getString(3));
-//
-//        db.close();
-//        return instructor;
-//    }
-//
-//
-//    //********** OFFERING TABLE OPERATIONS:  ADD, GETALL, EDIT, DELETE
-//
-//    public void addOffering(int crn, int semesterCode, int courseId, int instructorId) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//
-//        values.put(OFFERINGS_KEY_FIELD_ID, crn);
-//        values.put(FIELD_SEMESTER_CODE, semesterCode);
-//        values.put(FIELD_COURSE_ID, courseId);
-//        values.put(FIELD_INSTRUCTOR_ID, instructorId);
-//
-//        db.insert(OFFERINGS_TABLE, null, values);
-//
-//        // CLOSE THE DATABASE CONNECTION
-//        db.close();
-//    }
-//
-//    public ArrayList<Offering> getAllOfferings() {
-//        ArrayList<Offering> offeringsList = new ArrayList<>();
-//        SQLiteDatabase database = this.getReadableDatabase();
-//        //Cursor cursor = database.rawQuery(queryList, null);
-//        Cursor cursor = database.query(
-//                OFFERINGS_TABLE,
-//                new String[]{OFFERINGS_KEY_FIELD_ID, FIELD_SEMESTER_CODE, FIELD_COURSE_ID, FIELD_INSTRUCTOR_ID},
-//                null,
-//                null,
-//                null, null, null, null);
-//
-//        //COLLECT EACH ROW IN THE TABLE
-//        if (cursor.moveToFirst()) {
-//            do {
-//                Course course = getCourse(cursor.getInt(2));
-//                Instructor instructor = getInstructor(cursor.getInt(3));
-//                Offering offering = new Offering(cursor.getInt(0),
-//                        cursor.getInt(1), course, instructor);
-//
-//                offeringsList.add(offering);
-//            } while (cursor.moveToNext());
-//        }
-//        return offeringsList;
-//    }
-//
-//    public void deleteOffering(Offering offering) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//
-//        // DELETE THE TABLE ROW
-//        db.delete(OFFERINGS_TABLE, OFFERINGS_KEY_FIELD_ID + " = ?",
-//                new String[]{String.valueOf(offering.getCRN())});
-//        db.close();
-//    }
-//
-//    public void deleteAllOfferings() {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        db.delete(OFFERINGS_TABLE, null, null);
-//        db.close();
-//    }
-//
-//    public void updateOffering(Offering offering) {
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//
-//        values.put(FIELD_SEMESTER_CODE, offering.getSemesterCode());
-//        values.put(FIELD_COURSE_ID, offering.getCourse().getId());
-//        values.put(FIELD_INSTRUCTOR_ID, offering.getInstructor().getId());
-//
-//        db.update(OFFERINGS_TABLE, values, OFFERINGS_KEY_FIELD_ID + " = ?",
-//                new String[]{String.valueOf(offering.getCRN())});
-//        db.close();
-//    }
-//
-//    public Offering getOffering(int crn) {
-//        SQLiteDatabase db = this.getReadableDatabase();
-//        Cursor cursor = db.query(
-//                OFFERINGS_TABLE,
-//                new String[]{OFFERINGS_KEY_FIELD_ID, FIELD_SEMESTER_CODE, FIELD_COURSE_ID, FIELD_INSTRUCTOR_ID},
-//                OFFERINGS_KEY_FIELD_ID + "=?",
-//                new String[]{String.valueOf(crn)},
-//                null, null, null, null);
-//
-//        if (cursor != null)
-//            cursor.moveToFirst();
-//
-//        Course course = getCourse(cursor.getInt(2));
-//        Instructor instructor = getInstructor(cursor.getInt(3));
-//        Offering offering = new Offering(cursor.getInt(0),
-//                cursor.getInt(1), course, instructor);
-//
-//
-//        db.close();
-//        return offering;
-//    }
-//
-//
-//
-//    public Cursor getInstructorNamesCursor() {
-//        SQLiteDatabase database = this.getReadableDatabase();
-//        Cursor cursor = database.query(
-//                INSTRUCTORS_TABLE,
-//                new String[]{INSTRUCTORS_KEY_FIELD_ID, FIELD_LAST_NAME, FIELD_FIRST_NAME},
-//                null,
-//                null,
-//                null, null, null, null);
-//
-//        cursor.moveToFirst();
-//        return cursor;
-//    }
-//
-//    public boolean importCoursesFromCSV(String csvFileName) {
-//        AssetManager manager = mContext.getAssets();
-//        InputStream inStream;
-//        try {
-//            inStream = manager.open(csvFileName);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//
-//        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
-//        String line;
-//        try {
-//            while ((line = buffer.readLine()) != null) {
-//                String[] fields = line.split(",");
-//                if (fields.length != 4) {
-//                    Log.d("OCC Course Finder", "Skipping Bad CSV Row: " + Arrays.toString(fields));
-//                    continue;
-//                }
-//                int id = Integer.parseInt(fields[0].trim());
-//                String alpha = fields[1].trim();
-//                String number = fields[2].trim();
-//                String title = fields[3].trim();
-//                addCourse(new Course(id, alpha, number, title));
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    public boolean importInstructorsFromCSV(String csvFileName) {
-//        AssetManager am = mContext.getAssets();
-//        InputStream inStream = null;
-//        try {
-//            inStream = am.open(csvFileName);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
-//        String line;
-//        try {
-//            while ((line = buffer.readLine()) != null) {
-//                String[] fields = line.split(",");
-//                if (fields.length != 4) {
-//                    Log.d("OCC Course Finder", "Skipping Bad CSV Row: " + Arrays.toString(fields));
-//                    continue;
-//                }
-//                int id = Integer.parseInt(fields[0].trim());
-//                String lastName = fields[1].trim();
-//                String firstName = fields[2].trim();
-//                String email = fields[3].trim();
-//                addInstructor(new Instructor(id, lastName, firstName, email));
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//        return true;
-//    }
-//
-//    public boolean importOfferingsFromCSV(String csvFileName) {
-//        AssetManager am = mContext.getAssets();
-//        InputStream inStream = null;
-//        try {
-//            inStream = am.open(csvFileName);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//
-//        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
-//        String line;
-//        try {
-//            while ((line = buffer.readLine()) != null) {
-//                String[] fields = line.split(",");
-//                if (fields.length != 4) {
-//                    Log.d("OCC Course Finder", "Skipping Bad CSV Row: " + Arrays.toString(fields));
-//                    continue;
-//                }
-//                int crn = Integer.parseInt(fields[0].trim());
-//                int semesterCode = Integer.parseInt(fields[1].trim());
-//                int courseId = Integer.parseInt(fields[2].trim());
-//                int instructorId = Integer.parseInt(fields[3].trim());
-//                addOffering(crn, semesterCode, courseId, instructorId);
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//            return false;
-//        }
-//        return true;
-//    }
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
+        String line;
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length != 2) {
+                    Log.d("OCC Service Hours", "Skipping Bad CSV Row: " + Arrays.toString(fields));
+                    continue;
+                }
+                String q1 = fields[0].trim();
+                String q2 = fields[1].trim();
+
+                addQuestion(q1,q2);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
 }

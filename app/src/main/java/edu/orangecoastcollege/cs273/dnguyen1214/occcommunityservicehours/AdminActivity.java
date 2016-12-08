@@ -4,8 +4,8 @@ import android.annotation.TargetApi;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
@@ -15,7 +15,6 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -27,8 +26,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class AdminActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener,
-        MainFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener{
 
     SessionManager manager;
     DBHelper db;
@@ -48,19 +46,8 @@ public class AdminActivity extends AppCompatActivity
 
 
         //Set the main fragment
-        if (savedInstanceState == null) {
-            Fragment fragment = null;
-            Class fragmentClass = null;
-            fragmentClass = ValidationRequestListFragment.class; // change here
-            try {
-                fragment = (Fragment) fragmentClass.newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        transitionFragment(ValidationRequestListFragment.class);
 
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-        }
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -156,27 +143,37 @@ public class AdminActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Class fragmentClass = null;
+
 
         if (id == R.id.nav_profile) {
-            fragmentClass = MainFragment.class;// transition fragment
-            transitionFragment(fragmentClass);
+            // transition fragment
+            transitionFragment(AccountDetailsFragment.class);
 
-        } else if (id == R.id.nav_attending_events) {
+        }
+        else if (id == R.id.nav_create_events) {
             //TODO put attending fragment here
 
-        } else if (id == R.id.nav_upcoming_events) {
+        }
+        else if (id == R.id.nav_upcoming_events) {
             //TODO put upcoming fragment here
-        } else if (id == R.id.nav_passed_events) {
+            transitionFragment(UpcommingEventsListActivityFragment.class);
+        }
+        else if (id == R.id.nav_passed_events) {
             //TODO put passed fragment here
-            fragmentClass = AttendedEventListFragment.class;
-            transitionFragment(fragmentClass);
+            transitionFragment(AttendedEventListFragment.class);
+        }
+        else if (id == R.id.nav_validate_request) {
+        //TODO put passed fragment here
+        transitionFragment(ValidationRequestListFragment.class);
 
-        } else if (id == R.id.nav_share) {
+        }
+        else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_help) {
+        }
+        else if (id == R.id.nav_help) {
 
-        }else if (id == R.id.nav_exist) {
+        }
+        else if (id == R.id.nav_exist) {
             db.logout(db.getLoginUser());
             manager.setPreferences(AdminActivity.this, "status", "0");
             finish();
@@ -195,16 +192,13 @@ public class AdminActivity extends AppCompatActivity
             Fragment fragment = (Fragment) fragmentClass.newInstance();
             // Insert the fragment by replacing any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    @Override
-    public void onFragmentInteraction(Uri uri) {
 
-    }
     public void viewEventDetails(View view) {
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;

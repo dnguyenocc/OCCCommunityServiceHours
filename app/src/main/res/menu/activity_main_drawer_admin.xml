@@ -5,12 +5,12 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_account_box_black_24dp"
-            android:title="My Club" />
+            android:title="My Account" />
 
         <item android:title="Events">
             <menu>
                 <item
-                    android:id="@+id/nav_attending_events"
+                    android:id="@+id/nav_create_events"
                     android:icon="@drawable/ic_playlist_play_black_24dp"
                     android:title="Create" />
                 <item

@@ -5,7 +5,7 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_account_box_black_24dp"
-            android:title="My Profile" />
+            android:title="My Account" />
 
         <item android:title="Events">
             <menu>
@@ -18,9 +18,9 @@
                     android:icon="@drawable/ic_playlist_add_black_24dp"
                     android:title="Upcoming" />
                 <item
-                    android:id="@+id/nav_passed_events"
+                    android:id="@+id/nav_attended_events"
                     android:icon="@drawable/ic_playlist_add_check_black_24dp"
-                    android:title="Pass" />
+                    android:title="Attended" />
             </menu>
         </item>
     </group>

@@ -36,6 +36,10 @@ public class Recovery {
         this.times = times;
     }
 
+    public int getTimes() {
+        return times;
+    }
+
     public void setUserId(int userId) {
         this.userId = userId;
     }
