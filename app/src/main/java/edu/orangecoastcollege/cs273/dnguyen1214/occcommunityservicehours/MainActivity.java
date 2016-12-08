@@ -151,12 +151,13 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_attending_events) {
             //TODO put fragment want to be transition here
+            transitionFragment(AttendingEventListFragment.class);
         } else if (id == R.id.nav_upcoming_events) {
             //TODO put fragment want to be transition here
-        } else if (id == R.id.nav_passed_events) {
-
-            transitionFragment(AttendedEventListFragment.class);
+            transitionFragment(UpcommingEventsListActivityFragment.class);
+        } else if (id == R.id.nav_attended_events) {
             //TODO put fragment want to be transition here
+            transitionFragment(AttendedEventListFragment.class);
         } else if (id == R.id.nav_share) {
             //TODO put fragment want to be transition here
         } else if (id == R.id.nav_help) {

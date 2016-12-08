@@ -149,21 +149,31 @@ public class AdminActivity extends AppCompatActivity
             // transition fragment
             transitionFragment(AccountDetailsFragment.class);
 
-        } else if (id == R.id.nav_create_events) {
+        }
+        else if (id == R.id.nav_create_events) {
             //TODO put attending fragment here
 
-        } else if (id == R.id.nav_upcoming_events) {
+        }
+        else if (id == R.id.nav_upcoming_events) {
             //TODO put upcoming fragment here
-        } else if (id == R.id.nav_passed_events) {
+            transitionFragment(UpcommingEventsListActivityFragment.class);
+        }
+        else if (id == R.id.nav_passed_events) {
             //TODO put passed fragment here
-
             transitionFragment(AttendedEventListFragment.class);
+        }
+        else if (id == R.id.nav_validate_request) {
+        //TODO put passed fragment here
+        transitionFragment(ValidationRequestListFragment.class);
 
-        } else if (id == R.id.nav_share) {
+        }
+        else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_help) {
+        }
+        else if (id == R.id.nav_help) {
 
-        }else if (id == R.id.nav_exist) {
+        }
+        else if (id == R.id.nav_exist) {
             db.logout(db.getLoginUser());
             manager.setPreferences(AdminActivity.this, "status", "0");
             finish();
