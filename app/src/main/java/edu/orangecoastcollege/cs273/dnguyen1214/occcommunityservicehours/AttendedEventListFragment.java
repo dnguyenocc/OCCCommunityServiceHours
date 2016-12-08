@@ -29,7 +29,7 @@ public class AttendedEventListFragment extends Fragment {
     private List<Participation> allParticipationList;
     private List<Event> pastEvents;
 
-    private ListView allEventsListView;
+    private ListView pastEventsListView;
 
     private EventListAdapter eventsListAdapter;
 
@@ -45,8 +45,25 @@ public class AttendedEventListFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_attended_event_list, container, false);
 
+        db = new DBHelper(getContext());
 
 
+        pastEventsListView = (ListView) v.findViewById(R.id.pastEventsListView);
+
+
+        user = db.getLoginUser();
+        allParticipationList = db.getAllParticipationsByUserId(user.getmId());
+
+
+        pastEvents = new ArrayList<Event>();
+        for (Participation participation : allParticipationList) {
+            if (participation.getEvent().eventPassed()) pastEvents.add(participation.getEvent());
+        }
+
+        if (pastEvents == null)
+            Toast.makeText(getContext(), "You have no past events", Toast.LENGTH_SHORT).show();
+        eventsListAdapter = new EventListAdapter(getContext(), R.layout.event_list_item, pastEvents);
+        pastEventsListView.setAdapter(eventsListAdapter);
 
         return v;
     }
@@ -61,51 +78,5 @@ public class AttendedEventListFragment extends Fragment {
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        db = new DBHelper(getContext());
-
-
-        allEventsListView = (ListView) view.findViewById(R.id.allEventsListView);
-
-
-        user = db.getLoginUser();
-        allParticipationList = db.getAllParticipationsByUserId(user.getmId());
-
-
-        pastEvents = new ArrayList<Event>();
-        for (Participation participation : allParticipationList) {
-            if (participation.getEvent().eventPassed()) pastEvents.add(participation.getEvent());
-        }
-
-        if (pastEvents == null)
-            Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
-        eventsListAdapter = new EventListAdapter(getContext(), R.layout.event_list_item, pastEvents);
-        allEventsListView.setAdapter(eventsListAdapter);
-
     }
-
-    /**
-     * This method will be called when an item in the list is selected.
-     * Subclasses should override. Subclasses can call
-     * getListView().getItemAtPosition(position) if they need to access the
-     * data associated with the selected item.
-     *
-     * @param l        The ListView where the click happened
-     * @param v        The view that was clicked within the ListView
-     * @param position The position of the view in the list
-     * @param id       The row id of the item that was clicked
-     **/
-    //MUST FIX LATER, THIS IS WRONG
-    /*
-    @Override
-    public void onListItemClick(ListView l, View v, int position, long id) {
-        super.onListItemClick(l, v, position, id);
-
-
-
-        Bundle bundle1 = new Bundle();
-        bundle1.putParcelable("SelectedEvent", pastEvents.get(position));
-        Intent intent = new Intent(getContext(), EventDetailsActivity.class);
-        intent.putExtras(bundle1);
-        getActivity().startActivity(intent);
-    }*/
 }
