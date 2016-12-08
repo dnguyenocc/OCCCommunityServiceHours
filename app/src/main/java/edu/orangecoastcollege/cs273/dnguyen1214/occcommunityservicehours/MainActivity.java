@@ -18,10 +18,12 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity
@@ -156,13 +158,11 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment = null;
         Class fragmentClass = null;
 
         if (id == R.id.nav_profile) {
             fragmentClass = AccountDetailsFragment.class;// transition fragment
-            transitionFragment(fragment,fragmentClass);
-
+            transitionFragment(fragmentClass);
 
         } else if (id == R.id.nav_attending_events) {
             //TODO put fragment want to be transition here
@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity
             //TODO put fragment want to be transition here
         } else if (id == R.id.nav_passed_events) {
             fragmentClass = AttendedEventListFragment.class;
-            transitionFragment(fragment,fragmentClass);
+            transitionFragment(fragmentClass);
             //TODO put fragment want to be transition here
         } else if (id == R.id.nav_share) {
             //TODO put fragment want to be transition here
@@ -188,10 +188,11 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void transitionFragment(Fragment fragment, Class fragmentClass)
+
+    public void transitionFragment(Class fragmentClass)
     {
         try {
-            fragment = (Fragment) fragmentClass.newInstance();
+            Fragment fragment = (Fragment) fragmentClass.newInstance();
             // Insert the fragment by replacing any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
@@ -199,6 +200,28 @@ public class MainActivity extends AppCompatActivity
             e.printStackTrace();
         }
     }
+
+    public void viewEventDetails(View view) {
+        if (view instanceof LinearLayout) {
+            LinearLayout selectedLayout = (LinearLayout) view;
+            Event selectedEvent = (Event) selectedLayout.getTag();
+            Log.i("OCC Community Service", selectedEvent.toString());
+            Intent detailsIntent = new Intent(this, EventDetailsActivity.class);
+            detailsIntent.putExtra("SelectedEvent",selectedEvent);
+            startActivity(detailsIntent);
+        }
+    }
+    public void viewRequestDetails(View view) {
+        if (view instanceof LinearLayout) {
+            LinearLayout selectedLayout = (LinearLayout) view;
+            Participation selectedParticipation = (Participation) selectedLayout.getTag();
+            Log.i("OCC Community Service", selectedParticipation.toString());
+            Intent detailsIntent = new Intent(this, ParticipationValidationActivity.class);
+            detailsIntent.putExtra("SelectedParticipation",selectedParticipation);
+            startActivity(detailsIntent);
+        }
+    }
+
     @Override
     public void onFragmentInteraction(Uri uri) {
 

@@ -156,12 +156,11 @@ public class AdminActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment = null;
         Class fragmentClass = null;
 
         if (id == R.id.nav_profile) {
             fragmentClass = MainFragment.class;// transition fragment
-            transitionFragment(fragment,fragmentClass);
+            transitionFragment(fragmentClass);
 
         } else if (id == R.id.nav_attending_events) {
             //TODO put attending fragment here
@@ -170,6 +169,9 @@ public class AdminActivity extends AppCompatActivity
             //TODO put upcoming fragment here
         } else if (id == R.id.nav_passed_events) {
             //TODO put passed fragment here
+            fragmentClass = AttendedEventListFragment.class;
+            transitionFragment(fragmentClass);
+
         } else if (id == R.id.nav_share) {
 
         } else if (id == R.id.nav_help) {
@@ -187,10 +189,10 @@ public class AdminActivity extends AppCompatActivity
         return true;
     }
 
-    public void transitionFragment(Fragment fragment, Class fragmentClass)
+    public void transitionFragment(Class fragmentClass)
     {
         try {
-            fragment = (Fragment) fragmentClass.newInstance();
+            Fragment fragment = (Fragment) fragmentClass.newInstance();
             // Insert the fragment by replacing any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
