@@ -23,13 +23,13 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AttendedEventListFragment extends ListFragment {
+public class AttendedEventListFragment extends Fragment {
 
     private DBHelper db;
     private List<Participation> allParticipationList;
     private List<Event> pastEvents;
 
-    private ListView list;
+    private ListView allEventsListView;
 
     private EventListAdapter eventsListAdapter;
 
@@ -64,7 +64,7 @@ public class AttendedEventListFragment extends ListFragment {
         db = new DBHelper(getContext());
 
 
-        list = getListView();
+        allEventsListView = (ListView) view.findViewById(R.id.allEventsListView);
 
 
         user = db.getLoginUser();
@@ -79,7 +79,7 @@ public class AttendedEventListFragment extends ListFragment {
         if (pastEvents == null)
             Toast.makeText(getContext(), "", Toast.LENGTH_SHORT).show();
         eventsListAdapter = new EventListAdapter(getContext(), R.layout.event_list_item, pastEvents);
-        list.setAdapter(eventsListAdapter);
+        allEventsListView.setAdapter(eventsListAdapter);
 
     }
 
@@ -95,6 +95,7 @@ public class AttendedEventListFragment extends ListFragment {
      * @param id       The row id of the item that was clicked
      **/
     //MUST FIX LATER, THIS IS WRONG
+    /*
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
@@ -106,5 +107,5 @@ public class AttendedEventListFragment extends ListFragment {
         Intent intent = new Intent(getContext(), EventDetailsActivity.class);
         intent.putExtras(bundle1);
         getActivity().startActivity(intent);
-    }
+    }*/
 }
