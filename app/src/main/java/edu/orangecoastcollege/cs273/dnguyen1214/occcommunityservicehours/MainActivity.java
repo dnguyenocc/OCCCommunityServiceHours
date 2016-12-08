@@ -49,19 +49,8 @@ public class MainActivity extends AppCompatActivity
 
 
         //TODO Set the main fragment
-        if (savedInstanceState == null) {
-            Fragment fragment = null;
-            Class fragmentClass = null;
-            fragmentClass = MainFragment.class; // change here
-            try {
-                fragment = (Fragment) fragmentClass.newInstance();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.flContent, fragment).commit();
-        }
+        Class fragmentClass = AllEventListFragment.class;
+        transitionFragment(fragmentClass);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -188,6 +177,7 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
+
 
     public void transitionFragment(Class fragmentClass)
     {

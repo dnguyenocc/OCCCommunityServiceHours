@@ -62,6 +62,10 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(new Intent(LoginActivity.this,RecoveryActivity.class));
     }
 
+    public void signUp(View view)
+    {
+        startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
+    }
 
     public void signIn(View view)
     {
@@ -124,10 +128,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
-    public void signUp(View view)
-    {
-        startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
-    }
+
 
     public static final Uri getUriToResource(@NonNull Context context, @AnyRes int resId) throws Resources.NotFoundException{
         Resources res = context.getResources();
