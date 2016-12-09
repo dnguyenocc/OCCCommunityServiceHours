@@ -1,6 +1,8 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
+import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.Context;
 import android.view.View;
 
 /**
@@ -8,49 +10,44 @@ import android.view.View;
  */
 
 public class FlipAnimation {
-    private boolean mIsBackVisible = false;
+
+
     private AnimatorSet mSetRightOut;
     private AnimatorSet mSetLeftIn;
-    private View mCardFrontLayout;
-    private View mCardBackLayout;
 
 
-//
-//    public void toggleFlipAnim(View view, ImageView imageView, Context context){
-//
-//        findViews(view, imageView);
-//        loadAnimations(context);
-//        changeCameraDistance(context);
-//        if (!mIsBackVisible) {
-//
-//            mSetRightOut.setTarget(mCardFrontLayout);
-//            mSetLeftIn.setTarget(mCardBackLayout);
-//            mSetRightOut.start();
-//            mSetLeftIn.start();
-//            mIsBackVisible = true;
-//        } else {
-//            mSetRightOut.setTarget(mCardBackLayout);
-//            mSetLeftIn.setTarget(mCardFrontLayout);
-//            mSetRightOut.start();
-//            mSetLeftIn.start();
-//            mIsBackVisible = false;
-//        }
-//    }
-//
-//    private void changeCameraDistance(Context context) {
-//        int distance = 8000;
-//        float scale = context.getResources().getDisplayMetrics().density * distance;
-//        mCardFrontLayout.setCameraDistance(scale);
-//        mCardBackLayout.setCameraDistance(scale);
-//    }
-//
-//    private void loadAnimations(Context c) {
-//        mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(c, R.animator.out_animation);
-//        mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(c, R.animator.in_animation);
-//    }
-//
-//    private void findViews(View v) {
-//        mCardBackLayout = v.findViewById(R.drawable.imageView);
-//        mCardFrontLayout = v.findViewById(R.id.imageView);
-//    }
+
+
+    public void toggleFlipAnim( View frontImageView, View backImageView, Context context)
+    {
+
+
+        loadAnimations(context);
+        changeCameraDistance(context,frontImageView,backImageView);
+
+            mSetRightOut.setTarget(frontImageView);
+            mSetLeftIn.setTarget(backImageView);
+            mSetRightOut.start();
+            mSetLeftIn.start();
+
+            mSetRightOut.setTarget(backImageView);
+            mSetLeftIn.setTarget(frontImageView);
+            mSetRightOut.start();
+            mSetLeftIn.start();
+
+    }
+
+    private void changeCameraDistance(Context context, View frontImageView, View backImageView) {
+        int distance = 8000;
+        float scale = context.getResources().getDisplayMetrics().density * distance;
+        frontImageView.setCameraDistance(scale);
+        backImageView.setCameraDistance(scale);
+    }
+
+    private void loadAnimations(Context c) {
+        mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(c, R.animator.out_animation);
+        mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(c, R.animator.in_animation);
+    }
+
+
 }

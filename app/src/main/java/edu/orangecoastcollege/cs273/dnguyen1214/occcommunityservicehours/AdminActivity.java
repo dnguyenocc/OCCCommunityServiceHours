@@ -217,4 +217,6 @@ public class AdminActivity extends AppCompatActivity
             startActivity(detailsIntent);
         }
     }
+
+
 }

@@ -25,11 +25,29 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <ImageView
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="186dp"
-                app:srcCompat="@drawable/logo"
-                android:id="@+id/imageView4" />
+                android:layout_height="100dp"
+                android:onClick="flipImage">
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/frontLayout">
+
+                    <include layout="@layout/front_anim"
+                        android:layout_height="122dp" />
+                </FrameLayout>
+
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/backLayout">
+
+                    <include layout="@layout/back_anim" />
+                </FrameLayout>
+
+            </FrameLayout>
 
             <android.support.design.widget.TextInputLayout
                 android:layout_width="match_parent"
@@ -61,6 +79,17 @@
                     android:hint="@string/prompt_password" />
             </android.support.design.widget.TextInputLayout>
 
+            <TextView
+                android:text="@string/forgot_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/textView7"
+                android:textAlignment="center"
+                android:textSize="14sp"
+                android:paddingBottom="5dp"
+                android:paddingTop="5dp"
+                android:onClick="forgotPassword" />
+
             <Button
                 android:id="@+id/signInButton"
                 style="?android:textAppearanceSmall"
@@ -72,17 +101,6 @@
                 android:onClick="signIn"
                 android:background="@android:color/holo_orange_dark"
                 android:elevation="10dp" />
-
-            <TextView
-                android:text="@string/forgot_password"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/textView7"
-                android:textAlignment="center"
-                android:textSize="18sp"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:onClick="forgotPassword" />
 
             <TextView
                 android:text="@string/action_sign_up"

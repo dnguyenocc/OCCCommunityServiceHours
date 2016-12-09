@@ -62,11 +62,28 @@
 
     <!--Host Event List Strings-->
     <string name="add_event">Add an Event</string>
-    
+
     <!--Create Event-->
     <string name="event_name_hint">Enter a name:</string>
     <string name="address_location">Enter an Address:</string>
     <string name="event_description_hint">Enter a description:</string>
+
+    <!--Menu Drawer-->
+    <string name="my_account">My Profile</string>
+    <string name="create_event">Create</string>
+    <string name="upcoming_event">Upcoming</string>
+    <string name="past_event">Past</string>
+    <string name="attending_event">Attending</string>
+    <string name="attended_event">Attended</string>
+    <string name="validate_request">Validate Requests</string>
+    <string name="home">Home</string>
+    <string name="point">Hour Points</string>
+    <string name="help">Help</string>
+    <string name="log_out">Logout</string>
+    <string name="event_part">Events</string>
+    <string name="other_part">Extras</string>
+    <string name="share">Share</string>
+
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
@@ -76,4 +93,6 @@
     <string name="submit">Submit</string>
     <string name="ask_email_description">Enter the email address associated to your account</string>
     <string name="ask_question_description">Answer Security Questions</string>
+    <string name="update_security_question">Update security question</string>
+
 </resources>

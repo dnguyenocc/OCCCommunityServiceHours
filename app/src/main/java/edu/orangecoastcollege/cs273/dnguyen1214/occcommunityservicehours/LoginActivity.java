@@ -1,6 +1,8 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 
+import android.animation.AnimatorInflater;
+import android.animation.AnimatorSet;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -30,13 +32,27 @@ public class LoginActivity extends AppCompatActivity {
     private TextInputLayout usernameInputLayout;
     private TextInputLayout passwordInputLayout;
 
+    //FLip Animation
+    private View mFrontLayout;
+    private View mBackLayout;
+
     SessionManager sManager;
+    private AnimatorSet mSetRightOut;
+    private AnimatorSet mSetLeftIn;
+    private boolean mIsBackVisible = false;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        //Flip Animation Implement
+        findViews();
+        loadAnimations();
+        changeCameraDistance();
+
+
 
         // Set up the login form.
         userName = (EditText) findViewById(R.id.userNameLoginEditText);
@@ -46,6 +62,8 @@ public class LoginActivity extends AppCompatActivity {
         usernameInputLayout =(TextInputLayout) findViewById(R.id.usernameInputLayout);
         passwordInputLayout = (TextInputLayout) findViewById(R.id.passwordInputLayout);
 
+
+
         sManager = new SessionManager();
 
 //           this.deleteDatabase(DBHelper.DATABASE_NAME);
@@ -54,7 +72,26 @@ public class LoginActivity extends AppCompatActivity {
 //           db.importEventsFromCSV("Events.csv");
 //           db.importParticipationsFromCSV("participations.csv");
 
+    }
 
+
+    @Override
+    public void onResume(){
+        super.onResume();
+
+        if (!mIsBackVisible) {
+            mSetRightOut.setTarget(mFrontLayout);
+            mSetLeftIn.setTarget(mBackLayout);
+            mSetRightOut.start();
+            mSetLeftIn.start();
+            mIsBackVisible = true;
+        } else {
+            mSetRightOut.setTarget(mBackLayout);
+            mSetLeftIn.setTarget(mFrontLayout);
+            mSetRightOut.start();
+            mSetLeftIn.start();
+            mIsBackVisible = false;
+        }
 
     }
 
@@ -150,5 +187,40 @@ public class LoginActivity extends AppCompatActivity {
         startActivity(intent);
         finish();
         System.exit(0);
+    }
+
+
+    //TODO functions for flip animation
+    private void changeCameraDistance() {
+        int distance = 8000;
+        float scale = getResources().getDisplayMetrics().density * distance;
+        mFrontLayout.setCameraDistance(scale);
+        mBackLayout.setCameraDistance(scale);
+    }
+
+    private void loadAnimations() {
+        mSetRightOut = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.out_animation);
+        mSetLeftIn = (AnimatorSet) AnimatorInflater.loadAnimator(this, R.animator.in_animation);
+    }
+
+    private void findViews() {
+        mFrontLayout = findViewById(R.id.frontLayout);
+        mBackLayout = findViewById(R.id.backLayout);
+    }
+
+    public void flipImage(View view) {
+        if (!mIsBackVisible) {
+            mSetRightOut.setTarget(mFrontLayout);
+            mSetLeftIn.setTarget(mBackLayout);
+            mSetRightOut.start();
+            mSetLeftIn.start();
+            mIsBackVisible = true;
+        } else {
+            mSetRightOut.setTarget(mBackLayout);
+            mSetLeftIn.setTarget(mFrontLayout);
+            mSetRightOut.start();
+            mSetLeftIn.start();
+            mIsBackVisible = false;
+        }
     }
 }
