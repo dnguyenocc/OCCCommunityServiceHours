@@ -238,7 +238,7 @@ class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion2());
         values.put(FIELD_RECOVERY_USER_ANSWER_1, recovery.getAnswer1());
         values.put(FIELD_RECOVERY_USER_ANSWER_2, recovery.getAnswer2());
-        values.put(FIELD_RECOVERY_USER_TIMES, 0);
+        values.put(FIELD_RECOVERY_USER_TIMES, recovery.getTimes());
         db.insert(RECOVERY_TABLE, null, values);
 
         // CLOSE THE DATABASE CONNECTION
@@ -247,7 +247,7 @@ class DBHelper extends SQLiteOpenHelper {
 
     public Recovery getRecoveryUser(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
-        int id = getUserIdByEmail(email);
+        int rId = getUserIdByEmail(email);
         Cursor cursor = db.query(
                 RECOVERY_TABLE,
                 new String[]{RECOVERY_KEY_FIELD_ID,
@@ -258,7 +258,7 @@ class DBHelper extends SQLiteOpenHelper {
                         FIELD_RECOVERY_USER_ANSWER_2,
                         FIELD_RECOVERY_USER_TIMES},
                 FIELD_RECOVERY_USER_ID + "=?",
-                new String[]{String.valueOf(id)},
+                new String[]{String.valueOf(rId)},
                 null, null, null, null);
 
         if (cursor != null)
@@ -313,7 +313,7 @@ class DBHelper extends SQLiteOpenHelper {
 
         if (cursor != null)
             cursor.moveToFirst();
-        int userId = cursor.getInt(4);
+        int userId = cursor.getInt(0);
 
         cursor.close();
         db.close();
