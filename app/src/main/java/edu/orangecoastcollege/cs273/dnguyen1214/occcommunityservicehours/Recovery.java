@@ -14,29 +14,37 @@ public class Recovery implements Parcelable {
     private String question2;
     private String answer1;
     private String answer2;
-    private int times;
+    private String status;
 
 
     public Recovery() {
     }
 
-    public Recovery(int userId, String question1, String question2, String answer1, String answer2, int times) {
+    public Recovery(int userId, String question1, String question2, String answer1, String answer2) {
         this.userId = userId;
         this.question1 = question1;
         this.question2 = question2;
         this.answer1 = answer1;
         this.answer2 = answer2;
-        this.times = times;
     }
 
-    public Recovery(int id, int userId, String question1, String question2, String answer1, String answer2, int times) {
+    public Recovery(int userId, String question1, String question2, String answer1, String answer2, String status) {
+        this.userId = userId;
+        this.question1 = question1;
+        this.question2 = question2;
+        this.answer1 = answer1;
+        this.answer2 = answer2;
+        this.status = status;
+    }
+
+    public Recovery(int id, int userId, String question1, String question2, String answer1, String answer2, String status) {
         this.id = id;
         this.userId = userId;
         this.question1 = question1;
         this.question2 = question2;
         this.answer1 = answer1;
         this.answer2 = answer2;
-        this.times = times;
+        this.status = status;
     }
 
     protected Recovery(Parcel in) {
@@ -46,7 +54,7 @@ public class Recovery implements Parcelable {
         question2 = in.readString();
         answer1 = in.readString();
         answer2 = in.readString();
-        times = in.readInt();
+        status = in.readString();
     }
 
     @Override
@@ -57,7 +65,7 @@ public class Recovery implements Parcelable {
         dest.writeString(question2);
         dest.writeString(answer1);
         dest.writeString(answer2);
-        dest.writeInt(times);
+        dest.writeString(status);
     }
 
     @Override
@@ -77,8 +85,12 @@ public class Recovery implements Parcelable {
         }
     };
 
-    public int getTimes() {
-        return times;
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public String getStatus() {
+        return status;
     }
 
     public void setUserId(int userId) {

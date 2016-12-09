@@ -63,7 +63,7 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_RECOVERY_USER_QUESTION_2 = "question2";
     private static final String FIELD_RECOVERY_USER_ANSWER_1 = "answer1";
     private static final String FIELD_RECOVERY_USER_ANSWER_2 = "answer2";
-    private static final String FIELD_RECOVERY_USER_TIMES = "times";
+    private static final String FIELD_RECOVERY_STATUS = "status_recovery";
 
 
 
@@ -103,7 +103,7 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_FIRST_NAME + " TEXT, "
                 + FIELD_LAST_NAME + " TEXT, "
                 + FIELD_USERNAME + " TEXT UNIQUE, "
-                + FIELD_EMAIL + " TEXT, "
+                + FIELD_EMAIL + " TEXT UNIQUE, "
                 + FIELD_PHONE_NUMBER + " TEXT, "
                 + FIELD_PASSWORD + " TEXT, "
                 + FIELD_HOURS + " REAL, "
@@ -133,7 +133,7 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_RECOVERY_USER_QUESTION_2 + " TEXT, "
                 + FIELD_RECOVERY_USER_ANSWER_1 + " TEXT, "
                 + FIELD_RECOVERY_USER_ANSWER_2 + " TEXT, "
-                + FIELD_RECOVERY_USER_TIMES + " INTEGER" + ")";
+                + FIELD_RECOVERY_STATUS + " TEXT" + ")";
         database.execSQL(createQuery);
 
         // Create the Events table
@@ -235,10 +235,10 @@ class DBHelper extends SQLiteOpenHelper {
 
         values.put(FIELD_RECOVERY_USER_ID, recovery.getUserId());
         values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion1());
-        values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion2());
+        values.put(FIELD_RECOVERY_USER_QUESTION_2, recovery.getQuestion2());
         values.put(FIELD_RECOVERY_USER_ANSWER_1, recovery.getAnswer1());
         values.put(FIELD_RECOVERY_USER_ANSWER_2, recovery.getAnswer2());
-        values.put(FIELD_RECOVERY_USER_TIMES, recovery.getTimes());
+        values.put(FIELD_RECOVERY_STATUS, recovery.getStatus());
         db.insert(RECOVERY_TABLE, null, values);
 
         // CLOSE THE DATABASE CONNECTION
@@ -296,7 +296,7 @@ class DBHelper extends SQLiteOpenHelper {
         values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion2());
         values.put(FIELD_RECOVERY_USER_ANSWER_1, recovery.getAnswer1());
         values.put(FIELD_RECOVERY_USER_ANSWER_2, recovery.getAnswer2());
-        values.put(FIELD_RECOVERY_USER_TIMES, recovery.getTimes()+1);
+        values.put(FIELD_RECOVERY_STATUS, recovery.getStatus());
 
 
         db.update(RECOVERY_TABLE, values, RECOVERY_KEY_FIELD_ID + " = ?",
@@ -314,7 +314,7 @@ class DBHelper extends SQLiteOpenHelper {
                         FIELD_RECOVERY_USER_QUESTION_2,
                         FIELD_RECOVERY_USER_ANSWER_1,
                         FIELD_RECOVERY_USER_ANSWER_2,
-                        FIELD_RECOVERY_USER_TIMES},
+                        FIELD_RECOVERY_STATUS},
                 FIELD_RECOVERY_USER_ID + "=?",
                 new String[]{String.valueOf(id)},
                 null, null, null, null);
@@ -329,7 +329,7 @@ class DBHelper extends SQLiteOpenHelper {
                         cursor.getString(3),
                         cursor.getString(4),
                         cursor.getString(5),
-                        cursor.getInt(6));
+                        cursor.getString(6));
 
         cursor.close();
 
@@ -1163,6 +1163,40 @@ class DBHelper extends SQLiteOpenHelper {
                 String q2 = fields[1].trim();
 
                 addQuestion(q1,q2);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return true;
+    }
+
+    public boolean importRecoveryFromCSV(String csvFileName) {
+        AssetManager manager = mContext.getAssets();
+        InputStream inStream;
+        try {
+            inStream = manager.open(csvFileName);
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        BufferedReader buffer = new BufferedReader(new InputStreamReader(inStream));
+        String line;
+        try {
+            while ((line = buffer.readLine()) != null) {
+                String[] fields = line.split(",");
+                if (fields.length != 5) {
+                    Log.d("OCC Service Hours", "Skipping Bad CSV Row: " + Arrays.toString(fields));
+                    continue;
+                }
+
+                int userId = Integer.parseInt(fields[0].trim());
+                String question1 = fields[1].trim();
+                String question2 = fields[2].trim();
+                String answer1 = fields[3].trim();
+                String  answer2 = fields[4].trim();
+                addRecoveryUser(new Recovery(userId,question1,question2,answer1,answer2,""));
             }
         } catch (IOException e) {
             e.printStackTrace();

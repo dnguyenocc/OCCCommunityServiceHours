@@ -1,9 +1,11 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +28,7 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
     private Recovery recovery;
     private SessionManager sManager;
     Context context;
+    private  String email;
     public AnswerQuestionSecurityFragment() {
         // Required empty public constructor
     }
@@ -43,7 +46,6 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
         submitAnswerButton = (Button) v.findViewById(R.id.submitAnswerButton);
         submitAnswerButton.setOnClickListener(this);
 
-
         answer1InputText = (TextInputLayout) v.findViewById(R.id.answer1InputText);
         answer2InputText = (TextInputLayout) v.findViewById(R.id.answer2InputText);
 
@@ -53,10 +55,10 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
         askQuestion1TextView = (TextView) v.findViewById(R.id.askQuestion1TextView);
         askQuestion2TextView = (TextView) v.findViewById(R.id.askQuestion2TextView);
         //Get object pass by AskEmailRecoverFragment
-        String email = sManager.getEmailPreferences(context, "status");
-        recovery = db.getRecoveryByUserEmail(email);
-        //User user = db.getUser("admin");
-        askQuestion1TextView.setText(email);
+         email = sManager.getEmailPreferences(context, "status");
+         recovery = db.getRecoveryByUserEmail(email);
+
+        askQuestion1TextView.setText(recovery.getQuestion1());
         askQuestion2TextView.setText(recovery.getQuestion2());
 
         return v;
@@ -72,13 +74,27 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
 
         if(validate(answer1, answer2)) {
 
-//            getFragmentManager()
-//                    .beginTransaction()
-//                    .replace(R.id.recoveryContent, new AnswerQuestionSecurityFragment())
-//                    .commit();
+            String statusLogin ="";
+            recovery.setStatus("Your account is signed in by security questions, you should change the password for your account security" );
+            db.updateRecoveryUser(recovery);
+            User userLogin = db.getUser(recovery.getUserId());
+            db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
+            if(userLogin.getmRole() == 1) {
+                statusLogin = "admin";
+                startActivity(new Intent(context,AdminActivity.class));
+            }
+            else if(userLogin.getmRole() == 2) {
+                statusLogin = "user";
+                startActivity(new Intent(context, MainActivity.class));
+            }
+            sManager.setPreferences(context,"status",statusLogin);
+            String status =  sManager.getPreferences(context,"status");
+            Log.d("status",status);
+
         }
 
     }
+
 
 
     public boolean validate(String a1, String a2)

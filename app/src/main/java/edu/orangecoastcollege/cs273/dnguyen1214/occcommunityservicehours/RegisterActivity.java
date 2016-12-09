@@ -141,13 +141,13 @@ public class RegisterActivity extends AppCompatActivity {
         String answer1 = answer1EditText.getText().toString();
         String answer2 = answer2EditText.getText().toString();
 
-
         if(validate(firstName,lastName,email,userName,pass,question1,question2,answer1,answer2))
         {
 
             User user = new User(firstName,lastName,userName,email," ",pass,0.0,2,imageURI);// set 2 for role because this is normal user
             db.addUser(user);
-            Recovery recovery = new Recovery(db.getUser(userName).getmId(),question1,question2,answer1,answer2,0);
+
+            Recovery recovery = new Recovery(db.getUser(userName).getmId(),question1,question2,answer1,answer2,"");
             db.addRecoveryUser(recovery);
 
 
@@ -173,11 +173,11 @@ public class RegisterActivity extends AppCompatActivity {
         boolean valid = true;
 
         if (q1.equals("[Select Question 1]")) {
-            Toast.makeText(this,"Please pick a question in Question 1", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Please pick a question in Question 1", Toast.LENGTH_SHORT).show();
             valid = false;
         }
         if (q2.equals("[Select Question 2]")) {
-            Toast.makeText(this,"Please pick a question in Question 2", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Please pick a question in Question 2", Toast.LENGTH_SHORT).show();
             valid = false;
         }
 

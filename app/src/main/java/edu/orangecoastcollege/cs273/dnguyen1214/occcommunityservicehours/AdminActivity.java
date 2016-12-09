@@ -158,17 +158,15 @@ public class AdminActivity extends AppCompatActivity
             //TODO put upcoming fragment here
             transitionFragment(UpcommingEventsListActivityFragment.class);
         }
-        else if (id == R.id.nav_passed_events) {
+        else if (id == R.id.nav_past_events) {
             //TODO put passed fragment here
             transitionFragment(AttendedEventListFragment.class);
         }
-        else if (id == R.id.nav_validate_request) {
+        else if (id == R.id.nav_validate_requests) {
         //TODO put passed fragment here
         transitionFragment(ValidationRequestListFragment.class);
-
-        }
-        else if (id == R.id.nav_share) {
-
+        } else if (id == R.id.nav_point) {
+            //TODO put fragment want to be transition here
         }
         else if (id == R.id.nav_help) {
 

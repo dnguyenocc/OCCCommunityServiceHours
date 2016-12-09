@@ -22,6 +22,7 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
     private String email;
     private SessionManager sManager;
     Context context;
+    private RecoveryActivity recoveryActivity;
     public AskEmailRecoveryFragment() {
 
     }
@@ -34,15 +35,12 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
         View v = inflater.inflate(R.layout.fragment_ask_email_recovery, container, false);
         context = this.getContext();
         db = new DBHelper(context);
-        db.addRecoveryUser(new Recovery(1,1,"sadsadsad","dsfdsfds","a","b",0));
-        db.addRecoveryUser(new Recovery(2,2,"sadsadsad","dsfdsfds","a","b",0));
-        db.addRecoveryUser(new Recovery(3,3,"sadsadsad","dsfdsfds","a","b",0));
         answerEmailSecurityInputText = (TextInputLayout) v.findViewById(R.id.answerEmailSecurityInputText);
         emailSecurityEditText = (EditText) v.findViewById(R.id.emailSecurityEditText);
         submitButton = (Button) v.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(this);
         sManager = new SessionManager();
-
+        recoveryActivity = new RecoveryActivity();
 
         return v;
     }
@@ -54,14 +52,14 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
         email = emailSecurityEditText.getText().toString();
 
         if(validate(email)) {
+            //add email to share preference
             sManager.setEmailPreferences(context,"status",email);
-
-            AnswerQuestionSecurityFragment fragment2 = new AnswerQuestionSecurityFragment();
+            //transition to other fragment
+            AnswerQuestionSecurityFragment fragment = new AnswerQuestionSecurityFragment();
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.recoveryContent, fragment2);
+            fragmentTransaction.replace(R.id.recoveryContent, fragment);
             fragmentTransaction.commit();
-
 
             }
 

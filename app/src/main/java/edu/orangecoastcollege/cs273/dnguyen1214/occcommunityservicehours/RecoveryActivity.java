@@ -7,8 +7,8 @@ import android.support.v7.app.AppCompatActivity;
 
 public class RecoveryActivity extends AppCompatActivity {
 
-
-
+    SessionManager sessionManager;
+    DBHelper db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,14 +16,10 @@ public class RecoveryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_recovery);
 
         transitionFragment(AskEmailRecoveryFragment.class);
-
+        sessionManager = new SessionManager();
+        db = new DBHelper(this);
 
     }
-
-
-
-
-
 
 
 
@@ -33,10 +29,12 @@ public class RecoveryActivity extends AppCompatActivity {
             Fragment fragment = (Fragment) fragmentClass.newInstance();
             // Insert the fragment by adding any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().add(R.id.recoveryContent, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.recoveryContent, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
+
 
 }
