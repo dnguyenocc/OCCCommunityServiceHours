@@ -5,40 +5,44 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_account_box_black_24dp"
-            android:title="My Account" />
+            android:title="@string/my_account" />
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/home" />
 
-        <item android:title="Events">
+        <item android:title="@string/event_part">
             <menu>
                 <item
                     android:id="@+id/nav_attending_events"
                     android:icon="@drawable/ic_playlist_play_black_24dp"
-                    android:title="Attending" />
+                    android:title="@string/attending_event" />
                 <item
                     android:id="@+id/nav_upcoming_events"
                     android:icon="@drawable/ic_playlist_add_black_24dp"
-                    android:title="Upcoming" />
+                    android:title="@string/upcoming_event" />
                 <item
                     android:id="@+id/nav_attended_events"
                     android:icon="@drawable/ic_playlist_add_check_black_24dp"
-                    android:title="Attended" />
+                    android:title="@string/attended_event" />
+            </menu>
+        </item>
+        <item android:title="@string/other_part">
+            <menu>
+            <item
+                android:id="@+id/nav_point"
+                android:icon="@drawable/ic_favorite_black_24dp"
+                android:title="@string/point" />
+            <item
+                android:id="@+id/nav_help"
+                android:icon="@drawable/ic_info_outline_black_24dp"
+                android:title="@string/help"/>
+            <item
+                android:id="@+id/nav_exist"
+                android:icon="@drawable/ic_exit_to_app_black_24dp"
+                android:title="@string/log_out" />
             </menu>
         </item>
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-        <item
-            android:id="@+id/nav_share"
-            android:icon="@drawable/ic_menu_share"
-            android:title="Share" />
-        <item
-            android:id="@+id/nav_help"
-            android:title="Help"/>
-        <item
-            android:id="@+id/nav_exist"
-            android:icon="@drawable/ic_exit_to_app_black_24dp"
-            android:title="Logout" />
-    </menu>
-    </item>
 
 </menu>

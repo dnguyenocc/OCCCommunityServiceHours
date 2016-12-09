@@ -5,44 +5,48 @@
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_account_box_black_24dp"
-            android:title="My Account" />
+            android:title="@string/my_account" />
+        <item
+            android:id="@+id/nav_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/home" />
 
-        <item android:title="Events">
+        <item android:title="@string/event_part">
             <menu>
                 <item
                     android:id="@+id/nav_create_events"
-                    android:icon="@drawable/ic_playlist_play_black_24dp"
-                    android:title="Create" />
+                    android:icon="@drawable/ic_playlist_add_black_24dp"
+                    android:title="@string/attending_event" />
                 <item
                     android:id="@+id/nav_upcoming_events"
-                    android:icon="@drawable/ic_playlist_add_black_24dp"
-                    android:title="Upcoming" />
+                    android:icon="@drawable/ic_playlist_play_black_24dp"
+                    android:title="@string/upcoming_event" />
                 <item
-                    android:id="@+id/nav_passed_events"
+                    android:id="@+id/nav_past_events"
                     android:icon="@drawable/ic_playlist_add_check_black_24dp"
-                    android:title="Pass" />
+                    android:title="@string/past_event" />
+                <item
+                    android:id="@+id/nav_validate_requests"
+                    android:icon="@drawable/ic_playlist_add_check_black_24dp"
+                    android:title="@string/validate_request" />
             </menu>
         </item>
-        <item
-            android:id="@+id/nav_validate_request"
-            android:icon="@drawable/ic_assignment_black_24dp"
-            android:title="Validate Requests" />
+        <item android:title="@string/other_part">
+            <menu>
+                <item
+                    android:id="@+id/nav_point"
+                    android:icon="@drawable/ic_favorite_black_24dp"
+                    android:title="@string/point" />
+                <item
+                    android:id="@+id/nav_help"
+                    android:icon="@drawable/ic_info_outline_black_24dp"
+                    android:title="@string/help"/>
+                <item
+                    android:id="@+id/nav_exist"
+                    android:icon="@drawable/ic_exit_to_app_black_24dp"
+                    android:title="@string/log_out" />
+            </menu>
+        </item>
     </group>
-
-    <item android:title="Communicate">
-        <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
-            <item
-                android:id="@+id/nav_help"
-                android:title="Help"/>
-            <item
-                android:id="@+id/nav_exist"
-                android:icon="@drawable/ic_exit_to_app_black_24dp"
-                android:title="Logout" />
-        </menu>
-    </item>
 
 </menu>
