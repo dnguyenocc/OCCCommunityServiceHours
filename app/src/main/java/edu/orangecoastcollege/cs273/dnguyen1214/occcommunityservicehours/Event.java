@@ -3,7 +3,6 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.util.Log;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -27,7 +26,7 @@ import java.util.concurrent.TimeUnit;
 public class Event implements Parcelable {
 
     // Declare private fields
-    private int mId;
+    private int mId, mOwnerId;
     private String mName;
     private String mStartDate, mEndDate;
     private Date mStart, mEnd;
@@ -46,11 +45,11 @@ public class Event implements Parcelable {
      * @param location  The location of the event
      * @param imageUri  An image name to go along with the event.
      */
-    public Event(String name,
+    public Event(String name, int ownerId,
                  String startDate, String endDate,
                  String description, String location,
                  Uri imageUri) {
-        this(-1, name, startDate, endDate, description, location, imageUri);
+        this(-1, name, ownerId, startDate, endDate, description, location, imageUri);
     }
 
     /**
@@ -64,12 +63,13 @@ public class Event implements Parcelable {
      * @param imageUri  An image name to go along with the event.
      */
     public Event(int id,
-                 String name,
+                 String name, int ownerId,
                  String startDate, String endDate,
                  String description, String location, Uri imageUri) {
 
         mId = id;
         mName = name;
+        mOwnerId = ownerId;
 
         mStartDate = startDate;
         mEndDate = endDate;
@@ -82,6 +82,7 @@ public class Event implements Parcelable {
     protected Event(Parcel in) {
         mId = in.readInt();
         mName = in.readString();
+        mOwnerId = in.readInt();
         mStartDate = in.readString();
         mEndDate = in.readString();
         mDescription = in.readString();
@@ -100,6 +101,14 @@ public class Event implements Parcelable {
             return new Event[size];
         }
     };
+
+    public int getOwnerId() {
+        return mOwnerId;
+    }
+
+    public void setOwnerId(int mOwnerId) {
+        this.mOwnerId = mOwnerId;
+    }
 
     /**
      * getId - Returns the current id of the event
@@ -270,6 +279,7 @@ public class Event implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeInt(mId);
         dest.writeString(mName);
+        dest.writeInt(mOwnerId);
         dest.writeString(mStartDate);
         dest.writeString(mEndDate);
         dest.writeString(mDescription);

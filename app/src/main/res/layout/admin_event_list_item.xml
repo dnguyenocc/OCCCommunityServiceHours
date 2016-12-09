@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:onClick="editEvent"
+    android:clickable="true"
+    android:id="@+id/eventListLinearLayout">
+    <ImageView
+        android:id="@+id/eventListImageView"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginTop="4dp"
+        android:src="@mipmap/ic_launcher">
+    </ImageView>
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:id="@+id/eventListNameTextView" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/eventListTimeTextView" />
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/eventListLocationTextView" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -72,6 +72,7 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String EVENTS_TABLE = "Events";
     private static final String EVENTS_KEY_FIELD_ID = "id";
     private static final String FIELD_NAME = "name";
+    private static final String FIELD_OWNER_ID = "owner_id";
     private static final String FIELD_START_DATE = "start_date";
     private static final String FIELD_END_DATE = "end_date";
     private static final String FIELD_DESCRIPTION = "description";
@@ -139,6 +140,7 @@ class DBHelper extends SQLiteOpenHelper {
         createQuery = "CREATE TABLE " + EVENTS_TABLE + "("
                 + EVENTS_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + FIELD_NAME + " TEXT, "
+                + FIELD_OWNER_ID + " INTEGER, "
                 + FIELD_START_DATE + " TEXT, "
                 + FIELD_END_DATE + " TEXT, "
                 + FIELD_DESCRIPTION + " TEXT, "
@@ -618,6 +620,7 @@ class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(FIELD_NAME, event.getName());
+        values.put(FIELD_OWNER_ID, event.getOwnerId());
         values.put(FIELD_START_DATE, event.getStartDate());
         values.put(FIELD_END_DATE, event.getEndDate());
         values.put(FIELD_DESCRIPTION, event.getDescription());
@@ -634,7 +637,7 @@ class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
                 EVENTS_TABLE,
-                new String[]{EVENTS_KEY_FIELD_ID, FIELD_NAME, FIELD_START_DATE, FIELD_END_DATE,
+                new String[]{EVENTS_KEY_FIELD_ID, FIELD_NAME, FIELD_OWNER_ID, FIELD_START_DATE, FIELD_END_DATE,
                         FIELD_DESCRIPTION, FIELD_LOCATION, FIELD_EVENT_IMAGE_NAME},
                 EVENTS_KEY_FIELD_ID + "=?",
                 new String[]{String.valueOf(id)},
@@ -645,11 +648,12 @@ class DBHelper extends SQLiteOpenHelper {
         Event event =
                 new Event(cursor.getInt(0),
                         cursor.getString(1),
-                        cursor.getString(2),
+                        cursor.getInt(2),
                         cursor.getString(3),
                         cursor.getString(4),
                         cursor.getString(5),
-                        Uri.parse(cursor.getString(6)));
+                        cursor.getString(6),
+                        Uri.parse(cursor.getString(7)));
         cursor.close();
         db.close();
         return event;
@@ -661,7 +665,7 @@ class DBHelper extends SQLiteOpenHelper {
 
         Cursor cursor = database.query(
                 EVENTS_TABLE,
-                new String[]{EVENTS_KEY_FIELD_ID, FIELD_NAME, FIELD_START_DATE, FIELD_END_DATE,
+                new String[]{EVENTS_KEY_FIELD_ID, FIELD_NAME, FIELD_OWNER_ID, FIELD_START_DATE, FIELD_END_DATE,
                         FIELD_DESCRIPTION, FIELD_LOCATION, FIELD_EVENT_IMAGE_NAME},
                 null,
                 null,
@@ -673,11 +677,12 @@ class DBHelper extends SQLiteOpenHelper {
                 Event event =
                         new Event (cursor.getInt(0),
                                 cursor.getString(1),
-                                cursor.getString(2),
+                                cursor.getInt(2),
                                 cursor.getString(3),
                                 cursor.getString(4),
                                 cursor.getString(5),
-                                Uri.parse(cursor.getString(6)));
+                                cursor.getString(6),
+                                Uri.parse(cursor.getString(7)));
                 eventsList.add(event);
             } while (cursor.moveToNext());
         }
@@ -708,6 +713,7 @@ class DBHelper extends SQLiteOpenHelper {
         ContentValues values = new ContentValues();
 
         values.put(FIELD_NAME, event.getName());
+        values.put(FIELD_OWNER_ID, event.getOwnerId());
         values.put(FIELD_START_DATE, event.getStartDate());
         values.put(FIELD_END_DATE, event.getEndDate());
         values.put(FIELD_DESCRIPTION, event.getDescription());
@@ -718,6 +724,40 @@ class DBHelper extends SQLiteOpenHelper {
         db.update(EVENTS_TABLE, values, EVENTS_KEY_FIELD_ID + " = ?",
                 new String[]{String.valueOf(event.getId())});
         db.close();
+    }
+
+    public ArrayList<Event> getAllEventsByOwnerId(int ownerId)
+    {
+        ArrayList<Event> ownerEventsList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+
+        Cursor cursor = database.query(
+                EVENTS_TABLE,
+                new String[]{EVENTS_KEY_FIELD_ID, FIELD_NAME, FIELD_OWNER_ID, FIELD_START_DATE, FIELD_END_DATE,
+                        FIELD_DESCRIPTION, FIELD_LOCATION, FIELD_EVENT_IMAGE_NAME},
+                FIELD_OWNER_ID + "=?",
+                new String[]{String.valueOf(ownerId)},
+                null, null, null, null);
+
+        //COLLECT EACH ROW IN THE TABLE
+        if (cursor.moveToFirst()) {
+            do {
+                Event event =
+                        new Event (cursor.getInt(0),
+                                cursor.getString(1),
+                                cursor.getInt(2),
+                                cursor.getString(3),
+                                cursor.getString(4),
+                                cursor.getString(5),
+                                cursor.getString(6),
+                                Uri.parse(cursor.getString(7)));
+                ownerEventsList.add(event);
+            } while (cursor.moveToNext());
+        }
+
+        cursor.close();
+
+        return ownerEventsList;
     }
 
     //********** PARTICIPATION TABLE OPERATIONS:  ADD, GETALL, EDIT, DELETE
@@ -1021,21 +1061,22 @@ class DBHelper extends SQLiteOpenHelper {
         try {
             while ((line = buffer.readLine()) != null) {
                 String[] fields = line.split(",");
-                if (fields.length != 7) {
+                if (fields.length != 8) {
                     Log.d("OCC Service Hours", "Skipping Bad CSV Row: " + Arrays.toString(fields));
                     continue;
                 }
                 int id = Integer.parseInt(fields[0].trim());
                 String eventName = fields[1].trim();
-                String startDate = fields[2].trim();
-                String endDate = fields[3].trim();
-                String description = fields[4].trim();
-                String location = fields[5].trim();
+                int ownerId = Integer.parseInt(fields[2].trim());
+                String startDate = fields[3].trim();
+                String endDate = fields[4].trim();
+                String description = fields[5].trim();
+                String location = fields[6].trim();
                 //TODO change image name later
                 //String imageName = fields[6].trim();
 
                 Uri imageURI = LoginActivity.getUriToResource(mContext,R.drawable.occpirate);
-                addEvent(new Event(id, eventName, startDate, endDate,description,location,imageURI));
+                addEvent(new Event(id, eventName, ownerId, startDate, endDate,description,location,imageURI));
             }
         } catch (IOException e) {
             e.printStackTrace();
