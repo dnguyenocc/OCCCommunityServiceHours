@@ -24,6 +24,7 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
     private Button submitAnswerButton;
     private DBHelper db;
     private Recovery recovery;
+    private SessionManager sManager;
     Context context;
     public AnswerQuestionSecurityFragment() {
         // Required empty public constructor
@@ -38,7 +39,7 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
         View v = inflater.inflate(R.layout.fragment_answer_question_security, container, false);
         context = this.getContext();
         db = new DBHelper(context);
-
+        sManager = new SessionManager();
         submitAnswerButton = (Button) v.findViewById(R.id.submitAnswerButton);
         submitAnswerButton.setOnClickListener(this);
 
@@ -52,12 +53,11 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
         askQuestion1TextView = (TextView) v.findViewById(R.id.askQuestion1TextView);
         askQuestion2TextView = (TextView) v.findViewById(R.id.askQuestion2TextView);
         //Get object pass by AskEmailRecoverFragment
-        recovery = (Recovery) getArguments().getSerializable(
-                "Recovery");
-
-        askQuestion1TextView.setText(recovery.getQuestion1());
+        String email = sManager.getEmailPreferences(context, "status");
+        recovery = db.getRecoveryByUserEmail(email);
+        //User user = db.getUser("admin");
+        askQuestion1TextView.setText(email);
         askQuestion2TextView.setText(recovery.getQuestion2());
-
 
         return v;
     }
@@ -72,10 +72,10 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
 
         if(validate(answer1, answer2)) {
 
-            getFragmentManager()
-                    .beginTransaction()
-                    .replace(R.id.recoveryContent, new AnswerQuestionSecurityFragment())
-                    .commit();
+//            getFragmentManager()
+//                    .beginTransaction()
+//                    .replace(R.id.recoveryContent, new AnswerQuestionSecurityFragment())
+//                    .commit();
         }
 
     }

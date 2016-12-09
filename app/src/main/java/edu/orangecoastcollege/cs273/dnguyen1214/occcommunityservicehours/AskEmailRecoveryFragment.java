@@ -4,6 +4,8 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,7 +20,7 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
     private DBHelper db;
     private Recovery recovery;
     private String email;
-
+    private SessionManager sManager;
     Context context;
     public AskEmailRecoveryFragment() {
 
@@ -32,13 +34,14 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
         View v = inflater.inflate(R.layout.fragment_ask_email_recovery, container, false);
         context = this.getContext();
         db = new DBHelper(context);
-
+        db.addRecoveryUser(new Recovery(1,1,"sadsadsad","dsfdsfds","a","b",0));
+        db.addRecoveryUser(new Recovery(2,2,"sadsadsad","dsfdsfds","a","b",0));
+        db.addRecoveryUser(new Recovery(3,3,"sadsadsad","dsfdsfds","a","b",0));
         answerEmailSecurityInputText = (TextInputLayout) v.findViewById(R.id.answerEmailSecurityInputText);
         emailSecurityEditText = (EditText) v.findViewById(R.id.emailSecurityEditText);
         submitButton = (Button) v.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(this);
-
-        email = emailSecurityEditText.getText().toString();
+        sManager = new SessionManager();
 
 
         return v;
@@ -48,22 +51,24 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View v) {
 
+        email = emailSecurityEditText.getText().toString();
 
         if(validate(email)) {
-            recovery =  db.getRecoveryUser(email);
-            Bundle args = new Bundle();
-            args.putParcelable("Recovery", recovery);
-            Fragment askFragment = new AnswerQuestionSecurityFragment();
+            sManager.setEmailPreferences(context,"status",email);
 
-            askFragment.setArguments(args);
+            AnswerQuestionSecurityFragment fragment2 = new AnswerQuestionSecurityFragment();
+            FragmentManager fragmentManager = getFragmentManager();
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.recoveryContent, fragment2);
+            fragmentTransaction.commit();
 
-                getFragmentManager()
-                        .beginTransaction()
-                        .replace(R.id.recoveryContent, new AnswerQuestionSecurityFragment())
-                        .commit();
+
             }
 
     }
+
+
+
 
 
     public boolean validate(String email)

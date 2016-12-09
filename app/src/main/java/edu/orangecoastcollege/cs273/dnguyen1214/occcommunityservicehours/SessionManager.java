@@ -19,10 +19,25 @@ public class SessionManager {
 
     }
 
+    public void setEmailPreferences(Context context, String key, String value) {
+
+        SharedPreferences.Editor editor = context.getSharedPreferences("Email", Context.MODE_PRIVATE).edit();
+        editor.putString(key, value);
+
+        editor.commit();
+
+    }
 
     public String getPreferences(Context context, String key) {
 
         SharedPreferences prefs = context.getSharedPreferences("OCC", Context.MODE_PRIVATE);
+        String position = prefs.getString(key, "");
+        return position;
+    }
+
+    public String getEmailPreferences(Context context, String key) {
+
+        SharedPreferences prefs = context.getSharedPreferences("Email", Context.MODE_PRIVATE);
         String position = prefs.getString(key, "");
         return position;
     }

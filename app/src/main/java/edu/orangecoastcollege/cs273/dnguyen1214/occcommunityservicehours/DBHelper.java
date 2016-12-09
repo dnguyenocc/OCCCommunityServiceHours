@@ -111,14 +111,14 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_IMAGE_NAME + " TEXT" + ")";
         database.execSQL(createQuery);
 
-        // Create the Events table
+        // Create the Question table
         createQuery = "CREATE TABLE " + QUESTIONS_TABLE + "("
                 + QUESTION_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + QUESTION_1 + " TEXT, "
                 + QUESTION_2 + " TEXT" + ")";
         database.execSQL(createQuery);
 
-        // Create the Events table
+        // Create the Login table
         createQuery = "CREATE TABLE " + LOGIN_TABLE + "("
                 + LOGIN_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + FIELD_LOGIN_USER_ID + " INTEGER, "
@@ -245,55 +245,8 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public Recovery getRecoveryUser(String email) {
-        SQLiteDatabase db = this.getReadableDatabase();
-        int rId = getUserIdByEmail(email);
-        Cursor cursor = db.query(
-                RECOVERY_TABLE,
-                new String[]{RECOVERY_KEY_FIELD_ID,
-                        FIELD_RECOVERY_USER_ID,
-                        FIELD_RECOVERY_USER_QUESTION_1,
-                        FIELD_RECOVERY_USER_QUESTION_2,
-                        FIELD_RECOVERY_USER_ANSWER_1,
-                        FIELD_RECOVERY_USER_ANSWER_2,
-                        FIELD_RECOVERY_USER_TIMES},
-                FIELD_RECOVERY_USER_ID + "=?",
-                new String[]{String.valueOf(rId)},
-                null, null, null, null);
+    public Recovery getRecoveryByUserEmail(String email) {
 
-        if (cursor != null)
-            cursor.moveToFirst();
-
-        Recovery recovery =
-                new Recovery(cursor.getInt(0),
-                        cursor.getInt(1),
-                        cursor.getString(2),
-                        cursor.getString(3),
-                        cursor.getString(4),
-                        cursor.getString(5),
-                        cursor.getInt(6));
-        cursor.close();
-        db.close();
-        return recovery;
-    }
-    public void updateRecoveryUser(Recovery recovery) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues values = new ContentValues();
-
-        values.put(FIELD_RECOVERY_USER_ID, recovery.getUserId());
-        values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion1());
-        values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion2());
-        values.put(FIELD_RECOVERY_USER_ANSWER_1, recovery.getAnswer1());
-        values.put(FIELD_RECOVERY_USER_ANSWER_2, recovery.getAnswer2());
-        values.put(FIELD_RECOVERY_USER_TIMES, recovery.getTimes()+1);
-
-
-        db.update(RECOVERY_TABLE, values, RECOVERY_KEY_FIELD_ID + " = ?",
-                new String[]{String.valueOf(recovery.getId())});
-        db.close();
-    }
-    //********** LOGIN TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
-    public int getUserIdByEmail(String email) {
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(
                 USERS_TABLE,
@@ -310,15 +263,82 @@ class DBHelper extends SQLiteOpenHelper {
                 FIELD_EMAIL + "=?",
                 new String[]{email},
                 null, null, null, null);
-
         if (cursor != null)
             cursor.moveToFirst();
-        int userId = cursor.getInt(0);
+
+        User user =
+                new User(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getString(6),
+                        cursor.getDouble(7),
+                        cursor.getInt(8),
+                        Uri.parse(cursor.getString(9)));
+
+        Recovery recovery = getRecoveryByUserId(user.getmId());
+
 
         cursor.close();
         db.close();
-        return userId;
+        return recovery;
     }
+
+
+    public void updateRecoveryUser(Recovery recovery) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FIELD_RECOVERY_USER_ID, recovery.getUserId());
+        values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion1());
+        values.put(FIELD_RECOVERY_USER_QUESTION_1, recovery.getQuestion2());
+        values.put(FIELD_RECOVERY_USER_ANSWER_1, recovery.getAnswer1());
+        values.put(FIELD_RECOVERY_USER_ANSWER_2, recovery.getAnswer2());
+        values.put(FIELD_RECOVERY_USER_TIMES, recovery.getTimes()+1);
+
+
+        db.update(RECOVERY_TABLE, values, RECOVERY_KEY_FIELD_ID + " = ?",
+                new String[]{String.valueOf(recovery.getId())});
+        db.close();
+    }
+
+    public Recovery getRecoveryByUserId(int id) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                RECOVERY_TABLE,
+                new String[]{RECOVERY_KEY_FIELD_ID,
+                        FIELD_RECOVERY_USER_ID,
+                        FIELD_RECOVERY_USER_QUESTION_1,
+                        FIELD_RECOVERY_USER_QUESTION_2,
+                        FIELD_RECOVERY_USER_ANSWER_1,
+                        FIELD_RECOVERY_USER_ANSWER_2,
+                        FIELD_RECOVERY_USER_TIMES},
+                FIELD_RECOVERY_USER_ID + "=?",
+                new String[]{String.valueOf(id)},
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        Recovery recovery =
+                new Recovery(cursor.getInt(0),
+                        cursor.getInt(1),
+                        cursor.getString(2),
+                        cursor.getString(3),
+                        cursor.getString(4),
+                        cursor.getString(5),
+                        cursor.getInt(6));
+
+        cursor.close();
+
+        db.close();
+        return recovery;
+    }
+
+    //********** LOGIN TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
+
 
     public void addLoginUser(int id, int role) {
         SQLiteDatabase db = this.getWritableDatabase();
