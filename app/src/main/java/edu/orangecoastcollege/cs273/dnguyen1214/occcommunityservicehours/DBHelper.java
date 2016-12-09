@@ -247,7 +247,7 @@ class DBHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = this.getReadableDatabase();
         int id = getUserIdByEmail(email);
         Cursor cursor = db.query(
-                USERS_TABLE,
+                RECOVERY_TABLE,
                 new String[]{RECOVERY_KEY_FIELD_ID,
                         FIELD_RECOVERY_USER_ID,
                         FIELD_RECOVERY_USER_QUESTION_1,

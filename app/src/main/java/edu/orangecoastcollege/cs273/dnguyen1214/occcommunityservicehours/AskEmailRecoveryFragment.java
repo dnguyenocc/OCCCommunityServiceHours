@@ -16,8 +16,10 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
     private EditText emailSecurityEditText;
     private Button submitButton;
     private DBHelper db;
-    Context context;
     private Recovery recovery;
+    private String email;
+
+    Context context;
     public AskEmailRecoveryFragment() {
 
     }
@@ -36,6 +38,7 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
         submitButton = (Button) v.findViewById(R.id.submitButton);
         submitButton.setOnClickListener(this);
 
+        email = emailSecurityEditText.getText().toString();
 
 
         return v;
@@ -45,9 +48,14 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
     @Override
     public void onClick(View v) {
 
-        String email = emailSecurityEditText.getText().toString();
 
-            if(validate(email)) {
+        if(validate(email)) {
+            recovery =  db.getRecoveryUser(email);
+            Bundle args = new Bundle();
+            args.putParcelable("Recovery", recovery);
+            Fragment askFragment = new AnswerQuestionSecurityFragment();
+
+            askFragment.setArguments(args);
 
                 getFragmentManager()
                         .beginTransaction()

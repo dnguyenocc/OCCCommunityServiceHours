@@ -146,9 +146,11 @@ public class RegisterActivity extends AppCompatActivity {
         {
 
             User user = new User(firstName,lastName,userName,email," ",pass,0.0,2,imageURI);// set 2 for role because this is normal user
-            Recovery recovery = new Recovery(user.getmId(),question1,question2,answer1,answer2,0);
-            db.addRecoveryUser(recovery);
             db.addUser(user);
+            int id = db.getUserIdByEmail(email);
+            Recovery recovery = new Recovery(id,question1,question2,answer1,answer2,0);
+            db.addRecoveryUser(recovery);
+
 
             firstNameEditText.setText("");
             lastNameEditText.setText("");

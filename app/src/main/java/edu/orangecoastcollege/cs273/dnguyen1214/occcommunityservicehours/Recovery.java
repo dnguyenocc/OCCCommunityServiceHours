@@ -1,10 +1,13 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * Created by Alex Ho on 12/6/2016.
  */
 
-public class Recovery {
+public class Recovery implements Parcelable {
     private int id;
     private int userId;
     private String question1;
@@ -35,6 +38,44 @@ public class Recovery {
         this.answer2 = answer2;
         this.times = times;
     }
+
+    protected Recovery(Parcel in) {
+        id = in.readInt();
+        userId = in.readInt();
+        question1 = in.readString();
+        question2 = in.readString();
+        answer1 = in.readString();
+        answer2 = in.readString();
+        times = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(id);
+        dest.writeInt(userId);
+        dest.writeString(question1);
+        dest.writeString(question2);
+        dest.writeString(answer1);
+        dest.writeString(answer2);
+        dest.writeInt(times);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<Recovery> CREATOR = new Creator<Recovery>() {
+        @Override
+        public Recovery createFromParcel(Parcel in) {
+            return new Recovery(in);
+        }
+
+        @Override
+        public Recovery[] newArray(int size) {
+            return new Recovery[size];
+        }
+    };
 
     public int getTimes() {
         return times;

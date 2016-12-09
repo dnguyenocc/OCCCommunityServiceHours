@@ -1,6 +1,5 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -21,16 +20,6 @@ public class RecoveryActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
-        Intent intent = new Intent(Intent.ACTION_MAIN);
-        intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
-        startActivity(intent);
-        finish();
-        System.exit(0);
-    }
 
 
 
@@ -42,9 +31,9 @@ public class RecoveryActivity extends AppCompatActivity {
     {
         try {
             Fragment fragment = (Fragment) fragmentClass.newInstance();
-            // Insert the fragment by replacing any existing fragment
+            // Insert the fragment by adding any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.recoveryContent, fragment).commit();
+            fragmentManager.beginTransaction().add(R.id.recoveryContent, fragment).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }

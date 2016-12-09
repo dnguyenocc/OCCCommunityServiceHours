@@ -66,4 +66,5 @@
     <string name="email_security">Enter your email address</string>
     <string name="submit">Submit</string>
     <string name="ask_email_description">Enter the email address associated to your account</string>
+    <string name="ask_question_description">Answer Security Questions</string>
 </resources>
