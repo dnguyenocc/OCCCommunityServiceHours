@@ -1,6 +1,9 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
+import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -17,6 +20,8 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+
+import java.util.List;
 
 public class EventDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -139,15 +144,43 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
 
         // Loop through each Location
 
-        LatLng coordinate = new LatLng(33.671028, -117.911305);
+        //LatLng coordinate = new LatLng(33.671028, -117.911305);
+        LatLng currentPosition = getLocationFromAddress(this,selectedEvent.getLocation());
             // Add a marker at that coordinate
-        mMap.addMarker(new MarkerOptions().position(coordinate).title(selectedEvent.getName()));
+        if (currentPosition == null)
+            currentPosition = new LatLng(33.671028, -117.911305);
+        mMap.addMarker(new MarkerOptions().position(currentPosition).title(selectedEvent.getName()));
 
 
         // Change the camera view to our current position:
-        LatLng currentPosition = new LatLng(33.671028, -117.911305);
+        //LatLng currentPosition = new LatLng(33.671028, -117.911305);
         CameraPosition cameraPosition = new CameraPosition.Builder().target(currentPosition).zoom(14.0f).build();
         CameraUpdate cameraUpdate = CameraUpdateFactory.newCameraPosition(cameraPosition);
         mMap.moveCamera(cameraUpdate);
+    }
+
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+            Address location = address.get(0);
+            location.getLatitude();
+            location.getLongitude();
+
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (Exception ex) {
+
+            ex.printStackTrace();
+        }
+
+        return p1;
     }
 }
