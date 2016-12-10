@@ -11,19 +11,21 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:focusableInTouchMode="true"
     tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.LoginActivity"
-    android:background="@android:color/holo_orange_light">
+    android:background="@android:color/holo_orange_light"
+    android:weightSum="1">
 
     <!-- Login progress -->
 
     <ScrollView
-        android:id="@+id/login_form"
+        android:id="@+id/loginForm"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="418dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/loginMainLayout">
 
             <FrameLayout
                 android:layout_width="match_parent"
@@ -35,8 +37,11 @@
                     android:layout_height="match_parent"
                     android:id="@+id/frontLayout">
 
-                    <include layout="@layout/front_anim"
-                        android:layout_height="122dp" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/occlogo"
+                        android:id="@+id/imageView8" />
                 </FrameLayout>
 
                 <FrameLayout
@@ -44,7 +49,11 @@
                     android:layout_height="match_parent"
                     android:id="@+id/backLayout">
 
-                    <include layout="@layout/back_anim" />
+                    <ImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:srcCompat="@drawable/occlogo"
+                        android:id="@+id/imageView9" />
                 </FrameLayout>
 
             </FrameLayout>
@@ -119,11 +128,11 @@
     </ScrollView>
 
     <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
+        style="?android:attr/progressBarStyle"
+        android:layout_width="match_parent"
+        android:id="@+id/loginProgressBar"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:visibility="gone" />
+        android:indeterminate="true"
+        android:visibility="invisible" />
 
 </LinearLayout>
