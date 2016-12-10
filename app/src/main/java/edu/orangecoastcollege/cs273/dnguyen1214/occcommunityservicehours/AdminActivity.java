@@ -152,11 +152,11 @@ public class AdminActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_create_events) {
             //TODO put attending fragment here
-
+            transitionFragment(CreateEventFragment.class);
         }
         else if (id == R.id.nav_upcoming_events) {
             //TODO put upcoming fragment here
-            transitionFragment(UpcommingEventsListActivityFragment.class);
+            transitionFragment(HostEventListFragment.class);
         }
         else if (id == R.id.nav_past_events) {
             //TODO put passed fragment here
@@ -164,7 +164,7 @@ public class AdminActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_validate_requests) {
         //TODO put passed fragment here
-        transitionFragment(ValidationRequestListFragment.class);
+            transitionFragment(ValidationRequestListFragment.class);
         } else if (id == R.id.nav_point) {
             //TODO put fragment want to be transition here
             startActivity(new Intent(this,PointAwardActivity.class));

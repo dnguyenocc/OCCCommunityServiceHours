@@ -28,7 +28,7 @@ public class User implements Parcelable{
     }
 
     /**
-     * User - Overload constructor that constructs a new User object when called.
+     * User - Default constructor that constructs a new User object when called.
      *
      * @param firstName  The first name of the user.
      * @param lastName The last name of the user.

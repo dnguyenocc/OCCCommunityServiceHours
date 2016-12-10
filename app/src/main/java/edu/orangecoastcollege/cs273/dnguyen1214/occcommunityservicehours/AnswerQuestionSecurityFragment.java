@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +28,7 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
     private DBHelper db;
     private Recovery recovery;
     private SessionManager sManager;
+    private ProgressBar answerRecoveryProgressBar;
     Context context;
     private  String email;
     public AnswerQuestionSecurityFragment() {
@@ -45,7 +47,7 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
         sManager = new SessionManager();
         submitAnswerButton = (Button) v.findViewById(R.id.submitAnswerButton);
         submitAnswerButton.setOnClickListener(this);
-
+        answerRecoveryProgressBar = (ProgressBar) v.findViewById(R.id.answerRecoveryProgressBar);
         answer1InputText = (TextInputLayout) v.findViewById(R.id.answer1InputText);
         answer2InputText = (TextInputLayout) v.findViewById(R.id.answer2InputText);
 
@@ -68,7 +70,8 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
     @Override
     public void onClick(View v) {
 
-
+        answerRecoveryProgressBar.setVisibility(ProgressBar.VISIBLE);
+        submitAnswerButton.setEnabled(false);
         String answer1 = answerSecurity1EditText.getText().toString();
         String answer2 = answerSecurity2EditText.getText().toString();
 
@@ -91,6 +94,11 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
             String status =  sManager.getPreferences(context,"status");
             Log.d("status",status);
 
+        }
+        else
+        {
+            answerRecoveryProgressBar.setVisibility(ProgressBar.INVISIBLE);
+            submitAnswerButton.setEnabled(true);
         }
 
     }

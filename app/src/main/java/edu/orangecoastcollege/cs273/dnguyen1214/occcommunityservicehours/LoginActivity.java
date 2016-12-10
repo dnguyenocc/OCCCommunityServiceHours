@@ -8,9 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.annotation.AnyRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
@@ -42,7 +40,8 @@ public class LoginActivity extends AppCompatActivity {
     //FLip Animation
     private View mFrontLayout;
     private View mBackLayout;
-
+    private String userN;
+    private String pass;
     SessionManager sManager;
     private AnimatorSet mSetRightOut;
     private AnimatorSet mSetLeftIn;
@@ -116,7 +115,37 @@ public class LoginActivity extends AppCompatActivity {
 
     public void signIn(View view)
     {
-        new MyTask().execute();
+        signInButton.setEnabled(false);
+        loginProgressBar.setVisibility(ProgressBar.VISIBLE);
+        loginMainLayout.setVisibility(LinearLayout.GONE);
+        hideSoftKeyboard();
+        userN = userName.getText().toString();
+        pass = passWord.getText().toString();
+         String statusLogin = "";
+        //check if username and password in database
+        if (validate(userN, pass)) {
+            User userLogin = db.getUser(userN);
+            db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
+
+            if(userLogin.getmRole() == 1) {
+                statusLogin = "admin";
+                startActivity(new Intent(LoginActivity.this,AdminActivity.class));
+            }
+            else if(userLogin.getmRole() == 2) {
+                statusLogin = "user";
+                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+            }
+
+            sManager.setPreferences(LoginActivity.this,"status",statusLogin);
+            String status =  sManager.getPreferences(LoginActivity.this,"status");
+            Log.d("status",status);
+        }
+        else
+        {
+            loginProgressBar.setVisibility(ProgressBar.INVISIBLE);
+            signInButton.setEnabled(true);
+            loginMainLayout.setVisibility(LinearLayout.VISIBLE);
+        }
 
 
     }
@@ -220,70 +249,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-
-    private class MyTask extends AsyncTask <Void, Integer, Void> {
-
-        int count =0;
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            signInButton.setEnabled(false);
-            loginProgressBar.setVisibility(ProgressBar.VISIBLE);
-            loginMainLayout.setVisibility(LinearLayout.GONE);
-            hideSoftKeyboard();
-
-        }
-
-
-
-        @Override
-        protected Void doInBackground(Void... params) {
-
-                while (count < 10) {
-                    count+=2;
-                    publishProgress(count);
-                    SystemClock.sleep(300);
-                }
-
-            return null;
-        }
-
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-
-            String user = userName.getText().toString();
-            String pass = passWord.getText().toString();
-            String statusLogin = "";
-            //check if username and password in database
-            if (validate(user, pass)) {
-                User userLogin = db.getUser(user);
-                db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
-
-                if(userLogin.getmRole() == 1) {
-                    statusLogin = "admin";
-                    startActivity(new Intent(LoginActivity.this,AdminActivity.class));
-                }
-                else if(userLogin.getmRole() == 2) {
-                    statusLogin = "user";
-                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
-                }
-
-                sManager.setPreferences(LoginActivity.this,"status",statusLogin);
-                String status =  sManager.getPreferences(LoginActivity.this,"status");
-                Log.d("status",status);
-            }
-            else{
-
-            loginProgressBar.setVisibility(ProgressBar.GONE);
-            signInButton.setEnabled(true);
-            loginMainLayout.setVisibility(LinearLayout.VISIBLE);
-            }
-        }
-    }
-
-
     /**
      * Hides the soft keyboard
      */
@@ -294,12 +259,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    /**
-     * Shows the soft keyboard
-     */
-    public void showSoftKeyboard(View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        view.requestFocus();
-        inputMethodManager.showSoftInput(view, 0);
-    }
+//    /**
+//     * Shows the soft keyboard
+//     */
+//    public void showSoftKeyboard(View view) {
+//        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//        view.requestFocus();
+//        inputMethodManager.showSoftInput(view, 0);
+//    }
 }

@@ -14,7 +14,12 @@ import android.support.annotation.NonNull;
 public class UserAward {
 
 
-
+    /**
+     * getUserAwardImageUri: get the image uri which indicate the award for the user
+     * @param user an user object
+     * @param context a context activity
+     * @return an uri image
+     */
     public Uri getUserAwardImageUri(User user, Context context)
     {
         Uri imageURI = getUriToResource(context,R.drawable.prez_volunteer_award_logo);
@@ -41,9 +46,11 @@ public class UserAward {
     }
 
 
-
-
-
+    /**
+     * calculationAward: calculate the user's award by total hour community service of the user
+     * @param hours a double value of user's hours
+     * @return an integer value [0,1,2,3,4]
+     */
     //This award is based on President Volunteer Service Award program (age 15-25)
     // 0 = nothing; 1 = bronze; 2 = silver; 3 = gold; 4 = lifetime
     private int calculationAward(double hours) {
@@ -60,7 +67,7 @@ public class UserAward {
         return award;
     }
 
-    public static final Uri getUriToResource(@NonNull Context context, @AnyRes int resId) throws Resources.NotFoundException{
+    private static final Uri getUriToResource(@NonNull Context context, @AnyRes int resId) throws Resources.NotFoundException{
         Resources res = context.getResources();
 
         return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +

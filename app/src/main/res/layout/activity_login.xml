@@ -19,7 +19,7 @@
     <ScrollView
         android:id="@+id/loginForm"
         android:layout_width="match_parent"
-        android:layout_height="418dp">
+        android:layout_height="425dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -131,8 +131,8 @@
         style="?android:attr/progressBarStyle"
         android:layout_width="match_parent"
         android:id="@+id/loginProgressBar"
-        android:layout_height="wrap_content"
         android:indeterminate="true"
-        android:visibility="invisible" />
+        android:visibility="invisible"
+        android:layout_height="match_parent" />
 
 </LinearLayout>
