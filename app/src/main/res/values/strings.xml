@@ -99,5 +99,14 @@
     <string name="ask_email_description">Enter the email address associated to your account</string>
     <string name="ask_question_description">Answer Security Questions</string>
     <string name="update_security_question">Update security question</string>
+    <string name="sign_in">Sign In</string>
+    <string name="bronze_level">Bronze level: 100 to 174 hours</string>
+    <string name="silver_level">Silver level: 175 to 249 hours</string>
+    <string name="gold_level">Gold level: 250 hours or more</string>
+    <string name="lifetime_level">Lifetime level: 4000 hours or more</string>
+    <string name="attended_event_list">Attended Events</string>
+    <string name="detail_medal">More detail about the award here.</string>
+    <string name="message">Message</string>
+    <string name="send">Send</string>
 
 </resources>

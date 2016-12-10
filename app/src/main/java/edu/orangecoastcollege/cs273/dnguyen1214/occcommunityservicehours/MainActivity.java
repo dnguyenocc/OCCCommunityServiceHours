@@ -164,6 +164,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this,PointAwardActivity.class));
         } else if (id == R.id.nav_feedback) {
             //TODO put fragment want to be transition here
+            transitionFragment(FeedbackFragment.class);
         }else if (id == R.id.nav_exist) {
 
             db.logout(db.getLoginUser());

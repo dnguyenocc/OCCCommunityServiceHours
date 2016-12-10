@@ -134,6 +134,6 @@
         android:id="@+id/loginProgressBar"
         android:indeterminate="true"
         android:visibility="invisible"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content" />
 
 </LinearLayout>
