@@ -2,21 +2,27 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/activity_point_award"
+    android:id="@+id/pointAwardLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.PointAwardActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@android:color/holo_orange_light">
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/hourTextView"
+        android:textAlignment="center"
+        android:background="@android:color/background_light" />
 
     <FrameLayout
         android:layout_width="match_parent"
         android:onClick="flipMedal"
         android:id="@+id/FrameLayout"
-        android:layout_height="171dp">
+        android:layout_height="171dp"
+        android:background="@android:color/background_light">
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -42,5 +48,68 @@
                 android:id="@+id/backMedalImageView" />
         </FrameLayout>
     </FrameLayout>
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/levelTextView"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:background="@android:color/white" />
+
+    <ProgressBar
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/pointProgressBar"
+        android:visibility="visible"
+        android:indeterminate="false"
+        android:max="100" />
+
+    <TextView
+        android:text="TextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/progressTextView"
+        android:textAlignment="center"
+        android:textSize="10sp" />
+
+    <TextView
+        android:text="@string/detail_medal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView18"
+        android:paddingTop="10dp" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingLeft="10dp">
+
+    </LinearLayout>
+
+    <!-- This initially-hidden ImageView will hold the expanded/zoomed version of
+         the images above. Without transformations applied, it takes up the entire
+         screen. To achieve the "zoom" animation, this view's bounds are animated
+         from the bounds of the thumbnail button above, to its final laid-out
+         bounds.
+         -->
+
+    <TextView
+        android:text="@string/attended_event_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView15"
+        android:textAlignment="center"
+        android:textSize="18sp"
+        android:paddingTop="10dp" />
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:name="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.AttendedEventListFragment"
+        android:id="@+id/fragment3" />
 
 </LinearLayout>
