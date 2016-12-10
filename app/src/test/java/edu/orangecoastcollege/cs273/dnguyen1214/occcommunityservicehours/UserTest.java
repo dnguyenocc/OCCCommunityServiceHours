@@ -28,7 +28,7 @@ public class UserTest {
         mUser.setmPhoneNum("4657821342");
         mUser.setmPassWord("12345");
         mUser.setmRole(2);
-       // mUser.setmImageUri("");
+        //mUser.setmImageUri("");
     }
 
     @After

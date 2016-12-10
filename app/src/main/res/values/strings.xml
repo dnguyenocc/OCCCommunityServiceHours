@@ -105,7 +105,7 @@
     <string name="gold_level">Gold level: 250 hours or more</string>
     <string name="lifetime_level">Lifetime level: 4000 hours or more</string>
     <string name="attended_event_list">Attended Events</string>
-    <string name="detail_medal">More detail about the award here.</string>
+    <string name="detail_medal">More detail about the level here.</string>
     <string name="message">Message</string>
     <string name="send">Send</string>
 
