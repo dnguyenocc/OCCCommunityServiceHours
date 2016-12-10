@@ -152,6 +152,7 @@ public class AdminActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_create_events) {
             //TODO put attending fragment here
+            startActivity(new Intent(this, HostEventActivity.class));
 
         }
         else if (id == R.id.nav_upcoming_events) {

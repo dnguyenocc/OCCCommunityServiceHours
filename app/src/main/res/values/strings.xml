@@ -66,7 +66,12 @@
     <!--Create Event-->
     <string name="event_name_hint">Enter a name:</string>
     <string name="address_location">Enter an Address:</string>
-    <string name="event_description_hint">Enter a description:</string>
+    <string name="event_description">Enter a description:</string>
+    <string name="start_date">Pick a starting date</string>
+    <string name="end_date">Pick an end date</string>
+    <string name="event_image">An image of the event</string>
+    <string name="start_dialog">start</string>
+    <string name="end_dialog">end</string>
 
     <!--Menu Drawer-->
     <string name="my_account">My Profile</string>

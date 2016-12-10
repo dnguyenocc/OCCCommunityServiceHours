@@ -1,19 +1,39 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
+import android.annotation.TargetApi;
+import android.app.SearchManager;
+import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.support.annotation.NonNull;
+import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class HostEventActivity extends AppCompatActivity {
+
+    SessionManager manager;
+    DBHelper db;
 
     // Keys for reading data from SharedPreferences
     public static final String CHOICES = "pref_numberOfChoices", REGIONS = "pref_regionsToInclude";
@@ -36,7 +56,7 @@ public class HostEventActivity extends AppCompatActivity {
         setContentView(R.layout.activity_host_event);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayShowTitleEnabled(false);
 
         // determine screen size
         int screenSize = getResources().getConfiguration().screenLayout &
@@ -48,7 +68,6 @@ public class HostEventActivity extends AppCompatActivity {
             phoneDevice = false; // not a phone-sized device
 
         // if running on phone-sized device, allow only portrait orientation
-        if (phoneDevice)
-            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+        if (phoneDevice) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 }

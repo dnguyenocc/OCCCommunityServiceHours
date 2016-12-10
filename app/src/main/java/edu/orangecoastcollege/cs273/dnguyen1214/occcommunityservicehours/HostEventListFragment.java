@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ListView;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class HostEventListFragment extends Fragment implements View.OnClickListe
     private List<Event> hostEvents;
 
     private ListView hostEventsListView;
+    private Button addEventButton;
 
     private EventListAdapter eventsListAdapter;
 
@@ -40,6 +42,8 @@ public class HostEventListFragment extends Fragment implements View.OnClickListe
         user = db.getLoginUser();
 
         hostEventsListView = (ListView) v.findViewById(R.id.hostEventListView);
+        addEventButton = (Button) v.findViewById(R.id.addEventButton);
+        addEventButton.setOnClickListener(this);
 
         hostEvents = db.getAllEventsByOwnerId(user.getmId());
 
@@ -58,6 +62,16 @@ public class HostEventListFragment extends Fragment implements View.OnClickListe
     public void onClick(View v) {
 
         if (v.getId() == R.id.profileImageView) {
+            try {
+                Fragment fragment = CreateEventFragment.class.newInstance();
+                // Insert the fragment by replacing any existing fragment
+                FragmentManager fragmentManager = getFragmentManager();
+                fragmentManager.beginTransaction().replace(R.id.host_fragment, fragment).commit();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        if (v.getId() == R.id.addEventButton) {
             try {
                 Fragment fragment = CreateEventFragment.class.newInstance();
                 // Insert the fragment by replacing any existing fragment

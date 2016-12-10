@@ -228,7 +228,11 @@ public class Event implements Parcelable {
     public String getDuration() {
         setDates();
 
-        long diffInMillies = mEnd.getTime() - mStart.getTime();
+        long diffInMillies = 8578;
+
+        try {
+            diffInMillies = mEnd.getTime() - mStart.getTime();
+        } catch (Exception e) {};
         List<TimeUnit> units = new ArrayList<TimeUnit>(EnumSet.allOf(TimeUnit.class));
         Collections.reverse(units);
         Map<TimeUnit,Long> result = new LinkedHashMap<TimeUnit, Long>();
@@ -239,6 +243,13 @@ public class Event implements Parcelable {
             milliesRest = milliesRest - diffInMilliesForUnit;
             result.put(unit,diff);
         }
+
+        String temp = result.get(TimeUnit.DAYS).toString() +
+                result.get(TimeUnit.HOURS).toString() +
+                result.get(TimeUnit.MINUTES).toString();
+
+        if (temp.isEmpty()) return "-1";
+
         return result.get(TimeUnit.DAYS).toString() + " day, " +
                 result.get(TimeUnit.HOURS).toString() + " hours and " +
                 result.get(TimeUnit.MINUTES).toString() + " minutes";
@@ -256,6 +267,16 @@ public class Event implements Parcelable {
         Date now = new Date(Calendar.getInstance().getTimeInMillis());
 
         return now.after(mEnd);
+    }
+
+    public boolean validDates()
+    {
+        boolean temp = false;
+        try {
+            temp = mStart.before(mEnd);
+        } catch (Exception e) {}
+
+        return temp;
     }
 
     private void setDates()

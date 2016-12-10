@@ -3,12 +3,16 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 import android.Manifest;
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.AnyRes;
+import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
@@ -43,7 +47,6 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
             emailEditText, numberEditText, passwordEditText;
     private ImageView profileImageView, editLastNameImageView, editFirstNameImageView,
             editEmailImageView, editNumberImageView, editPasswordImageView;
-    private Context mContext;
 
     private User loginUser;
     private DBHelper db;
@@ -69,6 +72,8 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
 
         // Hookup Widgets
         hookUpWidgets(v);
+
+        imageUri = getUriToResource(getContext(), R.drawable.default_avatar);
 
         // Access the DataBase helper to get the current user
         db = new DBHelper(getContext());
@@ -174,6 +179,25 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
                     "OCC Community Service Hours requires camera and external storage permission",
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    /**
+     * Get uri to any resource type within an Android Studio project. Method is public static
+     * to allow other classes to use it as a helper function.
+     *
+     * @param context The current context
+     * @param resId   The resource identifier of the drawable
+     * @return  Uri to resource by given id
+     * @throws Resources.NotFoundException If the given resource id does not exist.
+     */
+    public static Uri getUriToResource(@NonNull Context context, @AnyRes int resId) throws Resources.NotFoundException {
+        /**Return a Resources instance for your application's package. */
+        Resources res = context.getResources();
+        /** return URI */
+        return Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                "://" + res.getResourcePackageName(resId)
+                + '/' + res.getResourceTypeName(resId)
+                + '/' + res.getResourceEntryName(resId));
     }
 
     private void edit(EditText field)
@@ -366,6 +390,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
             // Set the imageURI to the data
             imageUri = data.getData();
             profileImageView.setImageURI(imageUri);
+            loginUser.setmImageUri(imageUri);
         }
     }
 
