@@ -21,6 +21,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -160,6 +161,7 @@ public class MainActivity extends AppCompatActivity
             transitionFragment(AttendedEventListFragment.class);
         } else if (id == R.id.nav_point) {
             //TODO put fragment want to be transition here
+            startActivity(new Intent(this,PointAwardActivity.class));
         } else if (id == R.id.nav_help) {
             //TODO put fragment want to be transition here
         }else if (id == R.id.nav_exist) {
@@ -209,5 +211,22 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Hides the soft keyboard
+     */
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
 
+    /**
+     * Shows the soft keyboard
+     */
+    public void showSoftKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        view.requestFocus();
+        inputMethodManager.showSoftInput(view, 0);
+    }
 }

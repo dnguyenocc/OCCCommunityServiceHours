@@ -24,9 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
+        <activity android:name=".LoginActivity" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
@@ -50,7 +48,8 @@
         <activity android:name=".EventDetailsActivity" />
         <activity android:name=".requestValidationActivity" />
         <activity android:name=".RecoveryActivity" />
-        <activity android:name=".ParticipationValidationActivity"></activity>
+        <activity android:name=".ParticipationValidationActivity" />
+        <activity android:name=".PointAwardActivity"></activity>
     </application>
 
 </manifest>

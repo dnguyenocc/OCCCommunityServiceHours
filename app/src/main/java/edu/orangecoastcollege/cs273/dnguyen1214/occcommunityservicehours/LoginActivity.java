@@ -8,16 +8,21 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.AnyRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.Toast;
-
 
 
 /**
@@ -31,7 +36,9 @@ public class LoginActivity extends AppCompatActivity {
     private Uri imageURI;
     private TextInputLayout usernameInputLayout;
     private TextInputLayout passwordInputLayout;
-
+    private ProgressBar loginProgressBar;
+    private Button signInButton;
+    private LinearLayout loginMainLayout;
     //FLip Animation
     private View mFrontLayout;
     private View mBackLayout;
@@ -54,14 +61,16 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
+
         // Set up the login form.
+        signInButton = (Button) findViewById(R.id.signInButton);
         userName = (EditText) findViewById(R.id.userNameLoginEditText);
         passWord = (EditText) findViewById(R.id.passwordLoginEditText);
         imageURI = getUriToResource(this,R.drawable.default_avatar);
-
+        loginProgressBar = (ProgressBar) findViewById(R.id.loginProgressBar);
         usernameInputLayout =(TextInputLayout) findViewById(R.id.usernameInputLayout);
         passwordInputLayout = (TextInputLayout) findViewById(R.id.passwordInputLayout);
-
+        loginMainLayout = (LinearLayout) findViewById(R.id.loginMainLayout);
 
 
         sManager = new SessionManager();
@@ -107,33 +116,15 @@ public class LoginActivity extends AppCompatActivity {
 
     public void signIn(View view)
     {
-        String user = userName.getText().toString();
-        String pass = passWord.getText().toString();
-        String statusLogin = "";
-        //check if username and password in database
-        if (validate(user, pass)) {
-            User userLogin = db.getUser(user);
-            db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
+        new MyTask().execute();
 
-            if(userLogin.getmRole() == 1) {
-                statusLogin = "admin";
-                startActivity(new Intent(LoginActivity.this,AdminActivity.class));
-            }
-            else if(userLogin.getmRole() == 2) {
-                statusLogin = "user";
-                startActivity(new Intent(LoginActivity.this, MainActivity.class));
-            }
-
-            sManager.setPreferences(LoginActivity.this,"status",statusLogin);
-            String status =  sManager.getPreferences(LoginActivity.this,"status");
-            Log.d("status",status);
-        }
 
     }
 
     public boolean validate(String userN, String passW) {
 
         boolean valid = true;
+
 
         if(userN.isEmpty())
         {
@@ -161,6 +152,7 @@ public class LoginActivity extends AppCompatActivity {
             userName.setText("");
             passWord.setText("");
         }
+
 
         return  valid;
     }
@@ -222,5 +214,92 @@ public class LoginActivity extends AppCompatActivity {
             mSetLeftIn.start();
             mIsBackVisible = false;
         }
+    }
+
+
+
+
+
+
+    private class MyTask extends AsyncTask <Void, Integer, Void> {
+
+        int count =0;
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            signInButton.setEnabled(false);
+            loginProgressBar.setVisibility(ProgressBar.VISIBLE);
+            loginMainLayout.setVisibility(LinearLayout.GONE);
+            hideSoftKeyboard();
+
+        }
+
+
+
+        @Override
+        protected Void doInBackground(Void... params) {
+
+                while (count < 10) {
+                    count+=2;
+                    publishProgress(count);
+                    SystemClock.sleep(300);
+                }
+
+            return null;
+        }
+
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            super.onPostExecute(aVoid);
+
+            String user = userName.getText().toString();
+            String pass = passWord.getText().toString();
+            String statusLogin = "";
+            //check if username and password in database
+            if (validate(user, pass)) {
+                User userLogin = db.getUser(user);
+                db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
+
+                if(userLogin.getmRole() == 1) {
+                    statusLogin = "admin";
+                    startActivity(new Intent(LoginActivity.this,AdminActivity.class));
+                }
+                else if(userLogin.getmRole() == 2) {
+                    statusLogin = "user";
+                    startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                }
+
+                sManager.setPreferences(LoginActivity.this,"status",statusLogin);
+                String status =  sManager.getPreferences(LoginActivity.this,"status");
+                Log.d("status",status);
+            }
+            else{
+
+            loginProgressBar.setVisibility(ProgressBar.GONE);
+            signInButton.setEnabled(true);
+            loginMainLayout.setVisibility(LinearLayout.VISIBLE);
+            }
+        }
+    }
+
+
+    /**
+     * Hides the soft keyboard
+     */
+    public void hideSoftKeyboard() {
+        if(getCurrentFocus()!=null) {
+            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+        }
+    }
+
+    /**
+     * Shows the soft keyboard
+     */
+    public void showSoftKeyboard(View view) {
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+        view.requestFocus();
+        inputMethodManager.showSoftInput(view, 0);
     }
 }
