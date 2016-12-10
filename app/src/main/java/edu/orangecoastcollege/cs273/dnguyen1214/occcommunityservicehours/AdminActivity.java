@@ -169,7 +169,7 @@ public class AdminActivity extends AppCompatActivity
             //TODO put fragment want to be transition here
             startActivity(new Intent(this,PointAwardActivity.class));
         }
-        else if (id == R.id.nav_help) {
+        else if (id == R.id.nav_feedback) {
 
         }
         else if (id == R.id.nav_exist) {
