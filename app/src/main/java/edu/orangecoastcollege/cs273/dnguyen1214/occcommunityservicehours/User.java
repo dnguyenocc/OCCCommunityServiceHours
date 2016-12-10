@@ -20,10 +20,7 @@ public class User implements Parcelable{
     private double mHours;
     private int mRole; // 1 is admin, 2 is normal user
     private Uri mImageUri;
-//    private String mQuestion1;
-//    private String mQuestion2;
-//    private String mAnswer1;
-//    private String mAnswer2;
+
 
 
 
