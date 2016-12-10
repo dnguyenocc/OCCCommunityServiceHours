@@ -144,6 +144,7 @@ public class RegisterActivity extends AppCompatActivity {
         if(validate(firstName,lastName,email,userName,pass,question1,question2,answer1,answer2))
         {
 
+
             User user = new User(firstName,lastName,userName,email," ",pass,0.0,2,imageURI);// set 2 for role because this is normal user
             db.addUser(user);
 

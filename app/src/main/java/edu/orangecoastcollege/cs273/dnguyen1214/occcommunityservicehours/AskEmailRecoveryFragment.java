@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 
 public class AskEmailRecoveryFragment extends Fragment implements View.OnClickListener {
 
@@ -20,6 +21,7 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
     private DBHelper db;
     private Recovery recovery;
     private String email;
+    private ProgressBar recoveryProgressBar;
     private SessionManager sManager;
     Context context;
     private RecoveryActivity recoveryActivity;
@@ -35,6 +37,7 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
         View v = inflater.inflate(R.layout.fragment_ask_email_recovery, container, false);
         context = this.getContext();
         db = new DBHelper(context);
+        recoveryProgressBar =(ProgressBar) v.findViewById(R.id.recoveryProgressBar);
         answerEmailSecurityInputText = (TextInputLayout) v.findViewById(R.id.answerEmailSecurityInputText);
         emailSecurityEditText = (EditText) v.findViewById(R.id.emailSecurityEditText);
         submitButton = (Button) v.findViewById(R.id.submitButton);
@@ -48,7 +51,8 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-
+        submitButton.setEnabled(false);
+        recoveryProgressBar.setVisibility(ProgressBar.VISIBLE);
         email = emailSecurityEditText.getText().toString();
 
         if(validate(email)) {
@@ -62,6 +66,11 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
             fragmentTransaction.commit();
 
             }
+        else
+        {
+            recoveryProgressBar.setVisibility(ProgressBar.INVISIBLE);
+            submitButton.setEnabled(true);
+        }
 
     }
 
@@ -87,4 +96,6 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
         }
         return valid;
     }
+
+
 }

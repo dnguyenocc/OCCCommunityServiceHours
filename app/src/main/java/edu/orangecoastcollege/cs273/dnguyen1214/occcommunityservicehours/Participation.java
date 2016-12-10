@@ -27,6 +27,16 @@ public class Participation implements Parcelable {
     private User mUser;
     private Event mEvent;
 
+    /**
+     * Parameter constructor that constructs a new Participation object when called.
+     * @param id id number of a particular participation
+     * @param status Status code: one of these value: REGISTERED, VALIDATED, VALIDATION_DENY
+     * @param validationRequested whether this participation is on a request of validation
+     * @param serviceHours number of volunteered hours contributed
+     * @param responsibilities briefly responsibilities, how did a user involved in a event
+     * @param user a user instance
+     * @param event a event instance
+     */
     public Participation(int id, int status, boolean validationRequested, float serviceHours, String responsibilities,
                          User user, Event event)
     {
@@ -39,6 +49,14 @@ public class Participation implements Parcelable {
         mEvent = event;
     }
 
+    /**
+     * Participation Constructor can be used when the used first register for the event
+     * @param id id number of a specific participation
+     * @param status Status code: one of these value: REGISTERED, VALIDATED, VALIDATION_DENY
+     * @param user  a user instance
+     * @param event a event instance
+     */
+
     public Participation(int id, int status, User user, Event event)
     {
         mId = id;
@@ -49,6 +67,15 @@ public class Participation implements Parcelable {
         mEvent = event;
     }
 
+    /**
+     *  Parameter constructor that constructs a new Participation object with offset id when called.
+     * @param status Status code: one of these value: REGISTERED, VALIDATED, VALIDATION_DENY
+     * @param validationRequested whether this participation is on a request of validation
+     * @param serviceHours number of volunteered hours contributed
+     * @param responsibilities
+     * @param user
+     * @param event
+     */
     public Participation(int status, boolean validationRequested, float serviceHours, String responsibilities,
                          User user, Event event)
     {
@@ -62,6 +89,10 @@ public class Participation implements Parcelable {
 
     }
 
+    /**
+     * Parcelable Participation
+     * @param in
+     */
     protected Participation(Parcel in) {
         mId = in.readInt();
         mStatusCode = in.readInt();
@@ -84,35 +115,91 @@ public class Participation implements Parcelable {
         }
     };
 
+    /**
+     * getId - return Participation's id
+     * @return The participation's id
+     */
     public int getId() {return mId;}
 
+    /**
+     * getStatusCode - return Status Code of participation
+     * @return current participation's status code
+     */
     public int getStatusCode() {return mStatusCode;}
 
+    /**
+     * getValidationRequested - return boolean value to indicate this participation is in a request of validation
+     * @return participation's requested
+     */
     public boolean getValidationRequested(){return mValidationRequested;}
 
+    /**
+     * getServiceHours - return number hours serviced of a participation to request for validation
+     * @return the partcipation's number of hours
+     */
     public float getServiceHours() {return mServiceHours;}
 
+    /**
+     * getResponsiblities - return briefly duty how a participant involved in the event
+     * @return participant's responsibilities
+     */
     public String getResponsibilities() {return mResponsibilities;}
 
+    /**
+     * getEvent - return the event of the participation
+     * @return an Event
+     */
     public Event getEvent() {return mEvent;}
 
+    /**
+     * getUser - return the user of the participation
+     * @return a User
+     */
     public User getUser() {return mUser;}
 
+    /**
+     * setStatusCode - change participation's status
+     * @param statusCode new status code
+     */
     public void setStatusCode(int statusCode) {mStatusCode = statusCode;}
 
+    /**
+     * setValidationRequeseted - set participation's request
+     * @param validationRequested validation requested
+     */
     public void setValidationRequested(boolean validationRequested)
     {
         mValidationRequested = validationRequested;
     }
 
+    /**
+     * setServiceHours - set number of hours
+     * @param serviceHours participation's hours serviced
+     */
     public void setServiceHours(float serviceHours){mServiceHours = serviceHours;}
 
+    /**
+     * setResponsibilities - set participant's responsibilities
+     * @param responsibilities participant's responsibilities
+     */
     public void setResponsibilities(String responsibilities){mResponsibilities = responsibilities;}
 
+    /**
+     * setEvent - set participation's event
+     * @param event an Event
+     */
     public void setEvent(Event event){mEvent = event;}
 
+    /**
+     * setUser - set participation's user
+     * @param user an User
+     */
     public void setUser(User user){mUser = user;}
 
+    /**
+     *  A method for displaying a <code>Participation</code> as a String
+     * @return
+     */
     @Override
     public String toString() {
         return super.toString();

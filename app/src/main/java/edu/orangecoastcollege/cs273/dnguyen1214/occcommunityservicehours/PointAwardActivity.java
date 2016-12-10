@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class PointAwardActivity extends AppCompatActivity {
@@ -18,7 +20,11 @@ public class PointAwardActivity extends AppCompatActivity {
     private ImageView backMedalImage;
     private DBHelper db;
     private int point;
-    //private UserAward userAward;
+    private ProgressBar pointProgressBar;
+    private TextView hourTextView;
+    private TextView levelTextView;
+    private UserAward userAward;
+    private TextView progressTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,16 +36,35 @@ public class PointAwardActivity extends AppCompatActivity {
         changeCameraDistance();
         db = new DBHelper(this);
         User user = db.getLoginUser();
+        userAward = new UserAward();
         frontMedalImage = (ImageView) findViewById(R.id.frontMedalImageView);
         backMedalImage = (ImageView) findViewById(R.id.backMedalImageView);
-        //userAward = new UserAward();
+        progressTextView = (TextView) findViewById(R.id.progressTextView);
         Toast.makeText(this, user.getmUserName(), Toast.LENGTH_LONG).show();
+        userAward.setUserAwardImageUri(user,this);
+        frontMedalImage.setImageURI(userAward.getImageUri());
+        backMedalImage.setImageURI(userAward.getImageUri());
 
-        frontMedalImage.setImageURI(new UserAward().getUserAwardImageUri(user,this));
-        backMedalImage.setImageURI(new UserAward().getUserAwardImageUri(user,this));
+        pointProgressBar = (ProgressBar) findViewById(R.id.pointProgressBar);
+        pointProgressBar.setProgress(userAward.getPercent());
+        progressTextView.setText(userAward.getPercent() + " % to next level");
+
+        hourTextView = (TextView) findViewById(R.id.hourTextView);
+        hourTextView.setText("Your total hour: " + user.getmHours() + ((user.getmHours() > 0)?" hours":" hours"));
+
+        levelTextView = (TextView) findViewById(R.id.levelTextView);
+        levelTextView.setText(userAward.getLevelName());
+
+
+
+
 
 
     }
+
+
+
+
     @Override
     public void onResume(){
         super.onResume();
@@ -92,8 +117,6 @@ public class PointAwardActivity extends AppCompatActivity {
             mIsBackVisible = false;
         }
     }
-
-
 
 
 

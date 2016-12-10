@@ -20,40 +20,47 @@ public class User implements Parcelable{
     private double mHours;
     private int mRole; // 1 is admin, 2 is normal user
     private Uri mImageUri;
-//    private String mQuestion1;
-//    private String mQuestion2;
-//    private String mAnswer1;
-//    private String mAnswer2;
+
 
 
 
     public User() {
     }
 
-    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, double mHours, int mRole) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.mUserName = mUserName;
-        this.mEmail = mEmail;
-        this.mPhoneNum = mPhoneNum;
-        this.mPassWord = mPassWord;
-        this.mHours = mHours;
-        this.mRole = mRole;
-    }
+    /**
+     * User - Default constructor that constructs a new User object when called.
+     *
+     * @param firstName  The first name of the user.
+     * @param lastName The last name of the user.
+     * @param mUserName   The username of the user
+     * @param mEmail   The email of the user.
+     * @param mPhoneNum  The phone number of the user.
+     * @param mPassWord  The password of the user.
+     * @param mHours  Total hours community service of the user.
+     * @param mRole  The role of the user in application; 1 is admin and 2 is user
+     * @param mImageUri  An image uri for user.
+     */
+    public User(String firstName, String lastName, String mUserName, String mEmail,
+                String mPhoneNum, String mPassWord, double mHours, int mRole, Uri mImageUri) {
 
-    public User(String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, double mHours, int mRole, Uri mImageUri) {
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.mUserName = mUserName;
-        this.mEmail = mEmail;
-        this.mPhoneNum = mPhoneNum;
-        this.mPassWord = mPassWord;
-        this.mHours = mHours;
-        this.mRole = mRole;
-        this.mImageUri = mImageUri;
+        this(-1, firstName, lastName, mUserName, mEmail, mPhoneNum, mPassWord, mHours, mRole, mImageUri);
     }
+    /**
+     * User - Overload constructor that constructs a new User object when called.
+     * @param mId  The id number of the user.
+     * @param firstName  The first name of the user.
+     * @param lastName The last name of the user.
+     * @param mUserName   The username of the user
+     * @param mEmail   The email of the user.
+     * @param mPhoneNum  The phone number of the user.
+     * @param mPassWord  The password of the user.
+     * @param mHours  Total hours community service of the user.
+     * @param mRole  The role of the user in application; 1 is admin and 2 is user
+     * @param mImageUri  An image uri for user.
+     */
+    public User(int mId, String firstName, String lastName, String mUserName, String mEmail,
+                String mPhoneNum, String mPassWord, double mHours, int mRole, Uri mImageUri) {
 
-    public User(int mId, String firstName, String lastName, String mUserName, String mEmail, String mPhoneNum, String mPassWord, double mHours, int mRole, Uri mImageUri) {
         this.mId = mId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -112,79 +119,156 @@ public class User implements Parcelable{
     };
 
 
+    /**
+     * getmHours: return the total hours  of the user
+     *
+     * @return a double value
+     */
     public double getmHours() {
         return mHours;
     }
 
+    /**
+     * setmHours: set total hours volunteer of the user
+     * @param mHours a double value
+     */
     public void setmHours(double mHours) {
         this.mHours = mHours;
     }
-
+    /**
+     * setmRole: set role of the user (1 is admin; 2 is user)
+     *
+     * @param mRole an integer value
+     */
     public void setmRole(int mRole) {
         this.mRole = mRole;
     }
 
+    /***
+     * getmRole: get the role of the user  for authorization (1 is admin; 2 is user)
+     * @return an integer value of user's role
+     */
     public int getmRole() {
         return mRole;
     }
 
+    /**
+     * setFirstName: set the first name of the user
+     *
+     * @param firstName a string value of user'first name
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * setLastName: set last name of the user
+     * @param lastName a string value of user's last name
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * getFirstName: get the first name of the user
+     * @return a string value of user's first name
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * getLastName:  get last name of the user
+     * @return a string value of user's last name
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * get the username of the user
+     * @return a string value of user's username
+     */
     public String getmUserName() {
         return mUserName;
     }
 
+    /**
+     * getmEmail: return the email of the user
+     * @return a string value of user's email
+     */
     public String getmEmail() {
         return mEmail;
     }
 
+    /**
+     * getmPhoneNum: return the phone number of the user
+     * @return a string value of the user's phonenumber
+     */
     public String getmPhoneNum() {
         return mPhoneNum;
     }
 
+    /**
+     * getmPassWord: return the password of the user
+     * @return a string value of user's password
+     */
     public String getmPassWord() {
         return mPassWord;
     }
 
+    /**
+     * getmImageUri: return the image uri of the user
+     * @return a uri of user's image
+     */
     public Uri getmImageUri() {
         return mImageUri;
     }
 
+    /**
+     * getmId: return the id of the user
+     * @return a integer of user's id
+     */
     public int getmId() {
         return mId;
     }
 
-
+    /**
+     * setmUserName: set the username of the user
+     * @param mUserName a string of user's username
+     */
     public void setmUserName(String mUserName) {
         this.mUserName = mUserName;
     }
 
+    /**
+     * setmEmail: set the email of the user
+     * @param mEmail a string of user's email
+     */
     public void setmEmail(String mEmail) {
         this.mEmail = mEmail;
     }
 
+    /**
+     * setmPhoneNum: set the phone number of the user
+     * @param mPhoneNum a string value of user's phone
+     */
     public void setmPhoneNum(String mPhoneNum) {
         this.mPhoneNum = mPhoneNum;
     }
 
+    /**
+     * setmPassWord: set the password of the user
+     * @param mPassWord a sting value of user's password
+     */
     public void setmPassWord(String mPassWord) {
         this.mPassWord = mPassWord;
     }
 
+    /**
+     * setmImageUri: set the image uri of the user
+     * @param mImageUri a uri of user's image
+     */
     public void setmImageUri(Uri mImageUri) {
         this.mImageUri = mImageUri;
     }

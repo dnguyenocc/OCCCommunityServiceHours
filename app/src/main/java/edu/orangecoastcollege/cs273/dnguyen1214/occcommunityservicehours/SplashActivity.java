@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
 import android.widget.ProgressBar;
 
 import java.util.Timer;
@@ -17,6 +18,8 @@ public class SplashActivity extends AppCompatActivity {
     private User user;
     private Uri imageURI;
 
+    AlphaAnimation inAnimation;
+    AlphaAnimation outAnimation;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +73,7 @@ public class SplashActivity extends AppCompatActivity {
         super.onBackPressed();
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addCategory(Intent.CATEGORY_HOME);
-        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         startActivity(intent);
         finish();
         System.exit(0);
