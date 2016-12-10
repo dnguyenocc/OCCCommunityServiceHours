@@ -167,6 +167,7 @@ public class AdminActivity extends AppCompatActivity
         transitionFragment(ValidationRequestListFragment.class);
         } else if (id == R.id.nav_point) {
             //TODO put fragment want to be transition here
+            startActivity(new Intent(this,PointAwardActivity.class));
         }
         else if (id == R.id.nav_help) {
 
