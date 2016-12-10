@@ -55,8 +55,8 @@ public class AttendingEventListFragment extends ListFragment {
             if (!(participation.getEvent().eventPassed())) presentEvents.add(participation.getEvent());
         }
 
-        if (presentEvents == null)
-            Toast.makeText(getContext(), "You no events that you are currently attending.", Toast.LENGTH_SHORT).show();
+        if (presentEvents.isEmpty())
+            Toast.makeText(getContext(), "You are not attending any events at the moment.", Toast.LENGTH_LONG).show();
         eventsListAdapter = new EventListAdapter(getContext(), R.layout.event_list_item, presentEvents);
         presentEventsListView.setAdapter(eventsListAdapter);
 

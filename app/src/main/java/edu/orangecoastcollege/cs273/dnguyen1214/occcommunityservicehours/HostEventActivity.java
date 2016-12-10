@@ -1,0 +1,54 @@
+package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
+
+import android.content.pm.ActivityInfo;
+import android.content.res.Configuration;
+import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
+import android.view.View;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class HostEventActivity extends AppCompatActivity {
+
+    // Keys for reading data from SharedPreferences
+    public static final String CHOICES = "pref_numberOfChoices", REGIONS = "pref_regionsToInclude";
+
+    // Force portrait mode and check for preferences change
+    private boolean phoneDevice = true, preferencesChanged = true;
+
+    /**
+     * onCreate generates the appropriate layout to inflate, depending on the
+     * screen size. If the device is large or x-large, it will load the content_quiz.xml
+     * (sv700dp-land) which includes both the fragment_quiz.xml and fragment_settings.xml.
+     * Otherwise, it just inflates the standard content_main.xml with the fragment_quiz.
+     *
+     * All default preferences are set using the preferences.xml file.
+     * @param savedInstanceState The saved state to restore (not being used)
+     */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_host_event);
+
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        // determine screen size
+        int screenSize = getResources().getConfiguration().screenLayout &
+                Configuration.SCREENLAYOUT_SIZE_MASK;
+
+        // if device is a tablet, set phoneDevice to false
+        if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE ||
+                screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE)
+            phoneDevice = false; // not a phone-sized device
+
+        // if running on phone-sized device, allow only portrait orientation
+        if (phoneDevice)
+            setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+    }
+}

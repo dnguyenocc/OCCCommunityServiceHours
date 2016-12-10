@@ -60,8 +60,8 @@ public class AttendedEventListFragment extends Fragment {
             if (participation.getEvent().eventPassed()) pastEvents.add(participation.getEvent());
         }
 
-        if (pastEvents == null)
-            Toast.makeText(getContext(), "You have no past events", Toast.LENGTH_SHORT).show();
+        if (pastEvents.isEmpty())
+            Toast.makeText(getContext(), "You have no past events", Toast.LENGTH_LONG).show();
         eventsListAdapter = new EventListAdapter(getContext(), R.layout.event_list_item, pastEvents);
         pastEventsListView.setAdapter(eventsListAdapter);
 
