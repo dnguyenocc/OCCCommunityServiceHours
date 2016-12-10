@@ -1,0 +1,51 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.FeedbackFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/nameInput">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/edit_name"
+                android:id="@+id/nameFeedbackEditText"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" />
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:id="@+id/messageInput">
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="@string/message"
+                android:id="@+id/messageFeedbackEditText"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <Button
+            android:text="@string/send"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/sendButton"
+            android:padding="20dp" />
+
+    </LinearLayout>
+</FrameLayout>

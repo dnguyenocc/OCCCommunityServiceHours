@@ -115,6 +115,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void signIn(View view)
     {
+        hideSoftKeyboard();
         signInButton.setEnabled(false);
         loginProgressBar.setVisibility(ProgressBar.VISIBLE);
         loginMainLayout.setVisibility(LinearLayout.GONE);
