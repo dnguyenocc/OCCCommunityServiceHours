@@ -26,11 +26,11 @@ public class EventListAdapter extends ArrayAdapter<Event> {
 
 
     /**
-     * Creates a new <code>OfferingListAdapter</code> given a mContext, resource id and list of offerings.
+     * Creates a new <code>EventListAdapter</code> given a mContext, resource id and list of events.
      *
      * @param c The mContext for which the adapter is being used (typically an activity)
      * @param rId The resource id (typically the layout file name)
-     * @param events The list of offerings to display
+     * @param events The list of events to display
      */
     public EventListAdapter(Context c, int rId, List<Event> events) {
         super(c, rId, events);
@@ -41,7 +41,7 @@ public class EventListAdapter extends ArrayAdapter<Event> {
 
     /**
      * Gets the view associated with the layout.
-     * @param pos The position of the Offering selected in the list.
+     * @param pos The position of the Event selected in the list.
      * @param convertView The converted view.
      * @param parent The parent - ArrayAdapter
      * @return The new view with all content set.
