@@ -65,7 +65,7 @@ public class HostEventActivity extends AppCompatActivity {
         // if device is a tablet, set phoneDevice to false
         if (screenSize == Configuration.SCREENLAYOUT_SIZE_LARGE ||
                 screenSize == Configuration.SCREENLAYOUT_SIZE_XLARGE)
-            phoneDevice = false; // not a phone-sized device
+        //    phoneDevice = false; // not a phone-sized device
 
         // if running on phone-sized device, allow only portrait orientation
         if (phoneDevice) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);

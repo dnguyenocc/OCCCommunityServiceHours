@@ -104,6 +104,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
         eventImageView.setOnClickListener(this);
         startDateTextView.setOnClickListener(this);
         endDateTextView.setOnClickListener(this);
+        createEventButton.setOnClickListener(this);
 
         return v;
     }
@@ -322,6 +323,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
             case R.id.eventImageView:
                 selectEventImage(v);
                 break;
+
             case R.id.startDateTextView:
                 inStartDate = true;
                 DatePickerDialog datePickerDialogStart =
@@ -329,10 +331,12 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
                                 CreateEventFragment.this, year, month, day);
                 datePickerDialogStart.show();
                 break;
+
             case R.id.endDateTextView:
                 DatePickerDialog datePickerDialogEnd = new DatePickerDialog(getContext(),
                         CreateEventFragment.this, year, month, day);
                 datePickerDialogEnd.show();
+                break;
 
             case R.id.createEventButton:
                 if (!(startDateTextView.getText().toString().isEmpty()) || !(endDateTextView.getText().toString().isEmpty()))
@@ -345,7 +349,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
                             eventDetailsEditText.getText().toString(),
                             eventLocationEditText.getText().toString(),
                             imageUri);
-                    if (!(event.validDates()))
+                    if (event.invalidSetup().length() < 1)
                         Toast.makeText(getActivity(),
                                 "THE START TIME CAN NOT BE AFTER THE END TIME\n" +
                                         "Please change the fields and submit again.",

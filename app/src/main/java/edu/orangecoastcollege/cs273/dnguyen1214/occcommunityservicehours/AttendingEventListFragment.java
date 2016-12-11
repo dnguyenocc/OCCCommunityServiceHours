@@ -3,6 +3,7 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,7 +18,7 @@ import java.util.List;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class AttendingEventListFragment extends ListFragment {
+public class AttendingEventListFragment extends Fragment {
 
     private DBHelper db;
     private List<Participation> allParticipationList;

@@ -255,6 +255,36 @@ public class Event implements Parcelable {
                 result.get(TimeUnit.MINUTES).toString() + " minutes";
     }
 
+    public String invalidSetup() {
+        setDates();
+
+        long diffInMillies = 8578;
+
+        try {
+            diffInMillies = mEnd.getTime() - mStart.getTime();
+        } catch (Exception e) {};
+        List<TimeUnit>  units = new ArrayList<TimeUnit>(EnumSet.allOf(TimeUnit.class));
+        Collections.reverse(units);
+        Map<TimeUnit,Long> result = new LinkedHashMap<TimeUnit, Long>();
+        long milliesRest = diffInMillies;
+        for ( TimeUnit unit : units ) {
+            long diff = unit.convert(milliesRest,TimeUnit.MILLISECONDS);
+            long diffInMilliesForUnit = unit.toMillis(diff);
+            milliesRest = milliesRest - diffInMilliesForUnit;
+            result.put(unit,diff);
+        }
+
+        String temp = result.get(TimeUnit.DAYS).toString() +
+                result.get(TimeUnit.HOURS).toString() +
+                result.get(TimeUnit.MINUTES).toString();
+
+        if (temp.isEmpty()) return "";
+
+        return result.get(TimeUnit.DAYS).toString() +
+                result.get(TimeUnit.HOURS).toString() +
+                result.get(TimeUnit.MINUTES).toString();
+    }
+
     /**
      * eventPassed - Checks to see if an event has passed and returns either True or False
      *
