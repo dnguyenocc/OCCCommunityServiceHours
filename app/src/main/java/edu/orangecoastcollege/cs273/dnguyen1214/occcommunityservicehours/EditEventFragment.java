@@ -11,6 +11,8 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.AnyRes;
 import android.support.annotation.NonNull;
@@ -46,8 +48,9 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
     private ImageView eventImageView;
     private EditText eventNameEditText, eventLocationEditText, eventDetailsEditText;
     private TextView startDateTextView, endDateTextView;
-    private Button createEventButton;
+    private Button submitChangesButton;
 
+    Event event;
     private Calendar c;
 
     private DatePickerDialog datePickerDialogStart, datePickerDialogEnd;
@@ -85,12 +88,20 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
         eventDetailsEditText = (EditText) v.findViewById(R.id.eventDetailsEditText);
         startDateTextView = (TextView) v.findViewById(R.id.startDateTextView);
         endDateTextView = (TextView) v.findViewById(R.id.endDateTextView);
-        createEventButton = (Button) v.findViewById(R.id.createEventButton);
+        submitChangesButton = (Button) v.findViewById(R.id.submitChangesButton);
         eventImageView = (ImageView) v.findViewById(R.id.eventImageView);
 
+        event = this.getArguments().getParcelable("SelectedEvent");
 
+        eventNameEditText.setText(event.getName());
+        eventLocationEditText.setText(event.getLocation());
+        eventDetailsEditText.setText(event.getDescription());
+        startDateTextView.setText(event.getStartDate());
+        endDateTextView.setText(event.getEndDate());
+        eventImageView.setImageURI(event.getImageUri());
+        imageUri = event.getImageUri();
 
-        // Set up TextChanged listeners
+                // Set up TextChanged listeners
         eventNameEditText.addTextChangedListener(nameChangedListener);
         eventLocationEditText.addTextChangedListener(locationChangedListener);
 
@@ -98,7 +109,7 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
         eventImageView.setOnClickListener(this);
         startDateTextView.setOnClickListener(this);
         endDateTextView.setOnClickListener(this);
-        createEventButton.setOnClickListener(this);
+        submitChangesButton.setOnClickListener(this);
 
         return v;
 
@@ -118,10 +129,10 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
             if ((name.isEmpty() || name.length() < 2) && !locationValid)
             {
                 eventNameEditText.setError("Need at least 2 characters");
-                createEventButton.setEnabled(false);
+                submitChangesButton.setEnabled(false);
                 nameValid = false;
             } else {
-                createEventButton.setEnabled(true);
+                submitChangesButton.setEnabled(true);
                 nameValid = true;
             }
         }
@@ -145,10 +156,10 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
             if ((name.isEmpty() || name.length() < 15) && !nameValid)
             {
                 eventLocationEditText.setError("Need at least 15 characters");
-                createEventButton.setEnabled(false);
+                submitChangesButton.setEnabled(false);
                 locationValid = false;
             } else {
-                createEventButton.setEnabled(true);
+                submitChangesButton.setEnabled(true);
                 locationValid = true;
             }
         }
@@ -337,12 +348,14 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
                 {
                     DBHelper db = new DBHelper(getContext());
                     User user = db.getLoginUser();
-                    Event event = new Event(name, user.getmId(),
-                            startDateTextView.getText().toString(),
-                            endDateTextView.getText().toString(),
-                            eventDetailsEditText.getText().toString(),
-                            eventLocationEditText.getText().toString(),
-                            imageUri);
+
+                    event.setName(eventNameEditText.getText().toString());
+                    event.setStartDate(startDateTextView.getText().toString());
+                    event.setEndDate(startDateTextView.getText().toString());
+                    event.setLocation(eventLocationEditText.getText().toString());
+                    event.setImageUri(imageUri);
+
+
                     if (event.invalidSetup().length() < 1)
                         Toast.makeText(getActivity(),
                                 "THE START TIME CAN NOT BE AFTER THE END TIME\n" +

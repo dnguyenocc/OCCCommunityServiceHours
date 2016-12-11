@@ -84,16 +84,20 @@ public class HostEventActivity extends AppCompatActivity {
             bundle.putParcelable("SelectedEvent", selectedEvent);
 
             Fragment fragment = null;
+
             try {
-                fragment = (Fragment) EditEventFragment.class.newInstance();
+                fragment = EditEventFragment.class.newInstance();
             } catch (InstantiationException e) {
                 e.printStackTrace();
             } catch (IllegalAccessException e) {
                 e.printStackTrace();
             }
+
+            fragment.setArguments(bundle);
+
             // Insert the fragment by replacing any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+            fragmentManager.beginTransaction().replace(R.id.host_fragment, fragment).commit();
         }
     }
 }

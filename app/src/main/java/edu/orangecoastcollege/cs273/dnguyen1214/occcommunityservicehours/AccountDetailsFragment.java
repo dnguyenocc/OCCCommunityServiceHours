@@ -126,6 +126,8 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         serviceHoursTextView.setText(R.string.service_hours + " "
                 + );
          */
+        String hours = String.valueOf(user.getmHours());
+        serviceHoursTextView.setText(R.string.service_hours + " " + hours);
         profileImageView.setImageURI(user.getmImageUri());
         userNameTextView.setText(user.getmUserName());
         lastNameEditText.setText(user.getLastName());
