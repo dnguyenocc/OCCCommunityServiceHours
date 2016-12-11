@@ -10,7 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -46,7 +46,7 @@ public class AdminActivity extends AppCompatActivity
 
 
         //Set the main fragment
-        transitionFragment(ValidationRequestListFragment.class);
+        transitionFragment(new ValidationRequestListFragment(),"ValidationRequestList");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -147,30 +147,35 @@ public class AdminActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
             // transition fragment
-            transitionFragment(AccountDetailsFragment.class);
+            transitionFragment( new  AccountDetailsFragment(), "AccountDetail");
 
         }
         else if (id == R.id.nav_create_events) {
-            //TODO put attending fragment here
-            startActivity(new Intent(this, HostEventActivity.class));
+            //TODO put  fragment here
+           startActivity(new Intent(this, HostEventActivity.class));
 
+
+        }else if (id == R.id.nav_home) {
+            //TODO put  fragment here
+           // transitionFragment(new AttendedEventListFragment(),"AttendedEventList");
         }
         else if (id == R.id.nav_upcoming_events) {
-            //TODO put upcoming fragment here
-            transitionFragment(UpcommingEventsListActivityFragment.class);
+            //TODO put  fragment here
+            transitionFragment(new UpcommingEventsListActivityFragment(), "UpcomingEventList");
         }
         else if (id == R.id.nav_past_events) {
-            //TODO put passed fragment here
-            transitionFragment(AttendedEventListFragment.class);
+            //TODO put  fragment here
+            transitionFragment(new AttendedEventListFragment(),"AttendedEventList");
         }
         else if (id == R.id.nav_validate_requests) {
-        //TODO put passed fragment here
-        transitionFragment(ValidationRequestListFragment.class);
+        //TODO put  fragment here
+            transitionFragment(new ValidationRequestListFragment(), "ValidationRequestList");
         } else if (id == R.id.nav_point) {
             //TODO put fragment want to be transition here
+            startActivity(new Intent(this, PointAwardActivity.class));
         }
         else if (id == R.id.nav_feedback) {
-            transitionFragment(FeedbackFragment.class);
+            transitionFragment(new FeedbackFragment(),"Feedback");
         }
         else if (id == R.id.nav_exist) {
             db.logout(db.getLoginUser());
@@ -185,18 +190,31 @@ public class AdminActivity extends AppCompatActivity
         return true;
     }
 
-    public void transitionFragment(Class fragmentClass)
+//    public void transitionFragment(Class fragmentClass)
+//    {
+//        try {
+//            Fragment fragment = (Fragment) fragmentClass.newInstance();
+//            // Insert the fragment by replacing any existing fragment
+//            FragmentManager fragmentManager = getSupportFragmentManager();
+//            fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+//    }
+
+//create tag for fragment so we can look up fragment later by tag
+    // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
+    public void transitionFragment(Fragment fragmentClass, String tag)
     {
         try {
-            Fragment fragment = (Fragment) fragmentClass.newInstance();
+            FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
             // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+            fragment.replace(R.id.fragmentContent, fragmentClass,tag).commit();
+            //fragment.add(R.id.fragmentContent, fragmentClass).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
-
 
     public void viewEventDetails(View view) {
         if (view instanceof LinearLayout) {
