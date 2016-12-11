@@ -10,7 +10,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //TODO Set the main fragment
-        transitionFragment(AllEventListFragment.class);
+        transitionFragment(new AllEventListFragment(),"Homepage");
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -80,20 +80,26 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
-            startActivity(intent);
-            finish();
-            System.exit(0);
+
+        if (getSupportFragmentManager().findFragmentByTag("Homepage") != null) {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+                startActivity(intent);
+                finish();
+                System.exit(0);
+            }
+        }
+        else
+        {
+            transitionFragment(new AllEventListFragment(),"Homepage");
         }
     }
-
     @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -148,23 +154,25 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.nav_profile) {
             // transition fragment
-            transitionFragment(AccountDetailsFragment.class);
-
+            transitionFragment(new AccountDetailsFragment(),"AccountDetail");
+        } else if (id == R.id.nav_home) {
+            //TODO put fragment want to be transition here
+            transitionFragment(new AllEventListFragment(),"Homepage");
         } else if (id == R.id.nav_attending_events) {
             //TODO put fragment want to be transition here
-            transitionFragment(AttendingEventListFragment.class);
-        } else if (id == R.id.nav_upcoming_events) {
+            transitionFragment(new AttendingEventListFragment(),"AttendingEventList");
+        } else if (id == R.id.nav_all_events) {
             //TODO put fragment want to be transition here
-            transitionFragment(UpcommingEventsListActivityFragment.class);
+            transitionFragment(new AllEventListFragment(),"AllEventList");
         } else if (id == R.id.nav_attended_events) {
             //TODO put fragment want to be transition here
-            transitionFragment(AttendedEventListFragment.class);
+            transitionFragment(new AttendedEventListFragment(),"AttendedEventList");
         } else if (id == R.id.nav_point) {
             //TODO put fragment want to be transition here
             startActivity(new Intent(this,PointAwardActivity.class));
         } else if (id == R.id.nav_feedback) {
             //TODO put fragment want to be transition here
-            transitionFragment(FeedbackFragment.class);
+            transitionFragment(new FeedbackFragment(),"Feedback");
         }else if (id == R.id.nav_exist) {
 
             db.logout(db.getLoginUser());
@@ -179,13 +187,15 @@ public class MainActivity extends AppCompatActivity
     }
 
 
-    public void transitionFragment(Class fragmentClass)
+    //create tag for fragment so we can look up fragment later by tag
+    // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
+    public void transitionFragment(Fragment fragmentClass, String tag)
     {
         try {
-            Fragment fragment = (Fragment) fragmentClass.newInstance();
+            FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
             // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
+            fragment.replace(R.id.fragmentContent, fragmentClass,tag).commit();
+            //fragment.add(R.id.fragmentContent, fragmentClass).commit();
         } catch (Exception e) {
             e.printStackTrace();
         }

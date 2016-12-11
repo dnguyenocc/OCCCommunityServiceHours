@@ -32,10 +32,9 @@
     <string name="filter_by_semester">Lọc bằng mùa học</string>
     <string name="filter_setting">Lọc</string>
     <string name="forgot_password">Quên mật khẩu?</string>
-    <string name="hello_blank_fragment"></string>
     <string name="home">Trang chủ</string>
     <string name="hours_volunteered">Giờ tình nguyện:</string>
-    <string name="lifetime_level"></string>
+    <string name="lifetime_level">Huy chương cuộc đời</string>
     <string name="link_login">Đã là thành viên? Đăng nhập</string>
     <string name="log_out">Đăng xuất</string>
     <string name="message">Lời nhắn</string>
@@ -73,8 +72,8 @@
     <string name="submit">Gửi</string>
     <string name="title_activity_account_detail">Chi tiết tài khoản</string>
     <string name="title_activity_login">Đăng nhập</string>
-    <string name="title_activity_main"></string>
-    <string name="upcoming_event">Sự kiện sắp tới</string>
+    <string name="title_activity_main">Trang chủ</string>
+    <string name="all_event">Tất cả các sự kiện</string>
     <string name="update">Cập nhật tài khoản</string>
     <string name="update_security_question">Cập nhật câu hỏi bảo mật</string>
     <string name="validate_request">Xác nhận yêu cầu</string>

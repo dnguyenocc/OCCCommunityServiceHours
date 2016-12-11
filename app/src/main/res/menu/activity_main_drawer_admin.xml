@@ -18,9 +18,9 @@
                     android:icon="@drawable/ic_playlist_add_black_24dp"
                     android:title="@string/create_event" />
                 <item
-                    android:id="@+id/nav_upcoming_events"
+                    android:id="@+id/nav_all_events"
                     android:icon="@drawable/ic_playlist_play_black_24dp"
-                    android:title="@string/upcoming_event" />
+                    android:title="@string/all_event" />
                 <item
                     android:id="@+id/nav_past_events"
                     android:icon="@drawable/ic_playlist_add_check_black_24dp"

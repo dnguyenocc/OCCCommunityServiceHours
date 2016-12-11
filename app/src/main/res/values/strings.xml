@@ -76,7 +76,7 @@
     <!--Menu Drawer-->
     <string name="my_account">My Profile</string>
     <string name="create_event">Create</string>
-    <string name="upcoming_event">Upcoming</string>
+    <string name="all_event">All</string>
     <string name="past_event">Past</string>
     <string name="attending_event">Attending</string>
     <string name="attended_event">Attended</string>
@@ -107,6 +107,6 @@
     <string name="attended_event_list">Attended Events</string>
     <string name="detail_medal">More detail about the level here.</string>
     <string name="message">Message</string>
-    <string name="send">Send</string>
+    <string name="send_feedback">Send Feedback</string>
 
 </resources>

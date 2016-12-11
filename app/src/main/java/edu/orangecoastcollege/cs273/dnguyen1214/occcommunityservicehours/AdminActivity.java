@@ -46,7 +46,7 @@ public class AdminActivity extends AppCompatActivity
 
 
         //Set the main fragment
-        transitionFragment(new ValidationRequestListFragment(),"ValidationRequestList");
+        transitionFragment(new AllEventListFragment(),"Homepage");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -78,17 +78,23 @@ public class AdminActivity extends AppCompatActivity
 
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-            Intent intent = new Intent(Intent.ACTION_MAIN);
-            intent.addCategory(Intent.CATEGORY_HOME);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
-            startActivity(intent);
-            finish();
-            System.exit(0);
+        if (getSupportFragmentManager().findFragmentByTag("Homepage") != null) {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);//***Change Here***
+                startActivity(intent);
+                finish();
+                System.exit(0);
+            }
+        }
+        else
+        {
+            transitionFragment(new AllEventListFragment(),"Homepage");
         }
     }
 
@@ -157,11 +163,11 @@ public class AdminActivity extends AppCompatActivity
 
         }else if (id == R.id.nav_home) {
             //TODO put  fragment here
-           // transitionFragment(new AttendedEventListFragment(),"AttendedEventList");
+           transitionFragment(new AllEventListFragment(),"Homepage");
         }
-        else if (id == R.id.nav_upcoming_events) {
+        else if (id == R.id.nav_all_events) {
             //TODO put  fragment here
-            transitionFragment(new UpcommingEventsListActivityFragment(), "UpcomingEventList");
+            transitionFragment(new AllEventListFragment(), "AllEventList");
         }
         else if (id == R.id.nav_past_events) {
             //TODO put  fragment here
@@ -190,19 +196,8 @@ public class AdminActivity extends AppCompatActivity
         return true;
     }
 
-//    public void transitionFragment(Class fragmentClass)
-//    {
-//        try {
-//            Fragment fragment = (Fragment) fragmentClass.newInstance();
-//            // Insert the fragment by replacing any existing fragment
-//            FragmentManager fragmentManager = getSupportFragmentManager();
-//            fragmentManager.beginTransaction().replace(R.id.fragmentContent, fragment).commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
 
-//create tag for fragment so we can look up fragment later by tag
+    //create tag for fragment so we can look up fragment later by tag
     // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
     public void transitionFragment(Fragment fragmentClass, String tag)
     {
