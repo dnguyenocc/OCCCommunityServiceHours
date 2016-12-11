@@ -15,6 +15,8 @@ import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -45,6 +47,7 @@ public class LoginActivity extends AppCompatActivity {
     SessionManager sManager;
     private AnimatorSet mSetRightOut;
     private AnimatorSet mSetLeftIn;
+    private Animation shakeAnim;
     private boolean mIsBackVisible = false;
 
 
@@ -143,6 +146,9 @@ public class LoginActivity extends AppCompatActivity {
         }
         else
         {
+            // Start shake animation
+            shakeAnim = AnimationUtils.loadAnimation(this, R.anim.shake_anim);
+            loginMainLayout.startAnimation(shakeAnim);
             loginProgressBar.setVisibility(ProgressBar.INVISIBLE);
             signInButton.setEnabled(true);
             loginMainLayout.setVisibility(LinearLayout.VISIBLE);
