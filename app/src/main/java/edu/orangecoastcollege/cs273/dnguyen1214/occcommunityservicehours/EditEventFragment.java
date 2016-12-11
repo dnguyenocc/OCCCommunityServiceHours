@@ -1,7 +1,6 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 
-import android.*;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
@@ -20,7 +19,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,20 +30,15 @@ import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
-import java.util.Map;
-import java.util.Stack;
-
-import static edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.R.id.firstNameEditText;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class CreateEventFragment extends Fragment implements View.OnClickListener,
+public class EditEventFragment extends Fragment implements View.OnClickListener,
         DatePickerDialog.OnDateSetListener, TimePickerDialog.OnTimeSetListener {
 
     private static final int REQUEST_CODE_PHOTO = 100;
@@ -69,7 +62,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
 
     private int past = 0, current = 0;
 
-    public CreateEventFragment() {
+    public EditEventFragment() {
         // Required empty public constructor
     }
 
@@ -78,7 +71,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View v = inflater.inflate(R.layout.fragment_create_event, container, false);
+        View v = inflater.inflate(R.layout.fragment_edit_event, container, false);
 
         imageUri = getUriToResource(getContext(), R.drawable.default_image);
 
@@ -93,8 +86,9 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
         startDateTextView = (TextView) v.findViewById(R.id.startDateTextView);
         endDateTextView = (TextView) v.findViewById(R.id.endDateTextView);
         createEventButton = (Button) v.findViewById(R.id.createEventButton);
-
         eventImageView = (ImageView) v.findViewById(R.id.eventImageView);
+
+
 
         // Set up TextChanged listeners
         eventNameEditText.addTextChangedListener(nameChangedListener);
@@ -107,6 +101,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
         createEventButton.setOnClickListener(this);
 
         return v;
+
     }
 
     TextWatcher nameChangedListener = new TextWatcher() {
@@ -327,13 +322,13 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
                 inStartDate = true;
                 DatePickerDialog datePickerDialogStart =
                         new DatePickerDialog(getContext(),
-                                CreateEventFragment.this, year, month, day);
+                                EditEventFragment.this, year, month, day);
                 datePickerDialogStart.show();
                 break;
 
             case R.id.endDateTextView:
                 DatePickerDialog datePickerDialogEnd = new DatePickerDialog(getContext(),
-                        CreateEventFragment.this, year, month, day);
+                        EditEventFragment.this, year, month, day);
                 datePickerDialogEnd.show();
                 break;
 
@@ -363,5 +358,4 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
                 break;
         }
     }
-
 }
