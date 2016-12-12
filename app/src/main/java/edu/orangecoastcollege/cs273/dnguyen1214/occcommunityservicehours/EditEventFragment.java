@@ -21,6 +21,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -153,7 +154,7 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             location = eventLocationEditText.getText().toString();
 
-            if ((name.isEmpty() || name.length() < 15) && !nameValid)
+            if ((location.isEmpty() || location.length() < 15) && !nameValid)
             {
                 eventLocationEditText.setError("Need at least 15 characters");
                 submitChangesButton.setEnabled(false);
@@ -314,6 +315,8 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
                                     minuteFinal,
                                     isPm ? "pm" : "am"));
         }
+
+        submitChangesButton.setEnabled(true);
     }
 
 
@@ -343,7 +346,7 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
                 datePickerDialogEnd.show();
                 break;
 
-            case R.id.createEventButton:
+            case R.id.submitChangesButton:
                 if (!(startDateTextView.getText().toString().isEmpty()) || !(endDateTextView.getText().toString().isEmpty()))
                 {
                     DBHelper db = new DBHelper(getContext());
@@ -355,15 +358,17 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
                     event.setLocation(eventLocationEditText.getText().toString());
                     event.setImageUri(imageUri);
 
-
-                    if (event.invalidSetup().length() < 1)
+                    if (event.invalidSetup().length() <= 3) {
+                        Log.i("Invalid Times are ", String.valueOf(event.invalidSetup().length()));
                         Toast.makeText(getActivity(),
                                 "THE START TIME CAN NOT BE AFTER THE END TIME\n" +
                                         "Please change the fields and submit again.",
                                 Toast.LENGTH_SHORT).show();
+                        submitChangesButton.setEnabled(false);
+                    }
                     else {
-                        db.addEvent(event);
-                        Toast.makeText(getContext(), "Your event has been added",
+                        db.updateEvent(event);
+                        Toast.makeText(getContext(), "Your event has been updated",
                                 Toast.LENGTH_SHORT).show();
                         startActivity(new Intent(getContext(), HostEventActivity.class));
                     }
