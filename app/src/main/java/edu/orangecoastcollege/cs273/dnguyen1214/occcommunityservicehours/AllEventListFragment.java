@@ -25,7 +25,7 @@ import java.util.List;
 public class AllEventListFragment extends Fragment {
     private DBHelper db;
     private List<Event> allEventsList;
-    private List<Event> filteredEventsList;
+    //private List<Event> filteredEventsList;
 
     private EditText eventNameEditText;
     private Spinner eventTimeSpinner;
@@ -61,7 +61,7 @@ public class AllEventListFragment extends Fragment {
         allEventsList.add(new Event(3,"Blood Donation","12-01-16 07:45 am","12-01-16 10:45 am",
                 "Need volunteers to donate blood.","OCC Watson Hall",imageURI));
         */
-        filteredEventsList = new ArrayList<>(allEventsList);
+        //filteredEventsList = new ArrayList<>(allEventsList);
 
         eventNameEditText = (EditText) view.findViewById(R.id.eventNameEditText);
         eventNameEditText.addTextChangedListener(eventNameTextWatcher);
@@ -74,10 +74,17 @@ public class AllEventListFragment extends Fragment {
         eventTimeSpinner.setOnItemSelectedListener(eventTimeSpinnerListener);
 
         eventsListView = (ListView) view.findViewById(R.id.allEventsListView);
-        eventsListAdapter = new EventListAdapter(context, R.layout.event_list_item,filteredEventsList);
+        eventsListAdapter = new EventListAdapter(context, R.layout.event_list_item,allEventsList);
         eventsListView.setAdapter(eventsListAdapter);
 
         return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        allEventsList =db.getAllEvents();
+        eventsListAdapter.notifyDataSetChanged();
     }
 
     public TextWatcher eventNameTextWatcher = new TextWatcher() {

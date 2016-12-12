@@ -40,6 +40,7 @@
     <string name="security_question_2">Question 2</string>
     <string name="security_answer_1">Answer 1</string>
     <string name="security_answer_2">Answer 2</string>
+    <string name="view_participants">View participants</string>
 
     <!-- String related to Request Validation -->
     <string name="hours_volunteered">Hours volunteered:</string>
@@ -108,5 +109,6 @@
     <string name="detail_medal">More detail about the level here.</string>
     <string name="message">Message</string>
     <string name="send_feedback">Send Feedback</string>
+
 
 </resources>

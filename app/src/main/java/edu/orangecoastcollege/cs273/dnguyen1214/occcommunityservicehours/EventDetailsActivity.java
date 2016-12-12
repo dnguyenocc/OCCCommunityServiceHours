@@ -1,9 +1,15 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +27,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EventDetailsActivity extends AppCompatActivity implements OnMapReadyCallback {
@@ -76,6 +83,47 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
             db.addParticipation(Participation.REGISTERED,false,0.0f,"",loginUser.getmId(),selectedEvent.getId());
             updateButton();
             updateStatus();
+            DialogFragment dialogFragment = new DialogFragment(){
+                @Override
+                public Dialog onCreateDialog(Bundle bundle) {
+
+                    AlertDialog.Builder builder =
+                            new AlertDialog.Builder(getActivity());
+
+                    builder.setTitle(R.string.create_calendar_title);
+                    builder.setMessage("Do you want to set up an event in your calendar?");
+
+                    builder.setNegativeButton(R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int id) {
+
+                                }
+                            }
+                    );
+                    builder.setPositiveButton("Yes",
+                            new DialogInterface.OnClickListener(){
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            Intent intent = new Intent(Intent.ACTION_INSERT)
+                                    .setData(CalendarContract.Events.CONTENT_URI)
+                                    .putExtra(CalendarContract.Events.TITLE, selectedEvent.getName())
+                                    .putExtra(CalendarContract.Events.EVENT_LOCATION, selectedEvent.getLocation())
+                                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, selectedEvent.getStartDate())
+                                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, selectedEvent.getEndDate());
+                            if (intent.resolveActivity(getPackageManager()) != null) {
+                                startActivity(intent);
+                            }
+                        }
+                    });
+
+
+                    return builder.create(); // return the AlertDialog
+                }
+            };
+
+            FragmentManager fm = getFragmentManager();
+            dialogFragment.show(fm, "Participants");
         }
     }
 
@@ -85,6 +133,7 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
             Intent detailsIntent = new Intent(this, requestValidationActivity.class);
             detailsIntent.putExtra("SelectedParticipation",participation);
             startActivity(detailsIntent);
+
         }
     }
 
@@ -97,6 +146,46 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
         }
     }
 
+    public  void viewEvent(View view){
+        final ArrayList<Participation> allParticipations = db.getAllParticipationsByEventId(selectedEvent.getId());
+        final ParticipationListAdapter participationListAdapter = new ParticipationListAdapter(this,R.layout.request_list_item,allParticipations);
+        DialogFragment dialogFragment = new DialogFragment(){
+            @Override
+            public Dialog onCreateDialog(Bundle bundle) {
+                CharSequence[] names = new CharSequence[allParticipations.size()];
+                for (int i=0;i<allParticipations.size();i++)
+                {
+                    User user = allParticipations.get(i).getUser();
+                    names[i] = (user.getLastName() +", " +user.getFirstName());
+                }
+                AlertDialog.Builder builder =
+                        new AlertDialog.Builder(getActivity());
+
+                builder.setAdapter(participationListAdapter, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                builder.setPositiveButton(R.string.cancel,
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog,
+                                                int id) {
+
+                            }
+                        }
+                );
+
+
+                return builder.create(); // return the AlertDialog
+            }
+        };
+
+        FragmentManager fm = getFragmentManager();
+        dialogFragment.show(fm, "Participants");
+
+    }
 
 
 
@@ -137,6 +226,8 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
            buttonLinearLayouts[0].setVisibility(View.VISIBLE);
         }
     }
+
+
 
     @Override
     public void onMapReady(GoogleMap googleMap) {

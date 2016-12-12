@@ -2,10 +2,13 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -62,7 +65,16 @@ public class PointAwardActivity extends AppCompatActivity {
 
     }
 
-
+    public void viewEventDetails(View view) {
+        if (view instanceof LinearLayout) {
+            LinearLayout selectedLayout = (LinearLayout) view;
+            Event selectedEvent = (Event) selectedLayout.getTag();
+            Log.i("OCC Community Service", selectedEvent.toString());
+            Intent detailsIntent = new Intent(this, EventDetailsActivity.class);
+            detailsIntent.putExtra("SelectedEvent",selectedEvent);
+            startActivity(detailsIntent);
+        }
+    }
 
 
     @Override
