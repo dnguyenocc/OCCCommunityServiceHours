@@ -39,6 +39,23 @@ public class AttendedEventListFragment extends Fragment {
         // Required empty public constructor
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        user = db.getLoginUser();
+        allParticipationList = db.getAllParticipationsByUserId(user.getmId());
+
+        pastEvents = new ArrayList<Event>();
+        for (Participation participation : allParticipationList) {
+            if (participation.getEvent().eventPassed()) pastEvents.add(participation.getEvent());
+        }
+
+        if (pastEvents.isEmpty())
+            Toast.makeText(getContext(), "You have no past events", Toast.LENGTH_LONG).show();
+        eventsListAdapter = new EventListAdapter(getContext(), R.layout.event_list_item, pastEvents);
+        pastEventsListView.setAdapter(eventsListAdapter);
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,4 +96,5 @@ public class AttendedEventListFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
     }
+
 }

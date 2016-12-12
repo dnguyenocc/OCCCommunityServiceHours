@@ -255,34 +255,38 @@ public class Event implements Parcelable {
                 result.get(TimeUnit.MINUTES).toString() + " minutes";
     }
 
-    public String invalidSetup() {
+    public int invalidSetup() {
         setDates();
 
-        long diffInMillies = 8578;
+        long different = 14;
 
+        //milliseconds
         try {
-            diffInMillies = mEnd.getTime() - mStart.getTime();
-        } catch (Exception e) {};
-        List<TimeUnit>  units = new ArrayList<TimeUnit>(EnumSet.allOf(TimeUnit.class));
-        Collections.reverse(units);
-        Map<TimeUnit,Long> result = new LinkedHashMap<TimeUnit, Long>();
-        long milliesRest = diffInMillies;
-        for ( TimeUnit unit : units ) {
-            long diff = unit.convert(milliesRest,TimeUnit.MILLISECONDS);
-            long diffInMilliesForUnit = unit.toMillis(diff);
-            milliesRest = milliesRest - diffInMilliesForUnit;
-            result.put(unit,diff);
-        }
+            different = mEnd.getTime() - mStart.getTime();
+        } catch (Exception e) {}
 
-        String temp = result.get(TimeUnit.DAYS).toString() +
-                result.get(TimeUnit.HOURS).toString() +
-                result.get(TimeUnit.MINUTES).toString();
+        System.out.println("startDate : " + mStart);
+        System.out.println("endDate : "+ mEnd);
+        System.out.println("different : " + different);
 
-        if (temp.isEmpty()) return "";
+        long secondsInMilli = 1000;
+        long minutesInMilli = secondsInMilli * 60;
+        long hoursInMilli = minutesInMilli * 60;
+        long daysInMilli = hoursInMilli * 24;
 
-        return result.get(TimeUnit.DAYS).toString() +
-                result.get(TimeUnit.HOURS).toString() +
-                result.get(TimeUnit.MINUTES).toString();
+        long elapsedDays = different / daysInMilli;
+        different = different % daysInMilli;
+
+        long elapsedHours = different / hoursInMilli;
+        different = different % hoursInMilli;
+
+        long elapsedMinutes = different / minutesInMilli;
+
+        String temp = String.valueOf(elapsedDays) + " days, " +
+                String.valueOf(elapsedHours) + " hours and " +
+                String.valueOf(elapsedMinutes) + " minutes";
+
+        return temp.indexOf('-');
     }
 
     /**
@@ -292,11 +296,17 @@ public class Event implements Parcelable {
      */
     public boolean eventPassed()
     {
+        Date now = new Date(Calendar.getInstance().getTimeInMillis());
+        Date temp = mEnd;
+        mEnd = now;
+
         setDates();
 
-        Date now = new Date(Calendar.getInstance().getTimeInMillis());
+        boolean result = invalidSetup() != -1 ? true : false;
 
-        return now.after(mEnd);
+        mEnd = temp;
+
+        return result;
     }
 
     public boolean validDates()

@@ -51,6 +51,8 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
     private TextView startDateTextView, endDateTextView;
     private Button submitChangesButton;
 
+    private EditText throwAway;
+
     Event event;
     private Calendar c;
 
@@ -59,7 +61,7 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
     private int day, month, year, hour, minute,
             dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
 
-    private boolean isPm = false, inStartDate = true,
+    private boolean isPm = false, inStartDate = false,
             nameValid = false, locationValid = false;
 
     private String name, location;
@@ -114,6 +116,11 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
 
         return v;
 
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     TextWatcher nameChangedListener = new TextWatcher() {
@@ -305,6 +312,7 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
                                     minuteFinal,
                                     isPm ? "pm" : "am"));
             inStartDate = false;
+            Log.i("startDate ", startDateTextView.getText().toString());
         } else {
             endDateTextView.setText(
                     monthFinal + "-" + dayFinal + "-" + yearFinal + " " +
@@ -314,9 +322,8 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
                                     (hourFinal == 12 || hourFinal == 0) ? 12 : hourFinal % 12,
                                     minuteFinal,
                                     isPm ? "pm" : "am"));
+            Log.i("endDate ", endDateTextView.getText().toString());
         }
-
-        submitChangesButton.setEnabled(true);
     }
 
 
@@ -354,17 +361,19 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
 
                     event.setName(eventNameEditText.getText().toString());
                     event.setStartDate(startDateTextView.getText().toString());
-                    event.setEndDate(startDateTextView.getText().toString());
+                    event.setEndDate(endDateTextView.getText().toString());
                     event.setLocation(eventLocationEditText.getText().toString());
                     event.setImageUri(imageUri);
 
-                    if (event.invalidSetup().length() <= 3) {
-                        Log.i("Invalid Times are ", String.valueOf(event.invalidSetup().length()));
+                    Log.i("Duration is ", String.valueOf(event.getDuration()));
+                    //Log.i("Length of duration is ", String.valueOf(event.invalidSetup().length()));
+
+                    if (event.invalidSetup() != -1) {
+                        //Log.i("Invalid Times are ", String.valueOf(event.invalidSetup().length()));
                         Toast.makeText(getActivity(),
                                 "THE START TIME CAN NOT BE AFTER THE END TIME\n" +
                                         "Please change the fields and submit again.",
                                 Toast.LENGTH_SHORT).show();
-                        submitChangesButton.setEnabled(false);
                     }
                     else {
                         db.updateEvent(event);

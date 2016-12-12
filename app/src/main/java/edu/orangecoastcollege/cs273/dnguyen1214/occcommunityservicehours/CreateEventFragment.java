@@ -62,7 +62,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
     private int day, month, year, hour, minute,
             dayFinal, monthFinal, yearFinal, hourFinal, minuteFinal;
 
-    private boolean isPm = false, inStartDate = true,
+    private boolean isPm = false, inStartDate = false,
             nameValid = false, locationValid = false;
 
     private String name, location;
@@ -107,6 +107,11 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
         createEventButton.setOnClickListener(this);
 
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     TextWatcher nameChangedListener = new TextWatcher() {
@@ -342,13 +347,15 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
                 {
                     DBHelper db = new DBHelper(getContext());
                     User user = db.getLoginUser();
+                    System.out.println(endDateTextView.getText().toString());
                     Event event = new Event(name, user.getmId(),
-                            startDateTextView.getText().toString(),
+                            endDateTextView.getText().toString(),
                             endDateTextView.getText().toString(),
                             eventDetailsEditText.getText().toString(),
                             eventLocationEditText.getText().toString(),
                             imageUri);
-                    if (event.invalidSetup().length() <= 3)
+                    event.setEndDate(endDateTextView.getText().toString());
+                    if (event.invalidSetup() != -1)
                         Toast.makeText(getActivity(),
                                 "THE START TIME CAN NOT BE AFTER THE END TIME\n" +
                                         "Please change the fields and submit again.",

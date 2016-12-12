@@ -36,6 +36,25 @@ public class AttendingEventListFragment extends Fragment {
 
 
     @Override
+    public void onResume() {
+        super.onResume();
+
+        user = db.getLoginUser();
+        allParticipationList = db.getAllParticipationsByUserId(user.getmId());
+
+
+        presentEvents = new ArrayList<Event>();
+        for (Participation participation : allParticipationList) {
+            if (!(participation.getEvent().eventPassed())) presentEvents.add(participation.getEvent());
+        }
+
+        if (presentEvents.isEmpty())
+            Toast.makeText(getContext(), "You are not attending any events at the moment.", Toast.LENGTH_LONG).show();
+        eventsListAdapter = new EventListAdapter(getContext(), R.layout.event_list_item, presentEvents);
+        presentEventsListView.setAdapter(eventsListAdapter);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment

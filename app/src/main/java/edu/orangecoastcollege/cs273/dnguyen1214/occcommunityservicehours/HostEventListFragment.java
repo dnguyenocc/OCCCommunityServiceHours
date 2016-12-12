@@ -53,6 +53,17 @@ public class HostEventListFragment extends Fragment implements View.OnClickListe
         return v;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        user = db.getLoginUser();
+        hostEvents = db.getAllEventsByOwnerId(user.getmId());
+
+        eventsListAdapter = new EventListAdapter(getContext(), R.layout.admin_event_list_item, hostEvents);
+        hostEventsListView.setAdapter(eventsListAdapter);
+    }
+
     /**
      * Called when a view has been clicked.
      *
