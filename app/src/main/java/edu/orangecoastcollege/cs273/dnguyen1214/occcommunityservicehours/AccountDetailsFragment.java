@@ -15,6 +15,7 @@ import android.support.annotation.AnyRes;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -42,7 +43,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
 
     // Declare local variables
     private Button submitButton;
-    private TextView serviceHoursTextView, userNameTextView;
+    private TextView serviceHoursTextView, userNameTextView, securityQuestionsTextView;
     private EditText lastNameEditText, firstNameEditText,
             emailEditText, numberEditText, passwordEditText;
     private ImageView profileImageView, editLastNameImageView, editFirstNameImageView,
@@ -61,6 +62,13 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
 
     public AccountDetailsFragment() {
         // Required empty public constructor
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        loginUser = db.getLoginUser();
     }
 
 
@@ -90,6 +98,8 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         editNumberImageView.setOnClickListener(this);
         editPasswordImageView.setOnClickListener(this);
         submitButton.setOnClickListener(this);
+        securityQuestionsTextView.setOnClickListener(this);
+
 
         // Set up textWatchers for the edit text fields
 
@@ -118,7 +128,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         editNumberImageView = (ImageView) v.findViewById(R.id.editNumberImageView);
         editPasswordImageView = (ImageView) v.findViewById(R.id.editPasswordImageView);
         submitButton = (Button) v.findViewById(R.id.submitButton);
-
+        securityQuestionsTextView = (TextView) v.findViewById(R.id.securityQuestionsTextView);
     }
 
     private void setUp (View v, User user) {
@@ -412,6 +422,16 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
                 break;
             case R.id.editPasswordImageView:
                 edit(passwordEditText);
+                break;
+            case R.id.securityQuestionsTextView:
+                try {
+                    Fragment fragment = AnswerQuestionSecurityFragment.class.newInstance();
+                    // Insert the fragment by replacing any existing fragment
+                    FragmentManager fragmentManager = getFragmentManager();
+                    fragmentManager.beginTransaction().replace(R.id.account_fragment, fragment).commit();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case R.id.submitButton:
                 db.updateUser(loginUser);

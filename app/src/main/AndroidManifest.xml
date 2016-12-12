@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.SEND_SMS"/>
     <!--
      -         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
      -         Google Maps Android API v2, but you must specify either coarse or fine
@@ -80,6 +80,10 @@
         <activity android:name=".HostEventActivity">
         </activity>
         <activity android:name=".UserEventActivity">
+        </activity>
+        <activity android:name=".AttendedActivity">
+        </activity>
+        <activity android:name=".AttendingActivity">
         </activity>
     </application>
 

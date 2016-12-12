@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Build;
-import android.os.Parcel;
-import android.preference.PreferenceManager;
-import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -27,14 +24,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class HostEventActivity extends AppCompatActivity
+public class AttendedActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     SessionManager manager;
@@ -45,6 +37,11 @@ public class HostEventActivity extends AppCompatActivity
 
     // Force portrait mode and check for preferences change
     private boolean phoneDevice = true, preferencesChanged = true;
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     /**
      * onCreate generates the appropriate layout to inflate, depending on the
@@ -58,7 +55,7 @@ public class HostEventActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_host_event);
+        setContentView(R.layout.activity_attended);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         getSupportActionBar().setDisplayShowTitleEnabled(false);
         getSupportActionBar().show();
@@ -74,7 +71,8 @@ public class HostEventActivity extends AppCompatActivity
         try {
             drawer.addDrawerListener(toggle);
             toggle.syncState();
-        } catch (NullPointerException e) {Log.i("NullPtr Exception", "Attempting add a listener on drawer");}
+        } catch (NullPointerException e) {
+            Log.i("NullPtr Exception", "Attempting add a listener on drawer");}
 
         //TODO update the header navigation by user interface
         NavigationView navigationView;
@@ -197,9 +195,9 @@ public class HostEventActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_exist) {
             db.logout(db.getLoginUser());
-            manager.setPreferences(HostEventActivity.this, "status", "0");
+            manager.setPreferences(AttendedActivity.this, "status", "0");
             finish();
-            startActivity(new Intent(HostEventActivity.this, LoginActivity.class));
+            startActivity(new Intent(AttendedActivity.this, LoginActivity.class));
         }
 
 

@@ -1,14 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.AttendingEventListFragment">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.AttendingEventListFragment"
+              android:orientation="vertical" android:weightSum="7">
+    <TextView
+        android:text="@string/attended_event_list_title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" android:id="@+id/attendedEventTitleTextView" android:layout_weight="1"
+        android:textSize="30sp" android:gravity="center"
+        android:background="@android:color/holo_orange_light"
+        android:textColor="@android:color/background_light"/>
 
-    <!-- TODO: Update blank fragment layout -->
     <ListView
         android:id="@+id/presentEventsListView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp" android:layout_weight="6">
     </ListView>
 
-</FrameLayout>
+</LinearLayout>

@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.AccountDetailsFragment"
     android:orientation="vertical"
-    android:weightSum="10" android:background="@android:color/holo_orange_light"
+    android:weightSum="11" android:background="@android:color/holo_orange_light"
     android:paddingLeft="10dp" android:paddingRight="10dp" android:paddingBottom="10dp">
 
 
@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         app:srcCompat="@mipmap/ic_launcher"
         android:id="@+id/profileImageView" android:adjustViewBounds="true"
-        android:scaleType="fitCenter" android:layout_weight="2.02" android:layout_height="0dp"
+        android:scaleType="fitCenter" android:layout_weight="3" android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:clickable="true"
         android:contentDescription="@string/profile_image_desc"/>
@@ -84,7 +84,7 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp" android:weightSum="7"
+        android:layout_height="0dp" android:weightSum="13"
         android:layout_marginTop="10dp"
         android:layout_weight="1">
         <EditText
@@ -94,13 +94,13 @@
             android:ems="10"
             android:id="@+id/emailEditText"
             android:clickable="false" android:focusable="false" android:focusableInTouchMode="false"
-            android:cursorVisible="false" android:layout_weight="6"
+            android:cursorVisible="false" android:layout_weight="11"
             android:background="@android:color/background_light"
             tools:ignore="NestedWeights" android:paddingLeft="10dp"/>
         <ImageView
             android:layout_width="0dp"
-            android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_menu_edit"
-            android:id="@+id/editEmailImageView" android:layout_weight="1" android:clickable="true"
+            android:layout_height="match_parent" app:srcCompat="@android:drawable/ic_menu_edit"
+            android:id="@+id/editEmailImageView" android:layout_weight="2" android:clickable="true"
             android:background="@android:color/holo_orange_light"
             android:adjustViewBounds="true" android:scaleType="fitCenter"
             android:contentDescription="@string/edit_icon_desc"/>
@@ -109,14 +109,14 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp" android:weightSum="7"
+        android:layout_height="0dp" android:weightSum="13"
         android:layout_weight="1" android:layout_marginTop="10dp">
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:inputType="phone"
             android:ems="10"
-            android:id="@+id/numberEditText" android:layout_weight="6"
+            android:id="@+id/numberEditText" android:layout_weight="11"
             android:background="@android:color/background_light"
             android:clickable="false"
             android:cursorVisible="false"
@@ -125,7 +125,7 @@
         <ImageView
             android:layout_width="0dp"
             android:layout_height="wrap_content" app:srcCompat="@android:drawable/ic_menu_edit"
-            android:id="@+id/editNumberImageView" android:layout_weight="1" android:clickable="true"
+            android:id="@+id/editNumberImageView" android:layout_weight="2" android:clickable="true"
             android:background="@android:color/holo_orange_light"
             android:adjustViewBounds="true" android:scaleType="fitCenter"
             android:contentDescription="@string/edit_icon_desc"/>
@@ -134,12 +134,12 @@
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="0dp" android:weightSum="8"
+        android:layout_height="0dp" android:weightSum="13"
         android:layout_weight="1" android:layout_marginTop="10dp">
         <android.support.design.widget.TextInputLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/passwordInputLayout" android:layout_weight="5"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:id="@+id/passwordInputLayout" android:layout_weight="11"
             android:background="@android:color/background_light" android:paddingLeft="10dp">
 
             <EditText
@@ -153,21 +153,28 @@
                 android:cursorVisible="false"
                 android:focusable="false"
                 android:focusableInTouchMode="false"
-            />
+                android:textSize="14sp"
+                android:gravity="bottom|start"/>
         </android.support.design.widget.TextInputLayout>
         <ImageView
             android:layout_width="0dp"
             android:layout_height="match_parent" app:srcCompat="@android:drawable/ic_menu_edit"
-            android:id="@+id/editPasswordImageView" android:layout_weight="3" android:clickable="true"
+            android:id="@+id/editPasswordImageView" android:layout_weight="2" android:clickable="true"
             android:background="@android:color/holo_orange_light"
             android:adjustViewBounds="true" android:scaleType="fitCenter"
             android:contentDescription="@string/edit_icon_desc"/>
     </LinearLayout>
 
+    <TextView
+        android:text="@string/security_questions"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp" android:id="@+id/securityQuestionsTextView"
+        android:layout_weight="1" android:layout_marginTop="10dp"
+        android:gravity="center" android:layout_gravity="center" android:clickable="true"/>
     <Button
         android:text="@string/update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" android:id="@+id/submitButton" android:layout_weight="0.47"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" android:id="@+id/submitButton" android:layout_weight="1"
         android:elevation="4dp"
         android:background="@android:color/holo_orange_dark" android:enabled="false"
         android:layout_gravity="center"
