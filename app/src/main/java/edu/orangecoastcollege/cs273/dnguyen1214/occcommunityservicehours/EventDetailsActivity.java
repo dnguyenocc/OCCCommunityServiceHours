@@ -109,8 +109,8 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
                                     .setData(CalendarContract.Events.CONTENT_URI)
                                     .putExtra(CalendarContract.Events.TITLE, selectedEvent.getName())
                                     .putExtra(CalendarContract.Events.EVENT_LOCATION, selectedEvent.getLocation())
-                                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, selectedEvent.getStartDate())
-                                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, selectedEvent.getEndDate());
+                                    .putExtra(CalendarContract.EXTRA_EVENT_BEGIN_TIME, selectedEvent.getStart().getTime())
+                                    .putExtra(CalendarContract.EXTRA_EVENT_END_TIME, selectedEvent.getEnd().getTime());
                             if (intent.resolveActivity(getPackageManager()) != null) {
                                 startActivity(intent);
                             }

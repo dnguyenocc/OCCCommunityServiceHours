@@ -321,6 +321,16 @@ public class Event implements Parcelable {
         }
     }
 
+    public Date getStart()
+    {
+        setDates();
+        return mStart;
+    }
+    public Date getEnd()
+    {
+        setDates();
+        return mEnd;
+    }
     @Override
     public int describeContents() {
         return 0;
