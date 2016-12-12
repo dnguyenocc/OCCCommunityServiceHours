@@ -68,7 +68,7 @@
     <!--Edit Event Strings-->
     <string name="update_event">Update Event</string>
 
-    <!--Create Event-->
+    <!--Create Event Detais-->
     <string name="event_name_hint">Enter a name:</string>
     <string name="address_location">Enter an Address:</string>
     <string name="event_description">Enter a description:</string>
@@ -77,6 +77,8 @@
     <string name="event_image">An image of the event</string>
     <string name="start_dialog">start</string>
     <string name="end_dialog">end</string>
+    <string name="participant_empty">Be the first participant!</string>
+    <string name="send_sms">send message</string>
 
     <!--Menu Drawer-->
     <string name="my_account">My Profile</string>

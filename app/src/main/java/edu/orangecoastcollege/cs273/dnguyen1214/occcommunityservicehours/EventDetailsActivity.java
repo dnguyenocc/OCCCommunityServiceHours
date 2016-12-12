@@ -9,6 +9,8 @@ import android.location.Address;
 import android.location.Geocoder;
 import android.app.DialogFragment;
 import android.app.FragmentManager;
+
+//import android.support.v4.app.FragmentManager;
 import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -147,6 +149,9 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
     }
 
     public  void viewEvent(View view){
+        ParticipantListFragment participantListFragment = ParticipantListFragment.newInstance(selectedEvent.getId());
+        participantListFragment.show(getSupportFragmentManager(),"Participants");
+        /*
         final ArrayList<Participation> allParticipations = db.getAllParticipationsByEventId(selectedEvent.getId());
         final ParticipationListAdapter participationListAdapter = new ParticipationListAdapter(this,R.layout.request_list_item,allParticipations);
         DialogFragment dialogFragment = new DialogFragment(){
@@ -184,6 +189,7 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
 
         FragmentManager fm = getFragmentManager();
         dialogFragment.show(fm, "Participants");
+        */
 
     }
 
