@@ -6,6 +6,7 @@ import android.app.Dialog;
 //import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
@@ -48,15 +49,18 @@ public class ParticipantListFragment extends DialogFragment {
         ArrayList<Participation> allParticipants = db.getAllParticipationsByEventId(eventId);
         ParticipantListAdapter participantListAdapter = new ParticipantListAdapter(mContext,R.layout.participant_list_item,allParticipants);
 
-        AlertDialog.Builder builder =
+        final AlertDialog.Builder builder =
                 new AlertDialog.Builder(getActivity());
 
+        builder.setTitle(R.string.partcipant_list);
         if (allParticipants.isEmpty())
             builder.setMessage(R.string.participant_empty);
         else
             builder.setPositiveButton(R.string.send_sms, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
+
+                    ((EventDetailsActivity)getActivity()).doPositiveClick();
 
                 }
             });

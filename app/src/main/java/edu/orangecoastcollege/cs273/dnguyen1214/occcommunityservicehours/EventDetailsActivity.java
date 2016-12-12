@@ -129,6 +129,22 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
         }
     }
 
+    public void doPositiveClick()
+    {
+        String phoneNumber = "9999999999";
+        String smsBody = "This is an SMS!";
+
+        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
+// Invokes only SMS/MMS clients
+        smsIntent.setType("vnd.android-dir/mms-sms");
+// Specify the Phone Number
+        smsIntent.putExtra("address", phoneNumber);
+// Specify the Message
+        smsIntent.putExtra("sms_body", smsBody);
+
+// Shoot!
+        startActivity(smsIntent);
+    }
     public void requestValidation(View view) {
         if (view instanceof Button) {
             Participation participation = db.getParticipation(loginUser.getmId(),selectedEvent.getId());

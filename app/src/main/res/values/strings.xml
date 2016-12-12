@@ -79,6 +79,7 @@
     <string name="end_dialog">end</string>
     <string name="participant_empty">Be the first participant!</string>
     <string name="send_sms">send message</string>
+    <string name="partcipant_list">Participant List</string>
 
     <!--Menu Drawer-->
     <string name="my_account">My Profile</string>

@@ -46,7 +46,7 @@ public class AdminActivity extends AppCompatActivity
 
 
         //Set the main fragment
-        transitionFragment(new AllEventListFragment(),"Homepage");
+        transitionFragment(new HomeFragment(),"Homepage");
 
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
@@ -149,8 +149,30 @@ public class AdminActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        doNavigate(id);
 
 
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    //create tag for fragment so we can look up fragment later by tag
+    // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
+    public void transitionFragment(Fragment fragmentClass, String tag)
+    {
+        try {
+            FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
+            // Insert the fragment by replacing any existing fragment
+            fragment.replace(R.id.fragmentContent, fragmentClass,tag).commit();
+            //fragment.add(R.id.fragmentContent, fragmentClass).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void doNavigate(int id){
         if (id == R.id.nav_profile) {
             // transition fragment
             transitionFragment( new  AccountDetailsFragment(), "AccountDetail");
@@ -158,12 +180,12 @@ public class AdminActivity extends AppCompatActivity
         }
         else if (id == R.id.nav_create_events) {
             //TODO put  fragment here
-           startActivity(new Intent(this, HostEventActivity.class));
+            startActivity(new Intent(this, HostEventActivity.class));
 
 
         }else if (id == R.id.nav_home) {
             //TODO put  fragment here
-           transitionFragment(new AllEventListFragment(),"Homepage");
+            transitionFragment(new HomeFragment(),"Homepage");
         }
         else if (id == R.id.nav_all_events) {
             //TODO put  fragment here
@@ -174,7 +196,7 @@ public class AdminActivity extends AppCompatActivity
             transitionFragment(new AttendedEventListFragment(),"AttendedEventList");
         }
         else if (id == R.id.nav_validate_requests) {
-        //TODO put  fragment here
+            //TODO put  fragment here
             transitionFragment(new ValidationRequestListFragment(), "ValidationRequestList");
         } else if (id == R.id.nav_point) {
             //TODO put fragment want to be transition here
@@ -191,26 +213,7 @@ public class AdminActivity extends AppCompatActivity
         }
 
 
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
-
-
-    //create tag for fragment so we can look up fragment later by tag
-    // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
-    public void transitionFragment(Fragment fragmentClass, String tag)
-    {
-        try {
-            FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
-            // Insert the fragment by replacing any existing fragment
-            fragment.replace(R.id.fragmentContent, fragmentClass,tag).commit();
-            //fragment.add(R.id.fragmentContent, fragmentClass).commit();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public void viewEventDetails(View view) {
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;
