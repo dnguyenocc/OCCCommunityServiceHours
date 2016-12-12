@@ -147,7 +147,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
         public void onTextChanged(CharSequence s, int start, int before, int count) {
             location = eventLocationEditText.getText().toString();
 
-            if ((name.isEmpty() || name.length() < 15) && !nameValid)
+            if ((location.isEmpty() || location.length() < 15) && !nameValid)
             {
                 eventLocationEditText.setError("Need at least 15 characters");
                 createEventButton.setEnabled(false);
@@ -348,7 +348,7 @@ public class CreateEventFragment extends Fragment implements View.OnClickListene
                             eventDetailsEditText.getText().toString(),
                             eventLocationEditText.getText().toString(),
                             imageUri);
-                    if (event.invalidSetup().length() < 1)
+                    if (event.invalidSetup().length() <= 3)
                         Toast.makeText(getActivity(),
                                 "THE START TIME CAN NOT BE AFTER THE END TIME\n" +
                                         "Please change the fields and submit again.",
