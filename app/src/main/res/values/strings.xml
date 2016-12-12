@@ -40,6 +40,7 @@
     <string name="security_question_2">Question 2</string>
     <string name="security_answer_1">Answer 1</string>
     <string name="security_answer_2">Answer 2</string>
+    <string name="view_participants">View participants</string>
 
     <!-- String related to Request Validation -->
     <string name="hours_volunteered">Hours volunteered:</string>
@@ -67,7 +68,7 @@
     <!--Edit Event Strings-->
     <string name="update_event">Update Event</string>
 
-    <!--Create Event-->
+    <!--Create Event Detais-->
     <string name="event_name_hint">Enter a name:</string>
     <string name="address_location">Enter an Address:</string>
     <string name="event_description">Enter a description:</string>
@@ -76,6 +77,9 @@
     <string name="event_image">An image of the event</string>
     <string name="start_dialog">start</string>
     <string name="end_dialog">end</string>
+    <string name="participant_empty">Be the first participant!</string>
+    <string name="send_sms">send message</string>
+    <string name="partcipant_list">Participant List</string>
 
     <!--Menu Drawer-->
     <string name="my_account">My Profile</string>
@@ -112,5 +116,6 @@
     <string name="detail_medal">More detail about the level here.</string>
     <string name="message">Message</string>
     <string name="send_feedback">Send Feedback</string>
+
 
 </resources>

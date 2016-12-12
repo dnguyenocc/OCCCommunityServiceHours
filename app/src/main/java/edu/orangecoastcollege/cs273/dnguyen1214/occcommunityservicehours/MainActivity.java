@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity
         }
         else
         {
-            transitionFragment(new AllEventListFragment(),"Homepage");
+            transitionFragment(new HomeFragment(),"Homepage");
         }
     }
     @Override
@@ -152,12 +152,20 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
+        doNavigate(id);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    public void doNavigate(int id)
+    {
         if (id == R.id.nav_profile) {
             // transition fragment
             transitionFragment(new AccountDetailsFragment(),"AccountDetail");
         } else if (id == R.id.nav_home) {
             //TODO put fragment want to be transition here
-            transitionFragment(new AllEventListFragment(),"Homepage");
+            transitionFragment(new HomeFragment(),"Homepage");
         } else if (id == R.id.nav_attending_events) {
             //TODO put fragment want to be transition here
             transitionFragment(new AttendingEventListFragment(),"AttendingEventList");
@@ -181,12 +189,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(MainActivity.this, LoginActivity.class));
 
         }
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
-
-
     //create tag for fragment so we can look up fragment later by tag
     // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
     public void transitionFragment(Fragment fragmentClass, String tag)

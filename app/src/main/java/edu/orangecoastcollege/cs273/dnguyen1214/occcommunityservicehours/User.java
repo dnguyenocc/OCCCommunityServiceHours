@@ -10,6 +10,8 @@ import android.os.Parcelable;
  */
 
 public class User implements Parcelable{
+    public static final int ROLE_ADMIN = 1;
+    public static final int ROLE_USER = 2;
     private int mId;
     private String firstName;
     private String lastName;
