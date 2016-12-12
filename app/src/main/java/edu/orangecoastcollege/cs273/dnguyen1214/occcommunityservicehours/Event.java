@@ -35,6 +35,10 @@ public class Event implements Parcelable {
 
     private SimpleDateFormat dateFormat;
 
+    private boolean flag = true;
+
+    public Event() {}
+
     /**
      * Event - Default constructor that constructs a new Event object when called.
      *
@@ -225,6 +229,7 @@ public class Event implements Parcelable {
         mEndDate = endDate;
     }
 
+
     public String getDuration() {
         setDates();
 
@@ -250,13 +255,13 @@ public class Event implements Parcelable {
 
         if (temp.isEmpty()) return "-1";
 
-        return result.get(TimeUnit.DAYS).toString() + " day, " +
+        return result.get(TimeUnit.DAYS).toString() + " days, " +
                 result.get(TimeUnit.HOURS).toString() + " hours and " +
                 result.get(TimeUnit.MINUTES).toString() + " minutes";
     }
 
     public int invalidSetup() {
-        setDates();
+        if (flag) setDates();
 
         long different = 14;
 
@@ -286,6 +291,8 @@ public class Event implements Parcelable {
                 String.valueOf(elapsedHours) + " hours and " +
                 String.valueOf(elapsedMinutes) + " minutes";
 
+        flag = true;
+
         return temp.indexOf('-');
     }
 
@@ -296,27 +303,18 @@ public class Event implements Parcelable {
      */
     public boolean eventPassed()
     {
-        Date now = new Date(Calendar.getInstance().getTimeInMillis());
-        Date temp = mEnd;
-        mEnd = now;
+        flag = false;
 
         setDates();
 
+        Date temp = mStart;
+        mStart = new Date(Calendar.getInstance().getTimeInMillis());
+
         boolean result = invalidSetup() != -1 ? true : false;
 
-        mEnd = temp;
+        mStart = temp;
 
         return result;
-    }
-
-    public boolean validDates()
-    {
-        boolean temp = false;
-        try {
-            temp = mStart.before(mEnd);
-        } catch (Exception e) {}
-
-        return temp;
     }
 
     private void setDates()
