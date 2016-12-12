@@ -15,6 +15,8 @@ import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -131,19 +133,16 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
 
     public void doPositiveClick()
     {
+        /*
         String phoneNumber = "9999999999";
         String smsBody = "This is an SMS!";
-
         Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-// Invokes only SMS/MMS clients
         smsIntent.setType("vnd.android-dir/mms-sms");
-// Specify the Phone Number
         smsIntent.putExtra("address", phoneNumber);
-// Specify the Message
         smsIntent.putExtra("sms_body", smsBody);
 
-// Shoot!
         startActivity(smsIntent);
+        */
     }
     public void requestValidation(View view) {
         if (view instanceof Button) {
@@ -227,6 +226,8 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
         else {
             eventDetailsStatusTextView.setText("");
         }
+        Animation customAnim = AnimationUtils.loadAnimation(this,R.anim.custom_anim);
+        eventDetailsStatusTextView.startAnimation(customAnim);
     }
     private void updateButton(){
         // hide all button LinearLayouts
