@@ -71,11 +71,10 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
 
     @Override
     public void onClick(View v) {
-        if(textButton.equals("Submit")) {
-            answerRecoveryProgressBar.setVisibility(ProgressBar.VISIBLE);
-            submitAnswerButton.setEnabled(false);
-            String answer1 = answerSecurity1EditText.getText().toString();
-            String answer2 = answerSecurity2EditText.getText().toString();
+        answerRecoveryProgressBar.setVisibility(ProgressBar.VISIBLE);
+        submitAnswerButton.setEnabled(false);
+        String answer1 = answerSecurity1EditText.getText().toString();
+        String answer2 = answerSecurity2EditText.getText().toString();
 
             if (validate(answer1, answer2)) {
 
@@ -83,6 +82,7 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
                 recovery.setStatus("Your account is signed in by security questions, you should change the password for your account security");
                 db.updateRecoveryUser(recovery);
                 User userLogin = db.getUser(recovery.getUserId());
+
                 db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
                 if (userLogin.getmRole() == 1) {
                     statusLogin = "admin";
@@ -99,7 +99,6 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
                 answerRecoveryProgressBar.setVisibility(ProgressBar.INVISIBLE);
                 submitAnswerButton.setEnabled(true);
             }
-        }
     }
 
 

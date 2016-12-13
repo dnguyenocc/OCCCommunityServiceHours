@@ -90,7 +90,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
     public void onResume() {
         super.onResume();
 
-        loginUser = db.getLoginUser();
+        //loginUser = db.getLoginUser();
     }
 
 
@@ -158,7 +158,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
 
     private void setUp (View v, User user) {
         String userHours = String.valueOf(user.getmHours());
-        serviceHoursTextView.setText(getResources().getString(R.string.service_hours) + " " + userHours);
+        serviceHoursTextView.setText(getResources().getString(R.string.service_hours) + " " + userHours + ((user.getmHours() > 1.0)? " hours":" hour"));
         profileImageView.setImageURI(user.getmImageUri());
         userNameTextView.setText(user.getmUserName());
         lastNameEditText.setText(user.getLastName());
@@ -468,8 +468,8 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
                     descriptionTextView = (TextView) mView.findViewById(R.id.descriptionTextView);
 
                     //Get object pass by AskEmailRecoverFragment
-                    recovery = db.getRecoveryByUserEmail(emailEditText.getText().toString());
-                    sessionManager.setEmailPreferences(this.getContext(),"status",emailEditText.getText().toString() );
+                    recovery = db.getRecoveryByUserId(loginUser.getmId());
+                    sessionManager.setEmailPreferences(this.getContext(),"status",loginUser.getmEmail() );
 
                     askQuestion1TextView.setText(recovery.getQuestion1());
                     askQuestion2TextView.setText(recovery.getQuestion2());
@@ -497,6 +497,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
                             String answer2 = answerSecurity2EditText.getText().toString();
 
                             if(validate(answer1, answer2)) {
+
                                 recovery.setAnswer1(answerSecurity1EditText.getText().toString());
                                 recovery.setAnswer2(answerSecurity2EditText.getText().toString());
 
@@ -509,6 +510,9 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
 
                                 dialogFinished = true;
                                 dialog.dismiss();
+                                db.updateRecoveryUser(recovery);
+                                answerSecurity1EditText.setText(recovery.getAnswer1());
+                                answerSecurity2EditText.setText(recovery.getAnswer2());
                             }
                             else
                             {
@@ -522,9 +526,9 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
                 }
                 break;
             case R.id.submitButton:
-                db.updateRecoveryUser(recovery);
-                User userLogin = db.getUser(recovery.getUserId());
-                db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
+
+                //User userLogin = db.getUser(recovery.getUserId());
+                //db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
                 db.updateUser(loginUser);
                 Toast.makeText(getContext(), "Account updated", Toast.LENGTH_SHORT).show();
                 submitButton.setEnabled(false);
