@@ -75,7 +75,7 @@
     <!--Edit Event Strings-->
     <string name="update_event">Update Event</string>
 
-    <!--Create Event Detais-->
+    <!--Create Event Details-->
     <string name="event_name_hint">Enter a name:</string>
     <string name="address_location">Enter an Address:</string>
     <string name="event_description">Enter a description:</string>
@@ -88,6 +88,10 @@
     <string name="send_sms">send message</string>
     <string name="partcipant_list">Participant List</string>
 
+    <!--Participation Validation Activity-->
+    <string name="sms_validation_request">Your validation request of </string>
+    <string name="sms_approve"> has been approved.</string>
+    <string name="sms_deny"> has been denied</string>
     <!--Menu Drawer-->
     <string name="my_account">My Profile</string>
     <string name="create_event">Create</string>
