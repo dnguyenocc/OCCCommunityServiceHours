@@ -55,7 +55,7 @@ public class ParticipantListFragment extends DialogFragment {
         builder.setTitle(R.string.partcipant_list);
         if (allParticipants.isEmpty())
             builder.setMessage(R.string.participant_empty);
-        else
+        /*else
             builder.setPositiveButton(R.string.send_sms, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -64,6 +64,7 @@ public class ParticipantListFragment extends DialogFragment {
 
                 }
             });
+            */
         builder.setAdapter(participantListAdapter, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
