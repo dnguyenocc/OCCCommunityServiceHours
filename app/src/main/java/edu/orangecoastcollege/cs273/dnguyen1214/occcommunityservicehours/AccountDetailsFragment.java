@@ -468,7 +468,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
                     descriptionTextView = (TextView) mView.findViewById(R.id.descriptionTextView);
 
                     //Get object pass by AskEmailRecoverFragment
-                    recovery = db.getRecoveryByUserId(loginUser.getmId());
+                    recovery = db.getRecoveryByUserId(loginUser.getmId());//use loginUser to get id
                     sessionManager.setEmailPreferences(this.getContext(),"status",loginUser.getmEmail() );
 
                     askQuestion1TextView.setText(recovery.getQuestion1());
@@ -510,9 +510,8 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
 
                                 dialogFinished = true;
                                 dialog.dismiss();
-                                db.updateRecoveryUser(recovery);
-                                answerSecurity1EditText.setText(recovery.getAnswer1());
-                                answerSecurity2EditText.setText(recovery.getAnswer2());
+                                db.updateRecoveryUser(recovery);//always update recovery in DBHelper because you use direct data from database
+
                             }
                             else
                             {
@@ -526,9 +525,10 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
                 }
                 break;
             case R.id.submitButton:
-
+                //No need to getUser again, just use userLogin you have create on Create View
                 //User userLogin = db.getUser(recovery.getUserId());
                 //db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
+
                 db.updateUser(loginUser);
                 Toast.makeText(getContext(), "Account updated", Toast.LENGTH_SHORT).show();
                 submitButton.setEnabled(false);

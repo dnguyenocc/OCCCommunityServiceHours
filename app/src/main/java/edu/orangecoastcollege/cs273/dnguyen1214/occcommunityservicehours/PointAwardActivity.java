@@ -1,16 +1,28 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
+
 import android.animation.AnimatorInflater;
 import android.animation.AnimatorSet;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
+
+//import android.support.v4.app.DialogFragment;
 
 public class PointAwardActivity extends AppCompatActivity {
     private View mFrontLayout;
@@ -55,7 +67,7 @@ public class PointAwardActivity extends AppCompatActivity {
 
         pointProgressBar = (ProgressBar) findViewById(R.id.pointProgressBar);
         pointProgressBar.setProgress(userAward.getPercent());
-        progressTextView.setText(userAward.getPercent() + " % to next level");
+        progressTextView.setText(userAward.getPercent() + " %");
 
         hourTextView = (TextView) findViewById(R.id.hourTextView);
 
@@ -69,6 +81,13 @@ public class PointAwardActivity extends AppCompatActivity {
 
 
 
+    }
+
+    @Override
+    public void onBackPressed() {
+
+                super.onBackPressed();
+                finish();
     }
 
     public void viewEventDetails(View view) {
@@ -136,6 +155,55 @@ public class PointAwardActivity extends AppCompatActivity {
         }
     }
 
+    public void viewDetailLevel(View view)
+    {
+        if (view instanceof ImageView) {
+
+        }
+
+    }
+
+    public void viewLearnMore(View view)
+    {
+        if (view instanceof TextView) {
+
+            DialogFragment dialogFragment = new DialogFragment() {
+                //create an AlertDialog and return it
+                @Override
+                public Dialog onCreateDialog(Bundle bundle) {
+                    AlertDialog.Builder builder =
+                            new AlertDialog.Builder(getActivity());
+                    builder.setTitle("Community Service Opportunity");
+                    builder.setMessage(getString(R.string.description_level));
+
+                    builder.setNegativeButton(R.string.cancel,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,
+                                                    int id) {
+
+                                }
+                            }
+                    );
+                    // "learn more" Button
+                    builder.setPositiveButton(R.string.learn_more,
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    String url = "http://www.pointsoflight.org/";
+                                    Intent i = new Intent(Intent.ACTION_VIEW);
+                                    i.setData(Uri.parse(url));
+                                    startActivity(i);
+                                }
+                            }
+                    );
+
+
+                    return builder.create(); // return the AlertDialog
+                }
+            };
+            FragmentManager fm = getFragmentManager();
+            dialogFragment.show(fm, "DetailCommunity");
+        }
+    }
 
 
 

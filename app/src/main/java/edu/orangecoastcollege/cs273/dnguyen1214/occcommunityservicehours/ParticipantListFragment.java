@@ -3,19 +3,16 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
-//import android.app.DialogFragment;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
 
 import java.util.ArrayList;
+
+//import android.app.DialogFragment;
 
 
 /**
@@ -41,6 +38,7 @@ public class ParticipantListFragment extends DialogFragment {
 
 
     }
+
     @Override
     public Dialog onCreateDialog(Bundle bundle) {
         mContext = getContext();

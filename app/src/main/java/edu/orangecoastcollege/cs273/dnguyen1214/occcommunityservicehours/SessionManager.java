@@ -9,7 +9,12 @@ import android.content.SharedPreferences;
 
 public class SessionManager {
 
-    //method to save status
+    /**
+     * setPreferences:  set login user
+     * @param context context activity
+     * @param key the string key
+     * @param value the string value (admin or user)
+     */
     public void setPreferences(Context context, String key, String value) {
 
         SharedPreferences.Editor editor = context.getSharedPreferences("OCC", Context.MODE_PRIVATE).edit();
@@ -19,6 +24,12 @@ public class SessionManager {
 
     }
 
+    /**
+     * setEmailPreferences: set email fro recovery activity
+     * @param context context activity
+     * @param key the string key
+     * @param value the string value
+     */
     public void setEmailPreferences(Context context, String key, String value) {
 
         SharedPreferences.Editor editor = context.getSharedPreferences("Email", Context.MODE_PRIVATE).edit();
@@ -28,6 +39,12 @@ public class SessionManager {
 
     }
 
+    /**
+     * getPreferences: get the preference for user login
+     * @param context the contexy of activity
+     * @param key the string key
+     * @return  the string value
+     */
     public String getPreferences(Context context, String key) {
 
         SharedPreferences prefs = context.getSharedPreferences("OCC", Context.MODE_PRIVATE);
@@ -35,6 +52,12 @@ public class SessionManager {
         return position;
     }
 
+    /**
+     * getEmailPreferences: get email for recovery activity
+     * @param context the context of activity
+     * @param key the string key
+     * @return the string value
+     */
     public String getEmailPreferences(Context context, String key) {
 
         SharedPreferences prefs = context.getSharedPreferences("Email", Context.MODE_PRIVATE);

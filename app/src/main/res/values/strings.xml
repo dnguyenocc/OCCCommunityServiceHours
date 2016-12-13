@@ -31,7 +31,7 @@
 
     <!-- String related to Event buttons-->
     <string name="request_for_validation">Request Validation</string>
-    <string name="register">register</string>
+    <string name="register">Register</string>
     <string name="registered">registered</string>
     <string name="validated">validated</string>
     <string name="validation_request_sent">Validation request sent\n Waiting for approval</string>
@@ -98,6 +98,7 @@
     <string name="all_event">All</string>
     <string name="past_event">Past</string>
     <string name="attending_event">Attending</string>
+    <string name="upcoming_event">Upcoming</string>
     <string name="attended_event">Attended</string>
     <string name="validate_request">Validate Requests</string>
     <string name="home">Home</string>
@@ -107,6 +108,7 @@
     <string name="event_part">Events</string>
     <string name="other_part">Extras</string>
     <string name="share">Share</string>
+    <string name="hour_points">Your total hours: </string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
@@ -130,6 +132,13 @@
     <string name="recovery_questions">Recovery Questions</string>
     <string name="question_1">Question 1</string>
     <string name="send">Send</string>
+
+
+    <!--Main and Admin Activity-->
+    <string name="full_name_app">Orange Coast College \nCommunity Service Hours</string>
+    <string name="description_level">These levels is based on The President’s Volunteer Service Award
+    which celebrates and holds up as role models Americans making a positive impact as engaged and deeply committed volunteers.</string>
+    <string name="learn_more">Learn more</string>
 
 
 </resources>

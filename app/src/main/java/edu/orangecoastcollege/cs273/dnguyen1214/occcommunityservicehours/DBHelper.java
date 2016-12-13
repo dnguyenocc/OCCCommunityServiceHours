@@ -567,6 +567,7 @@ class DBHelper extends SQLiteOpenHelper {
         }
     }
 
+
     public float getHoursbyUserId(int id){
         ArrayList<Participation> allParticipations = getAllParticipationsByUserId(id);
         float mHours = 0.0f;

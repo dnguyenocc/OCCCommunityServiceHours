@@ -75,12 +75,24 @@
         android:textAlignment="center"
         android:textSize="10sp" />
 
+    <ImageView
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        app:srcCompat="@drawable/presidents_volunteer_service_awards"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal"
+        android:onClick="viewDetailLeval" />
+
     <TextView
         android:text="@string/detail_medal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/textView18"
-        android:paddingTop="10dp" />
+        android:onClick="viewLearnMore"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="10dp"
+        android:textAlignment="center"
+        android:textStyle="normal|bold" />
 
     <LinearLayout
         android:orientation="vertical"

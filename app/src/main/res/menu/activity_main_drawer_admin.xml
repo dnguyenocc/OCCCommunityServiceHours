@@ -22,12 +22,16 @@
                     android:icon="@drawable/ic_playlist_play_black_24dp"
                     android:title="@string/all_event" />
                 <item
+                    android:id="@+id/nav_upcoming_events"
+                    android:icon="@drawable/ic_playlist_play_black_24dp"
+                    android:title="@string/upcoming_event" />
+                <item
                     android:id="@+id/nav_past_events"
                     android:icon="@drawable/ic_playlist_add_check_black_24dp"
                     android:title="@string/past_event" />
                 <item
                     android:id="@+id/nav_validate_requests"
-                    android:icon="@drawable/ic_playlist_add_check_black_24dp"
+                    android:icon="@drawable/ic_assignment_black_24dp"
                     android:title="@string/validate_request" />
             </menu>
         </item>

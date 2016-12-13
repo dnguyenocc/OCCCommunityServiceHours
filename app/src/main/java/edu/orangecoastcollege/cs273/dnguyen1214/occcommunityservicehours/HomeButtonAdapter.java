@@ -49,9 +49,11 @@ public class HomeButtonAdapter extends BaseAdapter {
         if (convertView == null) {
             // if it's not recycled, initialize some attributes
             imageView = new ImageView(mContext);
+
             imageView.setLayoutParams(new GridView.LayoutParams(200, 200));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8, 8, 8);
+
         } else {
             imageView = (ImageView) convertView;
         }
@@ -59,6 +61,7 @@ public class HomeButtonAdapter extends BaseAdapter {
         //imageView.setImageResource(mThumbIds[position]);
         imageView.setBackgroundResource(mThumbIds[position]);
         imageView.setTag(mNavIds[position]);
+
         return imageView;
     }
 

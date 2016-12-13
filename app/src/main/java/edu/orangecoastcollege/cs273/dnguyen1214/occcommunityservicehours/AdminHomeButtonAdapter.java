@@ -22,8 +22,8 @@ public class AdminHomeButtonAdapter extends BaseAdapter {
     };
     private Integer[] mNavIds = {
             R.id.nav_create_events, R.id.nav_feedback,
-            R.id.nav_all_events, R.id.nav_attending_events,
-            R.id.nav_attended_events, R.id.nav_profile,
+            R.id.nav_all_events, R.id.nav_upcoming_events,
+            R.id.nav_past_events, R.id.nav_profile,
             R.id.nav_point, R.id.nav_exist
     };
 
@@ -45,6 +45,7 @@ public class AdminHomeButtonAdapter extends BaseAdapter {
 
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
+
         ImageView imageView;
         if (convertView == null) {
             // if it's not recycled, initialize some attributes

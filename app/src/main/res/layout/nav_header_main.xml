@@ -36,6 +36,8 @@
         android:id="@+id/hoursPointHeaderTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="android.studio@android.com" />
+        android:text="android.studio@android.com"
+        android:textColor="@android:color/background_light"
+        android:background="@color/wallet_dim_foreground_disabled_holo_dark" />
 
 </LinearLayout>

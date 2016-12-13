@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -60,8 +58,12 @@ public class AdminActivity extends AppCompatActivity
         View headerView =  navigationView.getHeaderView(0);
         TextView usernameAccountTextView = (TextView)headerView.findViewById(R.id.usernameHeaderTextView);
         ImageView profileImageView = (ImageView) headerView.findViewById(R.id.profileHeaderImageView);
+        TextView hoursPointHeaderTextView = (TextView) headerView.findViewById(R.id.hoursPointHeaderTextView);
         profileImageView.setImageURI(user.getmImageUri());
         usernameAccountTextView.setText(user.getmUserName());
+        hoursPointHeaderTextView.setText(getString(R.string.hour_points)+ String.valueOf(db.getHoursbyUserId(user.getmId())));
+
+
 
         navigationView.setNavigationItemSelectedListener(this);
     }
@@ -84,7 +86,7 @@ public class AdminActivity extends AppCompatActivity
         }
         else
         {
-            transitionFragment(new AllEventListFragment(),"Homepage");
+            transitionFragment(new HomeFragment(),"Homepage");
         }
     }
 
@@ -181,6 +183,10 @@ public class AdminActivity extends AppCompatActivity
             //TODO put  fragment here
             transitionFragment(new AllEventListFragment(), "AllEventList");
         }
+        else if (id == R.id.nav_upcoming_events) {
+            //TODO put  fragment here
+            transitionFragment(new AttendingEventListFragment(),"UpcomingEventList");
+        }
         else if (id == R.id.nav_past_events) {
             //TODO put  fragment here
             transitionFragment(new AttendedEventListFragment(),"AttendedEventList");
@@ -203,7 +209,12 @@ public class AdminActivity extends AppCompatActivity
         }
 
 
+       /* DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;*/
     }
+
+
     public void viewEventDetails(View view) {
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;

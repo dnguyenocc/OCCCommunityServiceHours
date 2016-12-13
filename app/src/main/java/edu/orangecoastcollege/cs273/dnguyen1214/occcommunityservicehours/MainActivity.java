@@ -6,9 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
@@ -21,7 +19,6 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -40,7 +37,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //Hide the title on app bar for Search View
-        getSupportActionBar().setDisplayShowTitleEnabled(false);
+
+        //getSupportActionBar().setDisplayShowTitleEnabled(false);
         db = new DBHelper(this);
         manager = new SessionManager();
         //TODO get user from Login table
@@ -48,7 +46,7 @@ public class MainActivity extends AppCompatActivity
 
 
         //TODO Set the main fragment
-        transitionFragment(new AllEventListFragment(),"Homepage");
+        transitionFragment(new HomeFragment(),"Homepage");
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -65,8 +63,13 @@ public class MainActivity extends AppCompatActivity
         TextView hoursPointHeaderTextView = (TextView) headerView.findViewById(R.id.hoursPointHeaderTextView);
         profileImageView.setImageURI(user.getmImageUri());
         usernameAccountTextView.setText(user.getmUserName());
-        hoursPointHeaderTextView.setText("Hour points: " + String.valueOf(user.getmHours()));
+        hoursPointHeaderTextView.setText(R.string.hour_points+ String.valueOf(db.getHoursbyUserId(user.getmId())));
         navigationView.setNavigationItemSelectedListener(this);
+    }
+    @Override
+    public void onResume(){
+        super.onResume();
+
     }
 
     @Override
@@ -106,12 +109,14 @@ public class MainActivity extends AppCompatActivity
             @Override
             public boolean onQueryTextSubmit(String query) {
                 //TODO write your code what you want to perform on search
-                return false;
+                transitionFragment(new AccountDetailsFragment(),"Account");
+                return true;
             }
 
             @Override
             public boolean onQueryTextChange(String newText) {
                 //TODO write your code what you want to perform on search text change
+
                 return false;
             }
         });
@@ -185,6 +190,7 @@ public class MainActivity extends AppCompatActivity
     // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
     public void transitionFragment(Fragment fragmentClass, String tag)
     {
+
         try {
             FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
             // Insert the fragment by replacing any existing fragment
@@ -216,22 +222,5 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    /**
-     * Hides the soft keyboard
-     */
-    public void hideSoftKeyboard() {
-        if(getCurrentFocus()!=null) {
-            InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-            inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
-        }
-    }
 
-    /**
-     * Shows the soft keyboard
-     */
-    public void showSoftKeyboard(View view) {
-        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-        view.requestFocus();
-        inputMethodManager.showSoftInput(view, 0);
-    }
 }
