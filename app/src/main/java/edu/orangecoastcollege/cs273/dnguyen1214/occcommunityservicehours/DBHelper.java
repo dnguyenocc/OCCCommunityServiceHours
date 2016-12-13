@@ -553,8 +553,34 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
+    public void updateServiceHours(){
+        ArrayList<User> allUsers = getAllUser();
+        for (User user:allUsers) {
+            ArrayList<Participation> allParticipations = getAllParticipationsByUserId(user.getmId());
+            double mHours = 0.0;
+            for (Participation participation : allParticipations) {
+                if (participation.getStatusCode() == Participation.VALIDATED)
+                    mHours += (double) participation.getServiceHours();
+            }
+            user.setmHours(mHours);
+            updateUser(user);
+        }
+    }
+
+    public float getHoursbyUserId(int id){
+        ArrayList<Participation> allParticipations = getAllParticipationsByUserId(id);
+        float mHours = 0.0f;
+        for (Participation participation : allParticipations) {
+            if (participation.getStatusCode() == Participation.VALIDATED)
+                mHours +=  participation.getServiceHours();
+        }
+        return mHours;
+    }
+
     public User getUser(int id) {
         SQLiteDatabase db = this.getReadableDatabase();
+
+
         Cursor cursor = db.query(
                 USERS_TABLE,
                 new String[]{USERS_KEY_FIELD_ID,
