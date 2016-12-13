@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.AccountDetailsFragment"
     android:orientation="vertical"
-    android:weightSum="11" android:background="@android:color/holo_orange_light"
+    android:weightSum="12" android:background="@android:color/holo_orange_light"
     android:paddingLeft="10dp" android:paddingRight="10dp" android:paddingBottom="10dp">
 
 
@@ -135,7 +135,7 @@
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="0dp" android:weightSum="13"
-        android:layout_weight="1" android:layout_marginTop="10dp">
+        android:layout_weight="2" android:layout_marginTop="10dp">
         <android.support.design.widget.TextInputLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -161,7 +161,7 @@
             android:layout_height="match_parent" app:srcCompat="@android:drawable/ic_menu_edit"
             android:id="@+id/editPasswordImageView" android:layout_weight="2" android:clickable="true"
             android:background="@android:color/holo_orange_light"
-            android:adjustViewBounds="true" android:scaleType="fitCenter"
+            android:adjustViewBounds="true" android:scaleType="center"
             android:contentDescription="@string/edit_icon_desc"/>
     </LinearLayout>
 

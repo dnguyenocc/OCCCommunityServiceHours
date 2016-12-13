@@ -106,12 +106,22 @@ public class Event implements Parcelable {
         }
     };
 
+    /**
+     * getOwnerId - Returns the current owner id associated with the event
+     *
+     * @return The owner id of the event.
+     */
     public int getOwnerId() {
         return mOwnerId;
     }
 
-    public void setOwnerId(int mOwnerId) {
-        this.mOwnerId = mOwnerId;
+    /**
+     * setOwnerId - Sets the current owner id associated with the event
+     *
+     * @param ownerId A new owner id for the event.
+     */
+    public void setOwnerId(int ownerId) {
+        this.mOwnerId = ownerId;
     }
 
     /**
@@ -229,7 +239,7 @@ public class Event implements Parcelable {
         mEndDate = endDate;
     }
 
-
+/*
     public String getDuration() {
         setDates();
 
@@ -260,6 +270,14 @@ public class Event implements Parcelable {
                 result.get(TimeUnit.MINUTES).toString() + " minutes";
     }
 
+    */
+
+    /**
+     * invalidSetup - Returns an index value if startDate exceeds endDate is not invalid,
+     *              else returns -1, indicating that the dates are valid.
+     *
+     * @return -1 or an index of where a '-' was found.
+     */
     public int invalidSetup() {
         if (flag) setDates();
 
@@ -329,16 +347,28 @@ public class Event implements Parcelable {
         }
     }
 
+    /**
+     * getStart - Returns the start date as a date obj
+     *
+     * @return The start date as an obj
+     */
     public Date getStart()
     {
         setDates();
         return mStart;
     }
+
+    /**
+     * getEnd - Returns the end date as a date obj
+     *
+     * @return The end date as an obj
+     */
     public Date getEnd()
     {
         setDates();
         return mEnd;
     }
+    
     @Override
     public int describeContents() {
         return 0;

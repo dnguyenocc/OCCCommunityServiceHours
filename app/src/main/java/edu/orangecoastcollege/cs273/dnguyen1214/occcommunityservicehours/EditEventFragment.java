@@ -357,7 +357,7 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
                 if (!(startDateTextView.getText().toString().isEmpty()) || !(endDateTextView.getText().toString().isEmpty()))
                 {
                     DBHelper db = new DBHelper(getContext());
-                    User user = db.getLoginUser();
+                    //User user = db.getLoginUser();
 
                     event.setName(eventNameEditText.getText().toString());
                     event.setStartDate(startDateTextView.getText().toString());
@@ -365,7 +365,7 @@ public class EditEventFragment extends Fragment implements View.OnClickListener,
                     event.setLocation(eventLocationEditText.getText().toString());
                     event.setImageUri(imageUri);
 
-                    Log.i("Duration is ", String.valueOf(event.getDuration()));
+                    //Log.i("Duration is ", String.valueOf(event.getDuration()));
                     //Log.i("Length of duration is ", String.valueOf(event.invalidSetup().length()));
 
                     if (event.invalidSetup() != -1) {

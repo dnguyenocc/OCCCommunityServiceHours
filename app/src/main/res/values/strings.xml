@@ -123,6 +123,8 @@
     <string name="detail_medal">More detail about the level here.</string>
     <string name="message">Message</string>
     <string name="send_feedback">Send Feedback</string>
+    <string name="recovery_questions">Recovery Questions</string>
+    <string name="question_1">Question 1</string>
 
 
 </resources>
