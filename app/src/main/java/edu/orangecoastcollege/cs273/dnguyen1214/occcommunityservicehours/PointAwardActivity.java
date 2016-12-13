@@ -28,6 +28,7 @@ public class PointAwardActivity extends AppCompatActivity {
     private TextView levelTextView;
     private UserAward userAward;
     private TextView progressTextView;
+    private double hours;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,11 +41,14 @@ public class PointAwardActivity extends AppCompatActivity {
         db = new DBHelper(this);
         User user = db.getLoginUser();
         userAward = new UserAward();
+        hours =db.getHoursbyUserId(user.getmId());
+
+
         frontMedalImage = (ImageView) findViewById(R.id.frontMedalImageView);
         backMedalImage = (ImageView) findViewById(R.id.backMedalImageView);
         progressTextView = (TextView) findViewById(R.id.progressTextView);
         Toast.makeText(this, user.getmUserName(), Toast.LENGTH_LONG).show();
-        userAward.setUserAwardImageUri(user,this);
+        userAward.setUserAwardImageUri(hours,this);
         frontMedalImage.setImageURI(userAward.getImageUri());
         backMedalImage.setImageURI(userAward.getImageUri());
 
@@ -53,7 +57,8 @@ public class PointAwardActivity extends AppCompatActivity {
         progressTextView.setText(userAward.getPercent() + " % to next level");
 
         hourTextView = (TextView) findViewById(R.id.hourTextView);
-        hourTextView.setText("Your total hour: " + user.getmHours() + ((user.getmHours() > 0)?" hours":" hours"));
+
+        hourTextView.setText("Your total hour: " + String.format( "%.2f", hours )  + ((hours > 0)?" hours":" hours"));
 
         levelTextView = (TextView) findViewById(R.id.levelTextView);
         levelTextView.setText(userAward.getLevelName());

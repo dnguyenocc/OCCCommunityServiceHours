@@ -37,14 +37,14 @@ public class UserAward {
 
     /**
      * getUserAwardImageUri: get the image uri which indicate the award for the user
-     * @param user an user object
+     * @param userHour is user hours
      * @param context a context activity
      * @return an uri image
      */
-    public void setUserAwardImageUri(User user, Context context)
+    public void setUserAwardImageUri(double userHour, Context context)
     {
 
-        hours = user.getmHours();
+        hours = userHour;
 
         if(hours < 100.0) {
             point = 0;
