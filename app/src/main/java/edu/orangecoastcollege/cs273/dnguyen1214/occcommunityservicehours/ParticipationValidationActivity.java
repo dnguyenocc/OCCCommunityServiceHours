@@ -1,19 +1,27 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
+import android.*;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.SmsManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
 public class ParticipationValidationActivity extends AppCompatActivity {
     private Participation selectedParticipation;
     private DBHelper db;
+    private User user;
+    private Event event;
+    private static final int REQUEST_CODE_SEND_SMS = 101;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,8 +40,8 @@ public class ParticipationValidationActivity extends AppCompatActivity {
         db = new DBHelper(this);
         Intent detailsIntent = getIntent();
         selectedParticipation = detailsIntent.getExtras().getParcelable("SelectedParticipation");
-        Event event = selectedParticipation.getEvent();
-        User  user = selectedParticipation.getUser();
+        event = selectedParticipation.getEvent();
+        user = selectedParticipation.getUser();
         requestUserImageView.setImageURI(user.getmImageUri());
         requestUserNameTextView.setText(user.getLastName()+", "+user.getFirstName());
         requestUserMailTextView.setText(user.getmEmail());
@@ -53,6 +61,9 @@ public class ParticipationValidationActivity extends AppCompatActivity {
             selectedParticipation.setStatusCode(Participation.VALIDATED);
             selectedParticipation.setValidationRequested(false);
             db.updateParticipation(selectedParticipation);
+            String mess = getResources().getString(R.string.sms_validation_request) + event.getName()
+                    + getResources().getString(R.string.sms_approve);
+            sendSms(mess);
             super.onBackPressed();
         }
     }
@@ -63,7 +74,28 @@ public class ParticipationValidationActivity extends AppCompatActivity {
             selectedParticipation.setStatusCode(Participation.VALIDATION_DENY);
             selectedParticipation.setValidationRequested(false);
             db.updateParticipation(selectedParticipation);
+            String mess = getResources().getString(R.string.sms_validation_request) + event.getName()
+                    + getResources().getString(R.string.sms_deny);
             super.onBackPressed();
+        }
+    }
+
+    private void sendSms(String message)
+    {
+        // Ask for permission to send text message:
+        if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED)
+            ActivityCompat.requestPermissions(this,new String[] {android.Manifest.permission.SEND_SMS},REQUEST_CODE_SEND_SMS);
+            // Define a reference to SmsManager (manages text messages)
+        else {
+            SmsManager manager = SmsManager.getDefault();
+
+            // For each loop through the contacts list
+                manager.sendTextMessage(user.getmPhoneNum(), null, message, null, null);
+
+
+            Toast.makeText(this,"Message sent to "+ user.getFirstName(),Toast.LENGTH_SHORT).show();
+
         }
     }
 
