@@ -29,7 +29,8 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/email_security"
                 android:id="@+id/emailSecurityEditText"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:layout_marginBottom="30dp" />
 
         </android.support.design.widget.TextInputLayout>
 
@@ -38,7 +39,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/submitButton"
-            android:onClick="submitEmailRecovery" />
+            android:onClick="submitEmailRecovery"
+            android:background="@android:color/holo_orange_dark" />
 
         <ProgressBar
             style="?android:attr/progressBarStyle"

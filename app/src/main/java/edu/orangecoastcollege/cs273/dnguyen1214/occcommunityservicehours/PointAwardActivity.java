@@ -11,7 +11,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 public class PointAwardActivity extends AppCompatActivity {
     private View mFrontLayout;
@@ -47,7 +46,9 @@ public class PointAwardActivity extends AppCompatActivity {
         frontMedalImage = (ImageView) findViewById(R.id.frontMedalImageView);
         backMedalImage = (ImageView) findViewById(R.id.backMedalImageView);
         progressTextView = (TextView) findViewById(R.id.progressTextView);
-        Toast.makeText(this, user.getmUserName(), Toast.LENGTH_LONG).show();
+
+        //Toast.makeText(this, user.getmUserName(), Toast.LENGTH_LONG).show();
+
         userAward.setUserAwardImageUri(hours,this);
         frontMedalImage.setImageURI(userAward.getImageUri());
         backMedalImage.setImageURI(userAward.getImageUri());

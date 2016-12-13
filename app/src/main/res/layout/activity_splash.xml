@@ -22,7 +22,7 @@
 
     <ImageView
         android:layout_width="match_parent"
-        app:srcCompat="@drawable/occpirate"
+        app:srcCompat="@drawable/ptklogomain"
         android:id="@+id/imageView3"
         android:padding="5dp"
         android:layout_height="200dp" />
@@ -42,4 +42,3 @@
         android:indeterminate="true"
         android:padding="10dp" />
 </LinearLayout>
-

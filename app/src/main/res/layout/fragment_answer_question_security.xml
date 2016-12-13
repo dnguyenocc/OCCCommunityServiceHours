@@ -72,9 +72,12 @@
                 android:text="@string/submit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
                 android:id="@+id/submitAnswerButton"
-                android:onClick="sendEmailPassword" />
+                android:onClick="sendEmailPassword"
+                android:background="@android:color/holo_orange_dark"
+                android:layout_marginTop="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp" />
 
             <ProgressBar
                 style="?android:attr/progressBarStyle"

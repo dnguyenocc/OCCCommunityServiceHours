@@ -58,6 +58,7 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
         if(validate(email)) {
             //add email to share preference
             sManager.setEmailPreferences(context,"status",email);
+
             //transition to other fragment
             AnswerQuestionSecurityFragment fragment = new AnswerQuestionSecurityFragment();
             FragmentManager fragmentManager = getFragmentManager();
@@ -96,6 +97,7 @@ public class AskEmailRecoveryFragment extends Fragment implements View.OnClickLi
         }
         return valid;
     }
+
 
 
 }

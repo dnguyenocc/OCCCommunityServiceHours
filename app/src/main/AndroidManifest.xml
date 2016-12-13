@@ -36,7 +36,8 @@
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
+            android:label="@string/sign_in"
+            />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
@@ -53,13 +54,15 @@
                 android:name="android.app.searchable"
                 android:resource="@xml/searchable"/>
         </activity>
-        <activity android:name=".RegisterActivity"/>
+        <activity android:name=".RegisterActivity"
+            android:label="@string/register"/>
         <activity
             android:name=".AdminActivity"
             android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".EventDetailsActivity"/>
         <activity android:name=".requestValidationActivity"/>
-        <activity android:name=".RecoveryActivity"/>
+        <activity android:name=".RecoveryActivity"
+            android:theme="@style/AppTheme.NoActionBar"/>
         <activity android:name=".ParticipationValidationActivity"/>
         <!--
 -             The API key for Google Maps-based APIs is defined as a string resource.
