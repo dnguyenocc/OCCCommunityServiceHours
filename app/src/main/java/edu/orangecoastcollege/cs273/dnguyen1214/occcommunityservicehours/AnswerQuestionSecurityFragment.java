@@ -31,6 +31,7 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
     private ProgressBar answerRecoveryProgressBar;
     Context context;
     private  String email;
+    private String textButton;
     public AnswerQuestionSecurityFragment() {
         // Required empty public constructor
     }
@@ -46,6 +47,7 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
         db = new DBHelper(context);
         sManager = new SessionManager();
         submitAnswerButton = (Button) v.findViewById(R.id.submitAnswerButton);
+        textButton = submitAnswerButton.getText().toString();
         submitAnswerButton.setOnClickListener(this);
         answerRecoveryProgressBar = (ProgressBar) v.findViewById(R.id.answerRecoveryProgressBar);
         answer1InputText = (TextInputLayout) v.findViewById(R.id.answer1InputText);
@@ -69,38 +71,35 @@ public class AnswerQuestionSecurityFragment extends Fragment implements View.OnC
 
     @Override
     public void onClick(View v) {
+        if(textButton.equals("Submit")) {
+            answerRecoveryProgressBar.setVisibility(ProgressBar.VISIBLE);
+            submitAnswerButton.setEnabled(false);
+            String answer1 = answerSecurity1EditText.getText().toString();
+            String answer2 = answerSecurity2EditText.getText().toString();
 
-        answerRecoveryProgressBar.setVisibility(ProgressBar.VISIBLE);
-        submitAnswerButton.setEnabled(false);
-        String answer1 = answerSecurity1EditText.getText().toString();
-        String answer2 = answerSecurity2EditText.getText().toString();
+            if (validate(answer1, answer2)) {
 
-        if(validate(answer1, answer2)) {
-
-            String statusLogin ="";
-            recovery.setStatus("Your account is signed in by security questions, you should change the password for your account security" );
-            db.updateRecoveryUser(recovery);
-            User userLogin = db.getUser(recovery.getUserId());
-            db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
-            if(userLogin.getmRole() == 1) {
-                statusLogin = "admin";
-                startActivity(new Intent(context,AdminActivity.class));
+                String statusLogin = "";
+                recovery.setStatus("Your account is signed in by security questions, you should change the password for your account security");
+                db.updateRecoveryUser(recovery);
+                User userLogin = db.getUser(recovery.getUserId());
+                db.addLoginUser(userLogin.getmId(), userLogin.getmRole());
+                if (userLogin.getmRole() == 1) {
+                    statusLogin = "admin";
+                    startActivity(new Intent(context, AdminActivity.class));
+                } else if (userLogin.getmRole() == 2) {
+                    statusLogin = "user";
+                    startActivity(new Intent(context, MainActivity.class));
+                }
+                sManager.setPreferences(context, "status", statusLogin);
+                String status = sManager.getPreferences(context, "status");
+                Log.d("status", status);
+                Toast.makeText(context, recovery.getStatus(), Toast.LENGTH_LONG).show();
+            } else {
+                answerRecoveryProgressBar.setVisibility(ProgressBar.INVISIBLE);
+                submitAnswerButton.setEnabled(true);
             }
-            else if(userLogin.getmRole() == 2) {
-                statusLogin = "user";
-                startActivity(new Intent(context, MainActivity.class));
-            }
-            sManager.setPreferences(context,"status",statusLogin);
-            String status =  sManager.getPreferences(context,"status");
-            Log.d("status",status);
-
         }
-        else
-        {
-            answerRecoveryProgressBar.setVisibility(ProgressBar.INVISIBLE);
-            submitAnswerButton.setEnabled(true);
-        }
-
     }
 
 

@@ -17,7 +17,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -46,6 +45,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
     private static final int REQUEST_CODE_CAMERA = 101;
     private AlertDialog dialog = null;
 
+    SessionManager sessionManager;
     // Declare local variables
     private Button submitButton;
     private TextView serviceHoursTextView, userNameTextView,
@@ -99,7 +99,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_account_details, container, false);
-
+        sessionManager = new SessionManager();
         // Hookup Widgets
         hookUpWidgets(v);
 
@@ -131,8 +131,11 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         numberEditText.addTextChangedListener(numberChangedListener);
         passwordEditText.addTextChangedListener(passwordChangedListener);
 
+
         return v;
     }
+
+
 
     private void hookUpWidgets(View v)
     {
@@ -466,11 +469,12 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
 
                     //Get object pass by AskEmailRecoverFragment
                     recovery = db.getRecoveryByUserEmail(emailEditText.getText().toString());
+                    sessionManager.setEmailPreferences(this.getContext(),"status",emailEditText.getText().toString() );
 
                     askQuestion1TextView.setText(recovery.getQuestion1());
                     askQuestion2TextView.setText(recovery.getQuestion2());
-                    answerSecurity1EditText.setHint(recovery.getAnswer1());
-                    answerSecurity2EditText.setHint(recovery.getAnswer2());
+                    answerSecurity1EditText.setText(recovery.getAnswer1());
+                    answerSecurity2EditText.setText(recovery.getAnswer2());
 
                     submitAnswerButton.setText("Update");
                     descriptionTextView.setText("Update Answers for Security Questions");
