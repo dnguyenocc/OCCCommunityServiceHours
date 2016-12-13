@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void signIn(View view)
     {
-        hideSoftKeyboard();
+
         signInButton.setEnabled(false);
         loginProgressBar.setVisibility(ProgressBar.VISIBLE);
         loginMainLayout.setVisibility(LinearLayout.GONE);
@@ -157,7 +157,7 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    public boolean validate(String userN, String passW) {
+    private boolean validate(String userN, String passW) {
 
         boolean valid = true;
 
@@ -259,19 +259,11 @@ public class LoginActivity extends AppCompatActivity {
     /**
      * Hides the soft keyboard
      */
-    public void hideSoftKeyboard() {
+    private void hideSoftKeyboard() {
         if(getCurrentFocus()!=null) {
             InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
         }
     }
 
-//    /**
-//     * Shows the soft keyboard
-//     */
-//    public void showSoftKeyboard(View view) {
-//        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-//        view.requestFocus();
-//        inputMethodManager.showSoftInput(view, 0);
-//    }
 }

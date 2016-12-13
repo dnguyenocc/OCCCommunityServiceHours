@@ -46,6 +46,7 @@ public class SplashActivity extends AppCompatActivity {
                 String status = manager.getPreferences(SplashActivity.this, "status");
                 Log.d("status", status);
 
+    //TODO uncomment these line to use login user
 //                if (status.equals("admin"))
 //                {
 //                    startActivity(new Intent(SplashActivity.this, AdminActivity.class));
@@ -58,7 +59,9 @@ public class SplashActivity extends AppCompatActivity {
 //
 //                    startActivity(new Intent(SplashActivity.this, LoginActivity.class));
 //                }
-                startActivity(new Intent(SplashActivity.this, LoginActivity.class));
+
+                startActivity(new Intent(SplashActivity.this, LoginActivity.class));//TODO comment this to use user login
+
                 finish();
             }
         };

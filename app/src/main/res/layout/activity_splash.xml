@@ -29,9 +29,10 @@
 
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         app:srcCompat="@drawable/logo"
-        android:id="@+id/imageView6" />
+        android:id="@+id/imageView6"
+        android:layout_height="150dp"
+        android:padding="10dp" />
 
     <ProgressBar
         style="?android:attr/progressBarStyle"
