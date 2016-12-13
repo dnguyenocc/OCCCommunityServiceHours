@@ -97,15 +97,6 @@
          bounds.
          -->
 
-    <TextView
-        android:text="@string/attended_event_list"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView15"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:paddingTop="10dp" />
-
     <fragment
         android:layout_width="match_parent"
         android:layout_height="match_parent"
