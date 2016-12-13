@@ -99,30 +99,14 @@ public class AttendingActivity extends AppCompatActivity
         if (phoneDevice) setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
     }
 
-    public void editEvent(View view) {
+    public void viewEventDetails(View view) {
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;
             Event selectedEvent = (Event) selectedLayout.getTag();
             Log.i("OCC Community Service", selectedEvent.toString());
-
-            Bundle bundle = new Bundle();
-            bundle.putParcelable("SelectedEvent", selectedEvent);
-
-            Fragment fragment = null;
-
-            try {
-                fragment = EditEventFragment.class.newInstance();
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-
-            fragment.setArguments(bundle);
-
-            // Insert the fragment by replacing any existing fragment
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            fragmentManager.beginTransaction().replace(R.id.host_fragment, fragment).commit();
+            Intent detailsIntent = new Intent(this, EventDetailsActivity.class);
+            detailsIntent.putExtra("SelectedEvent",selectedEvent);
+            startActivity(detailsIntent);
         }
     }
 
@@ -151,8 +135,26 @@ public class AttendingActivity extends AppCompatActivity
             }
         });
 
+
+
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
@@ -160,51 +162,44 @@ public class AttendingActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-
-        if (id == R.id.nav_profile) {
-            // transition fragment
-            transitionFragment( new  AccountDetailsFragment(), "AccountDetail");
-
-        }
-        else if (id == R.id.nav_create_events) {
-            //TODO put  fragment here
-            startActivity(new Intent(this, HostEventActivity.class));
-
-
-        }else if (id == R.id.nav_home) {
-            //TODO put  fragment here
-            transitionFragment(new AllEventListFragment(),"Homepage");
-        }
-        else if (id == R.id.nav_all_events) {
-            //TODO put  fragment here
-            transitionFragment(new AllEventListFragment(), "AllEventList");
-        }
-        else if (id == R.id.nav_past_events) {
-            //TODO put  fragment here
-            transitionFragment(new AttendedEventListFragment(),"AttendedEventList");
-        }
-        else if (id == R.id.nav_validate_requests) {
-            //TODO put  fragment here
-            transitionFragment(new ValidationRequestListFragment(), "ValidationRequestList");
-        } else if (id == R.id.nav_point) {
-            //TODO put fragment want to be transition here
-            startActivity(new Intent(this, PointAwardActivity.class));
-        }
-        else if (id == R.id.nav_feedback) {
-            transitionFragment(new FeedbackFragment(),"Feedback");
-        }
-        else if (id == R.id.nav_exist) {
-            db.logout(db.getLoginUser());
-            manager.setPreferences(AttendingActivity.this, "status", "0");
-            finish();
-            startActivity(new Intent(AttendingActivity.this, LoginActivity.class));
-        }
-
+        doNavigate(id);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
 
+    public void doNavigate(int id)
+    {
+        if (id == R.id.nav_profile) {
+            // transition fragment
+            transitionFragment(new AccountDetailsFragment(),"AccountDetail");
+        } else if (id == R.id.nav_home) {
+            //TODO put fragment want to be transition here
+            transitionFragment(new HomeFragment(),"Homepage");
+        } else if (id == R.id.nav_attending_events) {
+            //TODO put fragment want to be transition here
+            startActivity(new Intent(this, AttendingActivity.class));
+        } else if (id == R.id.nav_all_events) {
+            //TODO put fragment want to be transition here
+            transitionFragment(new AllEventListFragment(),"AllEventList");
+        } else if (id == R.id.nav_attended_events) {
+            //TODO put fragment want to be transition here
+            startActivity(new Intent(this, AttendedActivity.class));
+        } else if (id == R.id.nav_point) {
+            //TODO put fragment want to be transition here
+            startActivity(new Intent(this,PointAwardActivity.class));
+        } else if (id == R.id.nav_feedback) {
+            //TODO put fragment want to be transition here
+            transitionFragment(new FeedbackFragment(),"Feedback");
+        }else if (id == R.id.nav_exist) {
+
+            db.logout(db.getLoginUser());
+            manager.setPreferences(AttendingActivity.this, "status", "0");
+            finish();
+            startActivity(new Intent(AttendingActivity.this, LoginActivity.class));
+
+        }
+    }
     //create tag for fragment so we can look up fragment later by tag
     // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
     public void transitionFragment(Fragment fragmentClass, String tag)

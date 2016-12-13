@@ -16,7 +16,9 @@
     <string name="create_event">Tạo Sự Kiện</string>
     <string name="deny">Từ chối</string>
     <string name="detail_medal">Thêm chi tiết về về cấp độ</string>
-    <string name="edit_icon_desc"></string>
+    <string name="edit_icon_desc">Một biểu tượng của một cây bút chì dùng để chỉ một trường có thể
+        chỉnh sửa.
+    </string>
     <string name="edit_name">Tên</string>
     <string name="email_security">Điền địa chỉ email</string>
     <string name="end_date">Chọn ngày kết thúc</string>
@@ -39,7 +41,7 @@
     <string name="log_out">Đăng xuất</string>
     <string name="message">Lời nhắn</string>
     <string name="my_account">Thông tin của tôi</string>
-    <string name="navigation_drawer_close"></string>
+    <string name="navigation_drawer_close">Đóng ngăn điều hướng</string>
     <string name="number_of_request">Số lượng yêu cầu:</string>
     <string name="other_part">Thêm</string>
     <string name="past_event">Sự kiện đã qua</string>
@@ -79,4 +81,22 @@
     <string name="validate_request">Xác nhận yêu cầu</string>
     <string name="validated">Xác nhận</string>
     <string name="validation_request_sent">Yêu cầu gửi[...]</string>
+    <string name="active_event_list_title">Sự kiện hoạt động</string>
+    <string name="attended_event_list_title">Những sự kiện đã qua</string>
+    <string name="bronze_level">mức Bronze: 100-174 giờ</string>
+    <string name="gold_level">mức vàng: 250 giờ hoặc nhiều hơn</string>
+    <string name="hello_blank_fragment">Xin chào mảnh trống</string>
+    <string name="host_event_list_title">Sự kiện Hosted của bạn</string>
+    <string name="navigation_drawer_open">Mở ngăn navigation</string>
+    <string name="partcipant_list">Danh sách tham gia</string>
+    <string name="participant_empty">Hãy là người đầu tiên tham gia!</string>
+    <string name="question_1">Câu hỏi 1</string>
+    <string name="recovery_questions">Câu hỏi phục hồi</string>
+    <string name="registered">đăng ký</string>
+    <string name="security_questions">Change Security Questions</string>
+    <string name="send_feedback">Gửi phản hồi</string>
+    <string name="send_sms">gửi tin nhắn</string>
+    <string name="silver_level">mức bạc: 175-249 giờ</string>
+    <string name="update_event">cập nhật sự kiện</string>
+    <string name="view_participants">Xem người tham gia</string>
 </resources>

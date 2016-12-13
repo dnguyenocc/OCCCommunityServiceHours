@@ -61,7 +61,7 @@
     <string name="attended_event_list_title">Past Events</string>
 
     <!-- String related to AttendingEvent fragment -->
-    <string name="attending_event_list_title">Currently Attending Events</string>
+    <string name="active_event_list_title">Active Events</string>
 
     <!--String related to Request List-->
     <string name="number_of_request">Number of request:</string>
@@ -125,6 +125,7 @@
     <string name="send_feedback">Send Feedback</string>
     <string name="recovery_questions">Recovery Questions</string>
     <string name="question_1">Question 1</string>
+    <string name="send">Send</string>
 
 
 </resources>

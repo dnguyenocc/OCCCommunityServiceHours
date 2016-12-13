@@ -153,16 +153,56 @@ public class HostEventActivity extends AppCompatActivity
             }
         });
 
+
+
         return true;
     }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        doNavigate(id);
 
 
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
+    }
+
+    //create tag for fragment so we can look up fragment later by tag
+    // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
+    public void transitionFragment(Fragment fragmentClass, String tag)
+    {
+        try {
+            FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
+            // Insert the fragment by replacing any existing fragment
+            fragment.replace(R.id.fragmentContent, fragmentClass,tag).commit();
+            //fragment.add(R.id.fragmentContent, fragmentClass).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void doNavigate(int id){
         if (id == R.id.nav_profile) {
             // transition fragment
             transitionFragment( new  AccountDetailsFragment(), "AccountDetail");
@@ -172,10 +212,9 @@ public class HostEventActivity extends AppCompatActivity
             //TODO put  fragment here
             startActivity(new Intent(this, HostEventActivity.class));
 
-
         }else if (id == R.id.nav_home) {
             //TODO put  fragment here
-            transitionFragment(new AllEventListFragment(),"Homepage");
+            transitionFragment(new HomeFragment(),"Homepage");
         }
         else if (id == R.id.nav_all_events) {
             //TODO put  fragment here
@@ -200,25 +239,6 @@ public class HostEventActivity extends AppCompatActivity
             manager.setPreferences(HostEventActivity.this, "status", "0");
             finish();
             startActivity(new Intent(HostEventActivity.this, LoginActivity.class));
-        }
-
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
-    }
-
-    //create tag for fragment so we can look up fragment later by tag
-    // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
-    public void transitionFragment(Fragment fragmentClass, String tag)
-    {
-        try {
-            FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
-            // Insert the fragment by replacing any existing fragment
-            fragment.replace(R.id.fragmentContent, fragmentClass,tag).commit();
-            //fragment.add(R.id.fragmentContent, fragmentClass).commit();
-        } catch (Exception e) {
-            e.printStackTrace();
         }
     }
 }

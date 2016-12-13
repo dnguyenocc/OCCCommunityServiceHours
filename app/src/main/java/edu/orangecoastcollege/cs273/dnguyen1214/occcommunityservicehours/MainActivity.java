@@ -50,19 +50,10 @@ public class MainActivity extends AppCompatActivity
         //TODO Set the main fragment
         transitionFragment(new AllEventListFragment(),"Homepage");
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
+        drawer.addDrawerListener(toggle);
         toggle.syncState();
 
 
@@ -168,13 +159,13 @@ public class MainActivity extends AppCompatActivity
             transitionFragment(new HomeFragment(),"Homepage");
         } else if (id == R.id.nav_attending_events) {
             //TODO put fragment want to be transition here
-            transitionFragment(new AttendingEventListFragment(),"AttendingEventList");
+            startActivity(new Intent(this, AttendingActivity.class));
         } else if (id == R.id.nav_all_events) {
             //TODO put fragment want to be transition here
             transitionFragment(new AllEventListFragment(),"AllEventList");
         } else if (id == R.id.nav_attended_events) {
             //TODO put fragment want to be transition here
-            transitionFragment(new AttendedEventListFragment(),"AttendedEventList");
+            startActivity(new Intent(this, AttendedActivity.class));
         } else if (id == R.id.nav_point) {
             //TODO put fragment want to be transition here
             startActivity(new Intent(this,PointAwardActivity.class));
