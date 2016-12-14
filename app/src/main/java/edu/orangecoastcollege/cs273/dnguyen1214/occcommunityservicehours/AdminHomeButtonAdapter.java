@@ -15,6 +15,10 @@ import android.widget.TextView;
  * Created by duyng on 12/12/2016.
  */
 
+/**
+ * The Adapter for hooking up admin's home page
+ *
+ */
 public class AdminHomeButtonAdapter extends BaseAdapter {
     private Context mContext;
     // references to our images
@@ -37,23 +41,55 @@ public class AdminHomeButtonAdapter extends BaseAdapter {
             R.string.point, R.string.log_out
     };
 
+    /**
+     * Sets the context for the admin home button adapter
+     *
+     * @param c A context to set for the object
+     */
     public AdminHomeButtonAdapter(Context c) {
         mContext = c;
     }
 
+    /**
+     * Returns the count of the thumbnail for the current obj.
+     *
+     * @return A count of the total thumbnails
+     */
     public int getCount() {
         return mThumbIds.length;
     }
 
+    /**
+     * Gets the item at the position on the view.
+     *
+     * @param position
+     * @return null
+     */
     public Object getItem(int position) {
         return null;
     }
 
+
+    /**
+     * Gets the id of the item at the slected position on the view.
+     *
+     * @param position
+     * @return 0
+     */
     public long getItemId(int position) {
         return 0;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
+    /**
+     *
+     * Creates a new ImageView for each item referenced by the Adapter
+     *
+     * @param position Takes in a position of location of an item.
+     * @param convertView The view to convert to.
+     * @param parent The parent view group that the view is nested in.
+     *
+     * @return  The view to return.
+     */
     public View getView(int position, View convertView, ViewGroup parent) {
         LinearLayout view;
         if (convertView == null) {

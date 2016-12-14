@@ -26,7 +26,7 @@ import android.widget.TextView;
 /**
  * A class that handles the logic portion behind Admin's activities
  * and sets up the approp settings and pref for when an admin logs in.
- * 
+ *
  */
 public class AdminActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
