@@ -11,9 +11,11 @@ import android.app.DialogFragment;
 import android.app.FragmentManager;
 
 //import android.support.v4.app.FragmentManager;
+import android.net.Uri;
 import android.provider.CalendarContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -22,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.google.android.gms.games.multiplayer.Participant;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -133,16 +136,20 @@ public class EventDetailsActivity extends AppCompatActivity implements OnMapRead
 
     public void doPositiveClick()
     {
-        /*
-        String phoneNumber = "9999999999";
-        String smsBody = "This is an SMS!";
-        Intent smsIntent = new Intent(Intent.ACTION_VIEW);
-        smsIntent.setType("vnd.android-dir/mms-sms");
-        smsIntent.putExtra("address", phoneNumber);
-        smsIntent.putExtra("sms_body", smsBody);
 
-        startActivity(smsIntent);
-        */
+    }
+
+    public void callParticipant(View view) {
+        if (view instanceof LinearLayout) {
+            LinearLayout selectedLayout = (LinearLayout) view;
+            Participation selectedParticipation = (Participation) selectedLayout.getTag();
+            Log.i("OCC Community Service", selectedEvent.toString());
+            Intent intent = new Intent(Intent.ACTION_DIAL);
+            intent.setData(Uri.parse("tel:" + selectedParticipation.getUser().getmPhoneNum()));
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        }
     }
     public void requestValidation(View view) {
         if (view instanceof Button) {

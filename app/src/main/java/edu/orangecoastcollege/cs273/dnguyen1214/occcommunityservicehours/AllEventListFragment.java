@@ -2,6 +2,9 @@ package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 
 import android.content.Context;
+import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.Editable;
@@ -14,9 +17,11 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 
 /**
@@ -25,7 +30,7 @@ import java.util.List;
 public class AllEventListFragment extends Fragment {
     private DBHelper db;
     private List<Event> allEventsList;
-    //private List<Event> filteredEventsList;
+    private ArrayList<Event> filteredEventsList;
 
     private EditText eventNameEditText;
     private Spinner eventTimeSpinner;
@@ -34,11 +39,22 @@ public class AllEventListFragment extends Fragment {
     private EventListAdapter eventsListAdapter;
     Context context;
 
+    private SensorManager sensorManager;
+
+    // Reference to the accelerometer;
+    private Sensor accelerometer;
+    private ShakeDetector shakeDetector;
 
     public AllEventListFragment() {
         // Required empty public constructor
     }
 
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        sensorManager.unregisterListener(shakeDetector);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,8 +77,13 @@ public class AllEventListFragment extends Fragment {
         allEventsList.add(new Event(3,"Blood Donation","12-01-16 07:45 am","12-01-16 10:45 am",
                 "Need volunteers to donate blood.","OCC Watson Hall",imageURI));
         */
-        //filteredEventsList = new ArrayList<>(allEventsList);
+        filteredEventsList = new ArrayList<>();
 
+        for (Event event : allEventsList)
+        {
+            if (!event.eventPassed())
+                filteredEventsList.add(event);
+        }
         eventNameEditText = (EditText) view.findViewById(R.id.eventNameEditText);
         eventNameEditText.addTextChangedListener(eventNameTextWatcher);
 
@@ -77,6 +98,28 @@ public class AllEventListFragment extends Fragment {
         eventsListAdapter = new EventListAdapter(context, R.layout.event_list_item,allEventsList);
         eventsListView.setAdapter(eventsListAdapter);
 
+        // TASK 3: REGISTER THE SENSOR MANAGER AND SETUP THE SHAKE DETECTION
+        sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
+        shakeDetector = new ShakeDetector(new ShakeDetector.OnShakeListener() {
+            @Override
+            public void onShake() {
+                if (filteredEventsList.size()>0) {
+                    Random rng = new Random();
+                    int randomPosition = rng.nextInt(filteredEventsList.size());
+                    Event selectedEvent = filteredEventsList.get(randomPosition);
+                    Intent detailsIntent = new Intent(getContext(), EventDetailsActivity.class);
+                    detailsIntent.putExtra("SelectedEvent", selectedEvent);
+                    startActivity(detailsIntent);
+                }
+                else
+                {
+                    Toast.makeText(getContext(),"There is no new event recently!",Toast.LENGTH_LONG).show();
+                }
+            }
+        });
+
         return view;
     }
 
@@ -85,6 +128,7 @@ public class AllEventListFragment extends Fragment {
         super.onResume();
         allEventsList =db.getAllEvents();
         eventsListAdapter.notifyDataSetChanged();
+        sensorManager.registerListener(shakeDetector,accelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     public TextWatcher eventNameTextWatcher = new TextWatcher() {

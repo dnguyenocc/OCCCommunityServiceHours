@@ -1,11 +1,14 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 /**
  * Created by duyng on 12/12/2016.
@@ -26,6 +29,12 @@ public class HomeButtonAdapter extends BaseAdapter {
             R.id.nav_attended_events, R.id.nav_profile,
             R.id.nav_point, R.id.nav_exist
     };
+    private Integer[] mStringIds ={
+            R.string.feedback,R.string.all_event,
+            R.string.attending_event, R.string.attended_event,
+            R.string.my_account, R.string.point,
+            R.string.log_out
+    };
 
     public HomeButtonAdapter(Context c) {
         mContext = c;
@@ -45,24 +54,26 @@ public class HomeButtonAdapter extends BaseAdapter {
 
     // create a new ImageView for each item referenced by the Adapter
     public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
+        LinearLayout view;
         if (convertView == null) {
-            // if it's not recycled, initialize some attributes
-            imageView = new ImageView(mContext);
+            view = (LinearLayout) LayoutInflater.from(mContext).inflate(R.layout.home_button_item, parent, false);
 
-            imageView.setLayoutParams(new GridView.LayoutParams(200, 200));
+            ImageView imageView = (ImageView) view.findViewById(R.id.homeButtonImageView);
+            TextView textView = (TextView) view.findViewById(R.id.homeButtonTextView);
+            //view.setLayoutParams(new GridView.LayoutParams(200, 200));
             imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             imageView.setPadding(8, 8, 8, 8);
-
-        } else {
-            imageView = (ImageView) convertView;
+            imageView.setImageResource(mThumbIds[position]);
+            view.setTag(mNavIds[position]);
+            textView.setText(mStringIds[position]);
+        }
+        else
+        {
+            view = (LinearLayout) convertView;
         }
 
-        //imageView.setImageResource(mThumbIds[position]);
-        imageView.setBackgroundResource(mThumbIds[position]);
-        imageView.setTag(mNavIds[position]);
 
-        return imageView;
+        return view;
     }
 
 
