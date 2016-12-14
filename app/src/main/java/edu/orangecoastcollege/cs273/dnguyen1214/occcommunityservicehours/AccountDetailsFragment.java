@@ -105,7 +105,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
 
 
     /**
-     * Configures the QuizActivityFragment when it's View is created.
+     * Configures the QuizDetailsFragment when it's View is created.
      *
      * @param inflater The layout inflater
      * @param container The view group container in which the fragment resides

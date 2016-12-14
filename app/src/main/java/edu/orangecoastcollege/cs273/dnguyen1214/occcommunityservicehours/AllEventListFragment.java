@@ -25,9 +25,12 @@ import java.util.Random;
 
 
 /**
+ * AllEventListFragment
+ *
  * A simple {@link Fragment} subclass.
  */
 public class AllEventListFragment extends Fragment {
+    // Declaration of private fields
     private DBHelper db;
     private List<Event> allEventsList;
     private ArrayList<Event> filteredEventsList;
@@ -56,6 +59,14 @@ public class AllEventListFragment extends Fragment {
         sensorManager.unregisterListener(shakeDetector);
     }
 
+    /**
+     * Configures the AllEventListFragment when it's View is created.
+     *
+     * @param inflater The layout inflater
+     * @param container The view group container in which the fragment resides
+     * @param savedInstanceState Any saved state to restore in this fragment
+     * @return The view v
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -123,6 +134,11 @@ public class AllEventListFragment extends Fragment {
         return view;
     }
 
+    /**
+     * Resumes the fragment if the user already has the app running and is logged in.
+     * Avoids creating the view again.
+     *
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -131,6 +147,12 @@ public class AllEventListFragment extends Fragment {
         sensorManager.registerListener(shakeDetector,accelerometer, SensorManager.SENSOR_DELAY_UI);
     }
 
+    /**
+     * A TextWatcher to check for an input from the user
+     * and execute the appropriate action depending on what the
+     * user is entering in the input field.
+     *
+     */
     public TextWatcher eventNameTextWatcher = new TextWatcher() {
         @Override
         public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -164,6 +186,11 @@ public class AllEventListFragment extends Fragment {
         }
     };
 
+    /**
+     * Setup for an item listener
+     * Executes the approp action depending on what the user clicked on the adapter.
+     *
+     */
     public AdapterView.OnItemSelectedListener eventTimeSpinnerListener = new AdapterView.OnItemSelectedListener() {
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -194,6 +221,11 @@ public class AllEventListFragment extends Fragment {
             }
         }
 
+        /**
+         * A method that sets the current selection to 0 if nothing was selected.
+         *
+         * @param parent
+         */
         @Override
         public void onNothingSelected(AdapterView<?> parent) {
             parent.setSelection(0);
