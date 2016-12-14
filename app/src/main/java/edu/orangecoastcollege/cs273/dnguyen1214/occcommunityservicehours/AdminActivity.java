@@ -23,13 +23,26 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * A class that handles the logic portion behind Admin's activities
+ * and sets up the approp settings and pref for when an admin logs in.
+ * 
+ */
 public class AdminActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener{
 
     SessionManager manager;
     DBHelper db;
 
-    @Override
+    /**
+     * onCreate generates the drawer_layout when the user either swipes the screen from the fat left
+     * or clicks on the collapsed navigation menu
+     *
+     * All setups are made in this method.
+     * @param savedInstanceState The saved state to restore (not being used)
+     *
+     **/
+     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
@@ -68,6 +81,12 @@ public class AdminActivity extends AppCompatActivity
         navigationView.setNavigationItemSelectedListener(this);
     }
 
+    /**
+     * Goes back to the fragment that was displayed previous to the current fragment
+     *
+     * Ex. Frag A --> User goes to Frag B --> Frag B displayed -->
+     *     User clicks back button --> Frag A is displayed
+     */
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().findFragmentByTag("Homepage") != null) {
@@ -90,6 +109,12 @@ public class AdminActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Inflates the menu and handles search inputs from the user
+     *
+     * @param menu The menu to create.
+     * @return
+     */
     @Override
     @TargetApi(Build.VERSION_CODES.HONEYCOMB)
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -120,6 +145,12 @@ public class AdminActivity extends AppCompatActivity
         return true;
     }
 
+    /**
+     * Handles action bar item clicks
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -136,6 +167,12 @@ public class AdminActivity extends AppCompatActivity
     }
 
 
+    /**
+     * Handles click events for navigational view items.
+     *
+     * @param item
+     * @return
+     */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -150,10 +187,17 @@ public class AdminActivity extends AppCompatActivity
         return true;
     }
 
-    //create tag for fragment so we can look up fragment later by tag
-    // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
+    /**
+     * Transitions from fragment to fragment
+     * inflates the approp fragment that the user wants to view
+     *
+     * @param fragmentClass The name of the fragment class that the user wants to transition to.
+     * @param tag A tag name for that fragment.
+     */
     public void transitionFragment(Fragment fragmentClass, String tag)
     {
+        //create tag for fragment so we can look up fragment later by tag
+        // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
         try {
             FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
             // Insert the fragment by replacing any existing fragment
@@ -164,6 +208,11 @@ public class AdminActivity extends AppCompatActivity
         }
     }
 
+    /**
+     * Handles which fragment to go to to depending on which layout is selected
+     *
+     * @param id The id of the item that was selected from the drawer menu
+     */
     public void doNavigate(int id){
         if (id == R.id.nav_profile) {
             // transition fragment
@@ -216,7 +265,13 @@ public class AdminActivity extends AppCompatActivity
         return true;*/
     }
 
-
+    /**
+     * Starts an intent to the Event details view when the user clicks
+     * on an item in the events list view
+     *
+     * @param view The item that was clicked on from the custom list view
+     *
+     */
     public void viewEventDetails(View view) {
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;
@@ -227,6 +282,13 @@ public class AdminActivity extends AppCompatActivity
             startActivity(detailsIntent);
         }
     }
+
+    /**
+     * Starts an intent to the participation validation activity passing the information
+     * of an item that was clicked from a list view
+     *
+     * @param view The item that was clicked on from the custom list view
+     */
     public void viewRequestDetails(View view) {
         if (view instanceof LinearLayout) {
             LinearLayout selectedLayout = (LinearLayout) view;
