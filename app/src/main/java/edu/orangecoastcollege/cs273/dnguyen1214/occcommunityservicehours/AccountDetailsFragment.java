@@ -36,7 +36,10 @@ import java.util.ArrayList;
 
 
 /**
- * A simple {@link Fragment} subclass.
+ * Account Details Fragment Class
+ *
+ * - Blueprint for creating an AccountDetailsFragment
+ * - Handles the logic portion of fragment_account_details.xml
  */
 public class AccountDetailsFragment extends Fragment implements View.OnClickListener{
 
@@ -46,6 +49,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
     private AlertDialog dialog = null;
 
     SessionManager sessionManager;
+
     // Declare local variables
     private Button submitButton;
     private TextView serviceHoursTextView, userNameTextView,
@@ -66,6 +70,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
     private Recovery recovery;
     private SessionManager sManager;
     private ProgressBar answerRecoveryProgressBar;
+
     //Context context;
     private  String emailR_Q;
 
@@ -86,6 +91,11 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         // Required empty public constructor
     }
 
+    /**
+     * Resumes the fragment if the user already has the app running and is logged in.
+     * Avoids creating the view again.
+     *
+     */
     @Override
     public void onResume() {
         super.onResume();
@@ -94,6 +104,14 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
     }
 
 
+    /**
+     * Configures the QuizDetailsFragment when it's View is created.
+     *
+     * @param inflater The layout inflater
+     * @param container The view group container in which the fragment resides
+     * @param savedInstanceState Any saved state to restore in this fragment
+     * @return The view v
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -134,7 +152,6 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
 
         return v;
     }
-
 
 
     private void hookUpWidgets(View v)
@@ -426,6 +443,12 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         }
     }
 
+    /**
+     * Whenever an on click event is triggered by the user,
+     * this method will be called and it will handle the action appropriately.
+     *
+     * @param v - The view that was clicked.
+     */
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -536,7 +559,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         }
     }
 
-    public boolean validate(String a1, String a2)
+    private boolean validate(String a1, String a2)
     {
         boolean valid = true;
         if(a1.isEmpty() ||  a2.isEmpty()) {
@@ -562,7 +585,7 @@ public class AccountDetailsFragment extends Fragment implements View.OnClickList
         return valid;
     }
 
-    public void transitionFragment(Fragment fragmentClass, String tag)
+    private void transitionFragment(Fragment fragmentClass, String tag)
     {
         try {
             FragmentTransaction fragment = getFragmentManager().beginTransaction();
