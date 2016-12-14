@@ -40,7 +40,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/requestUserEmailTextView"
-            android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+            android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+            android:fontFamily="sans-serif"
+            android:textAllCaps="false"
+            android:clickable="true"
+            android:onClick="emailUser"/>
 
         <TextView
             android:text="TextView"
@@ -54,7 +58,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/requestEventNameTextView"
-
             android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
 
         <TextView

@@ -1,9 +1,12 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 import android.*;
+import android.app.Dialog;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.support.v4.app.ActivityCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.telephony.SmsManager;
@@ -53,6 +56,20 @@ public class ParticipationValidationActivity extends AppCompatActivity {
         hoursTextView.setText(String.valueOf(selectedParticipation.getServiceHours()));
         responsibilitiesTextView.setText(selectedParticipation.getResponsibilities());
 
+    }
+
+    public void emailUser(View view)
+    {
+        if (view instanceof TextView)
+        {
+            Intent intent = new Intent(Intent.ACTION_SENDTO);
+            intent.setData(Uri.parse("mailto:"+user.getmEmail())); // only email apps should handle this
+            intent.putExtra(Intent.EXTRA_EMAIL, new String[]{user.getmEmail()});
+            intent.putExtra(Intent.EXTRA_SUBJECT, event.getName());
+            if (intent.resolveActivity(getPackageManager()) != null) {
+                startActivity(intent);
+            }
+        }
     }
     public void acceptRequest(View view)
     {
