@@ -75,7 +75,8 @@ public class MainActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
 
-        if (getSupportFragmentManager().findFragmentByTag("Homepage") != null) {
+
+         if (getSupportFragmentManager().findFragmentByTag("Homepage") != null) {
             DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
             if (drawer.isDrawerOpen(GravityCompat.START)) {
                 drawer.closeDrawer(GravityCompat.START);
@@ -174,6 +175,9 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_point) {
             //TODO put fragment want to be transition here
             startActivity(new Intent(this,PointAwardActivity.class));
+        } else if (id == R.id.nav_faq) {
+            //TODO put fragment want to be transition here
+            startActivity(new Intent(this,FAQActivity.class));
         } else if (id == R.id.nav_feedback) {
             //TODO put fragment want to be transition here
             transitionFragment(new FeedbackFragment(),"Feedback");

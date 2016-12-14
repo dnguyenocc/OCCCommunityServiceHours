@@ -43,6 +43,14 @@ class DBHelper extends SQLiteOpenHelper {
     private static final String FIELD_IMAGE_NAME = "image_name";
 
 
+    //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE FQA ANSWER TABLE
+    private static final String FAQ_ANSWER_TABLE = "FAQAnswer";
+    private static final String FAQ_ANSWER_KEY_FIELD_ID = "_id";
+    private static final String FAQ_ANSWER_NAME = "name";
+    private static final String FAQ_ANSWER_DESCRIPTION = "description";
+
+
+
     //TASK: DEFINE THE FIELDS (COLUMN NAMES) FOR THE LOGIN TABLE
     private static final String LOGIN_TABLE = "Login";
     private static final String LOGIN_KEY_FIELD_ID = "_id";
@@ -111,6 +119,12 @@ class DBHelper extends SQLiteOpenHelper {
                 + FIELD_IMAGE_NAME + " TEXT" + ")";
         database.execSQL(createQuery);
 
+        // Create the FQA answer table
+        createQuery = "CREATE TABLE " + FAQ_ANSWER_TABLE + "("
+                + FAQ_ANSWER_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + FAQ_ANSWER_NAME + " TEXT, "
+                + FAQ_ANSWER_DESCRIPTION + " TEXT" + ")";
+        database.execSQL(createQuery);
         // Create the Question table
         createQuery = "CREATE TABLE " + QUESTIONS_TABLE + "("
                 + QUESTION_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -172,6 +186,7 @@ class DBHelper extends SQLiteOpenHelper {
                           int oldVersion,
                           int newVersion) {
         database.execSQL("DROP TABLE IF EXISTS " + USERS_TABLE);
+        database.execSQL("DROP TABLE IF EXISTS " + FAQ_ANSWER_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + LOGIN_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + RECOVERY_TABLE);
         database.execSQL("DROP TABLE IF EXISTS " + QUESTIONS_TABLE);
@@ -180,6 +195,105 @@ class DBHelper extends SQLiteOpenHelper {
 
         onCreate(database);
     }
+
+    //********** FAQ ANSWER TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
+
+    public void addFAQAnswer(FAQAnswer answer) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+
+        values.put(FAQ_ANSWER_NAME, answer.getName());
+        values.put(FAQ_ANSWER_DESCRIPTION, answer.getDescription());
+
+        db.insert(FAQ_ANSWER_TABLE, null, values);
+
+        // CLOSE THE DATABASE CONNECTION
+        db.close();
+    }
+
+    public ArrayList<FAQAnswer> getAnswersByKeyName(String keyName) {
+        ArrayList<FAQAnswer> answersList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        //Cursor cursor = database.rawQuery(queryList, null);
+        Cursor cursor = database.query(
+                FAQ_ANSWER_TABLE,
+                new String[]{FAQ_ANSWER_KEY_FIELD_ID,
+                        FAQ_ANSWER_NAME,
+                        FAQ_ANSWER_DESCRIPTION},
+                null,
+                null,
+                null, null, null, null);
+
+
+        //COLLECT EACH ROW IN THE TABLE
+        if (cursor.moveToFirst()) {
+            do {
+                if(cursor.getString(1).equals(keyName))
+                {
+                    FAQAnswer answer =
+                            new FAQAnswer(cursor.getInt(0),
+                                    cursor.getString(1),
+                                    cursor.getString(2));
+                    answersList.add(answer);
+                }
+            } while (cursor.moveToNext());
+        }
+        return answersList;
+    }
+
+    public FAQAnswer getAnswer(String keyName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(
+                FAQ_ANSWER_TABLE,
+                new String[]{USERS_KEY_FIELD_ID,
+                        FAQ_ANSWER_NAME,
+                        FAQ_ANSWER_DESCRIPTION},
+                FAQ_ANSWER_NAME + "=?",
+                new String[]{keyName},
+                null, null, null, null);
+
+        if (cursor != null)
+            cursor.moveToFirst();
+
+        FAQAnswer answer =
+                new FAQAnswer(cursor.getInt(0),
+                        cursor.getString(1),
+                        cursor.getString(2));
+
+        cursor.close();
+
+        db.close();
+        return answer;
+    }
+    public ArrayList<FAQAnswer> getAllAnswer() {
+        ArrayList<FAQAnswer> answersList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        //Cursor cursor = database.rawQuery(queryList, null);
+        Cursor cursor = database.query(
+                FAQ_ANSWER_TABLE,
+                new String[]{FAQ_ANSWER_KEY_FIELD_ID,
+                        FAQ_ANSWER_NAME,
+                        FAQ_ANSWER_DESCRIPTION},
+                null,
+                null,
+                null, null, null, null);
+
+
+        //COLLECT EACH ROW IN THE TABLE
+        if (cursor.moveToFirst()) {
+            do {
+
+                FAQAnswer answer =
+                        new FAQAnswer(cursor.getInt(0),
+                                cursor.getString(1),
+                                cursor.getString(2));
+                answersList.add(answer);
+            } while (cursor.moveToNext());
+        }
+        return answersList;
+    }
+
+
 
     //********** QUESTION TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
     public void addQuestion(String q1,String q2) {

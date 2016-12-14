@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_magic_answer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.FAQActivity"
+    android:orientation="vertical">
+
+    <!-- USER ENTERED QUESTION -->
+
+    <!-- MAGIC ANSWER SUPPLIED AFTER A SHAKE -->
+
+    <android.support.design.widget.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical|center_horizontal"
+        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:id="@+id/questionInputLayout">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:ems="10"
+            android:id="@+id/questionEditText"
+            android:layout_weight="1"
+            android:hint="@string/enter_request" />
+
+    </android.support.design.widget.TextInputLayout>
+
+    <TextView
+        android:id="@+id/answerTextView"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:text="@string/answer"
+        android:textSize="20sp"
+        android:layout_centerHorizontal="true"
+        android:gravity="center_horizontal"
+        android:onClick="viewDetailAnswer" />
+
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/faqAnswersListView"
+        android:elevation="0dp"
+        android:layout_weight="1" />
+
+</LinearLayout>

@@ -51,7 +51,7 @@
     <!-- String related to AccountDetails fragment -->
     <string name="title_activity_account_detail">AccountDetail</string>
     <string name="service_hours">Service Hours:</string>
-    <string name="edit_name">Name</string>
+    <string name="edit_name">Your Name</string>
     <string name="edit_icon_desc">An icon of a pencil used to indicate an editable field.</string>
     <string name="profile_image_desc">A profile image.</string>
     <string name="update">Update Account</string>
@@ -107,12 +107,12 @@
     <string name="log_out">Logout</string>
     <string name="event_part">Events</string>
     <string name="other_part">Extras</string>
+    <string name="faq">FAQ</string>
     <string name="share">Share</string>
     <string name="hour_points">Your total hours: </string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="forgot_password">Forgot your password?</string>
     <string name="security_answer">Answer</string>
     <string name="email_security">Enter your email address</string>
@@ -139,6 +139,16 @@
     <string name="description_level">These levels is based on The President’s Volunteer Service Award
     which celebrates and holds up as role models Americans making a positive impact as engaged and deeply committed volunteers.</string>
     <string name="learn_more">Learn more</string>
+    <string name="frequently_ask">Frequently Asked Questions</string>
+
+    <!-- LABELS -->
+    <string name="enter_request">Enter your question here.</string>
+    <string name="answer">Enter the key word (no space) and shake your device to see the answer to your question.\n EX: occ, ptk, hourpoint...</string>
+
+
+
+    <!-- TODO: Remove or change this placeholder text -->
+
 
 
 </resources>

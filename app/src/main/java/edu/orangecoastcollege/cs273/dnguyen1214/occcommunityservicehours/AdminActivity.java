@@ -197,8 +197,10 @@ public class AdminActivity extends AppCompatActivity
         } else if (id == R.id.nav_point) {
             //TODO put fragment want to be transition here
             startActivity(new Intent(this, PointAwardActivity.class));
-        }
-        else if (id == R.id.nav_feedback) {
+        }else if (id == R.id.nav_faq) {
+            //TODO put fragment want to be transition here
+            startActivity(new Intent(this,FAQActivity.class));
+        } else if (id == R.id.nav_feedback) {
             transitionFragment(new FeedbackFragment(),"Feedback");
         }
         else if (id == R.id.nav_exist) {

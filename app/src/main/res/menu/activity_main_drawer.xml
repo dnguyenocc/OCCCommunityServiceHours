@@ -34,6 +34,10 @@
                 android:icon="@drawable/ic_favorite_black_24dp"
                 android:title="@string/point" />
             <item
+                android:id="@+id/nav_faq"
+                android:icon="@drawable/ic_help_black_24dp"
+                android:title="@string/faq" />
+            <item
                 android:id="@+id/nav_feedback"
                 android:icon="@drawable/ic_info_outline_black_24dp"
                 android:title="@string/feedback"/>

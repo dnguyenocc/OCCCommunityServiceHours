@@ -1,23 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours">
+    package="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours">
 
     <!-- To auto-complete the email text field in the login form with the user's emails -->
-    <uses-permission android:name="android.permission.GET_ACCOUNTS"/>
-    <uses-permission android:name="android.permission.READ_PROFILE"/>
-    <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.CAMERA"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
-    <uses-permission android:name="android.permission.SEND_SMS"/>
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
+    <uses-permission android:name="android.permission.READ_PROFILE" />
+    <uses-permission android:name="android.permission.READ_CONTACTS" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
     <!--
      -         The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
      -         Google Maps Android API v2, but you must specify either coarse or fine
      -         location permissions for the 'MyLocation' functionality.
      -
     -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -29,15 +29,14 @@
             android:name=".SplashActivity"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
             android:name=".LoginActivity"
-            android:label="@string/sign_in"
-            />
+            android:label="@string/sign_in" />
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
@@ -45,25 +44,27 @@
 
             <!-- to identify this activity as "searchable" -->
             <intent-filter>
-                <action android:name="android.intent.action.SEARCH"/>
+                <action android:name="android.intent.action.SEARCH" />
 
-                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
 
             <meta-data
                 android:name="android.app.searchable"
-                android:resource="@xml/searchable"/>
+                android:resource="@xml/searchable" />
         </activity>
-        <activity android:name=".RegisterActivity"
-            android:label="@string/register"/>
+        <activity
+            android:name=".RegisterActivity"
+            android:label="@string/register" />
         <activity
             android:name=".AdminActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".EventDetailsActivity"/>
-        <activity android:name=".requestValidationActivity"/>
-        <activity android:name=".RecoveryActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".ParticipationValidationActivity"/>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".EventDetailsActivity" />
+        <activity android:name=".requestValidationActivity" />
+        <activity
+            android:name=".RecoveryActivity"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".ParticipationValidationActivity" />
         <!--
 -             The API key for Google Maps-based APIs is defined as a string resource.
 -             (See the file "res/values/google_maps_api.xml").
@@ -75,19 +76,18 @@
         -->
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="@string/google_maps_key"/>
+            android:value="@string/google_maps_key" />
 
         <activity
             android:name=".PointAwardActivity"
-            android:theme="@style/AppTheme.NoActionBar"/>
-        <activity android:name=".HostEventActivity">
-        </activity>
-        <activity android:name=".UserEventActivity">
-        </activity>
-        <activity android:name=".AttendedActivity">
-        </activity>
-        <activity android:name=".AttendingActivity">
-        </activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".HostEventActivity" />
+        <activity android:name=".UserEventActivity" />
+        <activity android:name=".AttendedActivity" />
+        <activity android:name=".AttendingActivity" />
+        <activity android:name=".FAQActivity"
+            android:label="@string/frequently_ask"/>
+        <activity android:name=".FAQAnswerDetailActivity"></activity>
     </application>
 
 </manifest>
