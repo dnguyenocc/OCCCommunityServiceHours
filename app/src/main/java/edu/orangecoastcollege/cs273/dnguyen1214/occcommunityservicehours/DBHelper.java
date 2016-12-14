@@ -197,6 +197,22 @@ class DBHelper extends SQLiteOpenHelper {
     }
 
     //********** FAQ ANSWER TABLE OPERATIONS:  ADD, GET ALL, EDIT, DELETE
+    public boolean checkFAQAnswer(String keyname)
+    {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String[] selectionArgs = new String[]{keyname};
+
+
+        Cursor  c = db.rawQuery("select * from "+FAQ_ANSWER_TABLE+ " where " +FAQ_ANSWER_NAME+ " =? ", selectionArgs);
+        c.moveToFirst();
+        if(c.getCount() <= 0){
+            c.close();
+            return false;
+        }
+        c.close();
+        return true;
+    }
 
     public void addFAQAnswer(FAQAnswer answer) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -211,35 +227,7 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
     }
 
-    public ArrayList<FAQAnswer> getAnswersByKeyName(String keyName) {
-        ArrayList<FAQAnswer> answersList = new ArrayList<>();
-        SQLiteDatabase database = this.getReadableDatabase();
-        //Cursor cursor = database.rawQuery(queryList, null);
-        Cursor cursor = database.query(
-                FAQ_ANSWER_TABLE,
-                new String[]{FAQ_ANSWER_KEY_FIELD_ID,
-                        FAQ_ANSWER_NAME,
-                        FAQ_ANSWER_DESCRIPTION},
-                null,
-                null,
-                null, null, null, null);
 
-
-        //COLLECT EACH ROW IN THE TABLE
-        if (cursor.moveToFirst()) {
-            do {
-                if(cursor.getString(1).equals(keyName))
-                {
-                    FAQAnswer answer =
-                            new FAQAnswer(cursor.getInt(0),
-                                    cursor.getString(1),
-                                    cursor.getString(2));
-                    answersList.add(answer);
-                }
-            } while (cursor.moveToNext());
-        }
-        return answersList;
-    }
 
     public FAQAnswer getAnswer(String keyName) {
         SQLiteDatabase db = this.getReadableDatabase();
