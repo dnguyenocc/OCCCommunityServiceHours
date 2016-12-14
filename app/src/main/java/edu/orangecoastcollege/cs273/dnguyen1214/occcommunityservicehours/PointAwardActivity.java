@@ -11,6 +11,10 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -22,7 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import android.support.v4.app.DialogFragment;
+
 
 public class PointAwardActivity extends AppCompatActivity {
     private View mFrontLayout;
@@ -155,13 +159,13 @@ public class PointAwardActivity extends AppCompatActivity {
         }
     }
 
-    public void viewDetailLevel(View view)
-    {
-        if (view instanceof ImageView) {
-
-        }
-
-    }
+//    public void viewDetailLevel(View view)
+//    {
+//        if (view instanceof ImageView) {
+//
+//        }
+//
+//    }
 
     public void viewLearnMore(View view)
     {
@@ -188,10 +192,10 @@ public class PointAwardActivity extends AppCompatActivity {
                     builder.setPositiveButton(R.string.learn_more,
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int id) {
-                                    String url = "http://www.pointsoflight.org/";
-                                    Intent i = new Intent(Intent.ACTION_VIEW);
-                                    i.setData(Uri.parse(url));
-                                    startActivity(i);
+
+                                    android.support.v4.app.FragmentManager fm = getSupportFragmentManager();
+                                    ImageLevelFragment editNameDialogFragment = ImageLevelFragment.newInstance("Level Details");
+                                    editNameDialogFragment.show(fm, "FragmentLevel");
                                 }
                             }
                     );
@@ -204,6 +208,21 @@ public class PointAwardActivity extends AppCompatActivity {
             dialogFragment.show(fm, "DetailCommunity");
         }
     }
+
+    //create tag for fragment so we can look up fragment later by tag
+    // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
+    public void transitionFragment(Fragment fragmentClass, String tag)
+    {
+        try {
+            FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
+            // Insert the fragment by replacing any existing fragment
+            fragment.replace(R.id.pointAwardContent, fragmentClass,tag).commit();
+            //fragment.add(R.id.fragmentContent, fragmentClass).commit();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 

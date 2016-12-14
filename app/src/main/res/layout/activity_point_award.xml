@@ -1,105 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pointAwardLayout"
+    android:id="@+id/pointAwardContent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.PointAwardActivity"
     android:orientation="vertical"
     android:background="@android:color/holo_orange_light">
 
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/hourTextView"
-        android:textAlignment="center"
-        android:background="@android:color/background_light" />
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:onClick="flipMedal"
-        android:id="@+id/FrameLayout"
-        android:layout_height="171dp"
-        android:background="@android:color/background_light">
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/frontLayout">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/prez_volunteer_award_logo"
-                android:id="@+id/frontMedalImageView" />
-        </FrameLayout>
-
-        <FrameLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/backLayout">
-
-            <ImageView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:srcCompat="@drawable/prez_volunteer_award_logo"
-                android:id="@+id/backMedalImageView" />
-        </FrameLayout>
-    </FrameLayout>
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/levelTextView"
-        android:textAlignment="center"
-        android:textSize="18sp"
-        android:background="@android:color/white" />
-
-    <ProgressBar
-        style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/pointProgressBar"
-        android:visibility="visible"
-        android:indeterminate="false"
-        android:max="100" />
-
-    <TextView
-        android:text="TextView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/progressTextView"
-        android:textAlignment="center"
-        android:textSize="10sp" />
-
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        app:srcCompat="@drawable/presidents_volunteer_service_awards"
-        android:id="@+id/imageView"
-        android:layout_gravity="center_horizontal"
-        android:onClick="viewDetailLeval" />
-
-    <TextView
-        android:text="@string/detail_medal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/textView18"
-        android:onClick="viewLearnMore"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="10dp"
-        android:textAlignment="center"
-        android:textStyle="normal|bold" />
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingLeft="10dp">
+        android:layout_height="match_parent">
 
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/hourTextView"
+            android:textAlignment="center"
+            android:background="@android:color/background_light" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:onClick="flipMedal"
+            android:id="@+id/FrameLayout"
+            android:background="@android:color/background_light"
+            android:layout_height="120dp">
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/frontLayout">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/prez_volunteer_award_logo"
+                    android:id="@+id/frontMedalImageView" />
+            </FrameLayout>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/backLayout">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    app:srcCompat="@drawable/prez_volunteer_award_logo"
+                    android:id="@+id/backMedalImageView" />
+            </FrameLayout>
+        </FrameLayout>
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/levelTextView"
+            android:textAlignment="center"
+            android:textSize="18sp"
+            android:background="@android:color/white" />
+
+        <ProgressBar
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/pointProgressBar"
+            android:visibility="visible"
+            android:indeterminate="false"
+            android:max="100" />
+
+        <TextView
+            android:text="TextView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/progressTextView"
+            android:textAlignment="center"
+            android:textSize="10sp" />
+
+        <TextView
+            android:text="@string/detail_medal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView18"
+            android:onClick="viewLearnMore"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="10dp"
+            android:textAlignment="center"
+            android:textStyle="normal|bold" />
+
+        <fragment
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.AttendedEventListFragment"
+            android:id="@+id/fragment3" />
     </LinearLayout>
 
     <!-- This initially-hidden ImageView will hold the expanded/zoomed version of
@@ -109,10 +105,4 @@
          bounds.
          -->
 
-    <fragment
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours.AttendedEventListFragment"
-        android:id="@+id/fragment3" />
-
-</LinearLayout>
+</FrameLayout>
