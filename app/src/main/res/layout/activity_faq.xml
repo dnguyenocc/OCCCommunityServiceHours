@@ -35,12 +35,22 @@
     <TextView
         android:id="@+id/answerTextView"
         android:layout_width="match_parent"
-        android:layout_height="130dp"
         android:text="@string/answer"
         android:textSize="20sp"
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
-        android:onClick="viewDetailAnswer" />
+        android:onClick="viewDetailAnswer"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:text="@string/learn_more_keys"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/textView8"
+        android:textAlignment="center"
+        android:textStyle="normal|bold"
+        android:textSize="15sp"
+        android:onClick="viewKeys" />
 
     <ListView
         android:layout_width="match_parent"

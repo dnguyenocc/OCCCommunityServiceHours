@@ -1,11 +1,16 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.app.FragmentManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.design.widget.TextInputLayout;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.EditText;
@@ -26,6 +31,7 @@ public class FAQActivity extends AppCompatActivity {
     private SensorManager senserManager;
     private List<FAQAnswer> ansswerlist;
     private  FAQAnswerAdapter answerListAdapter;
+    private  List<String> allKeyList;
     private DBHelper db;
     private FAQAnswer answer;
     private String key;
@@ -58,7 +64,8 @@ public class FAQActivity extends AppCompatActivity {
         db.addFAQAnswer(new FAQAnswer("upcoming","What is Upcoming Event?\nonly Admin can access this function which will show all upcoming events in one list view, you can click on event in the list to view its detail "));
         db.addFAQAnswer(new FAQAnswer("past","What is Past Event?\nonly Admin can access this function which will show all past events in one list view, you can click on event in the list to view its detail "));
         //db.addFAQAnswer(new FAQAnswer(null,"Empty \nthere is empty string. Please enter the key word"));
-
+        allKeyList = db.getAllAnswerKey();
+        //answerTextView.setText(allKeyList.toString());
         ansswerlist = db.getAllAnswer();
 
         answerListAdapter = new FAQAnswerAdapter(this,R.layout.faq_answer_item,ansswerlist);
@@ -84,8 +91,33 @@ public class FAQActivity extends AppCompatActivity {
 
     }
 
+public void viewKeys(View v) {
+
+    DialogFragment dialogFragment = new DialogFragment() {
+        //create an AlertDialog and return it
+        @Override
+        public Dialog onCreateDialog(Bundle bundle) {
+            AlertDialog.Builder builder =
+                    new AlertDialog.Builder(getActivity());
+            builder.setTitle("Keys Question");
+            builder.setMessage(allKeyList.toString());
+
+            builder.setNegativeButton(R.string.cancel,
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog,
+                                            int id) {
+
+                        }
+                    }
+            );
 
 
+            return builder.create(); // return the AlertDialog
+        }
+    };
+    FragmentManager fm = getFragmentManager();
+    dialogFragment.show(fm, "DetailCommunity");
+}
     private void viewShakeAnswer()
     {
             if(validate(key)){
