@@ -156,12 +156,12 @@
 
     <!-- LABELS -->
     <string name="enter_request">Enter your question here.</string>
-    <string name="answer">Enter the key word (no space) and shake your device to see the answer to your question.\n EX: occ, ptk, hourpoint...</string>
+    <string name="answer">Enter a key word (no space) and shake your device to see the answer to your question.\n EX: occ, ptk, hourpoint...</string>
     <string name="learn_more_keys">Learn more about keys question, click here.</string>
     <string name="change_password">Change Password</string>
 
     <!-- TODO: Remove or change this placeholder text -->
-
+    <string name="ok">Ok</string>
 
 
 </resources>
