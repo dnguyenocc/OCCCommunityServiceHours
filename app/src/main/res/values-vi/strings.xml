@@ -99,4 +99,24 @@
     <string name="silver_level">mức bạc: 175-249 giờ</string>
     <string name="update_event">cập nhật sự kiện</string>
     <string name="view_participants">Xem người tham gia</string>
+    <string name="all_event_home">Tất cả các sự kiện</string>
+    <string name="answer">Trả lời</string>
+    <string name="attended_event_home">Sự kiện đã tham gia</string>
+    <string name="attending_event_home">Những sự kiện đã qua</string>
+    <string name="change_password">Đổi mật khẩu</string>
+    <string name="create_event_home">Tạo Sự Kiện</string>
+    <string name="description_level">Các mức này được dựa trên tình nguyện viên giải thưởng của Tổng thống mà kỷ niệm và nắm giữ lên như là hình mẫu người Mỹ thực hiện một tác động tích cực như tình nguyện viên tham gia và cam kết sâu sắc.</string>
+    <string name="enter_request">Enter your question here.</string>
+    <string name="frequently_ask">Frequently Asked Questions</string>
+    <string name="full_name_app">Orange Coast College Community Service Hours</string>
+    <string name="hour_points">Tổng số giờ của bạn:</string>
+    <string name="learn_more">Tìm hiểu thêm</string>
+    <string name="learn_more_keys">Tìm hiểu thêm về từ khoá</string>
+    <string name="new_password">"Mật khẩu mới "</string>
+    <string name="ok">OK</string>
+    <string name="original_password">Mật khẩu cũ</string>
+    <string name="past_event_home">Sự kiện đã qua</string>
+    <string name="upcoming_event">Những sự kiện sắp tới</string>
+    <string name="upcoming_event_home">Những sự kiện sắp tới</string>
+    <string name="faq">Giải đáp thắc mắc</string>
 </resources>
