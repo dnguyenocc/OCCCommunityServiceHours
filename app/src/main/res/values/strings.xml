@@ -162,6 +162,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="ok">Ok</string>
+    <string name="feedback_thank">We listen to you for improving our application.</string>
 
 
 </resources>

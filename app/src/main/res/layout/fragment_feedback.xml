@@ -30,8 +30,8 @@
 
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:id="@+id/messageInput">
+            android:id="@+id/messageInput"
+            android:layout_height="160dp">
 
             <EditText
                 android:layout_width="match_parent"
@@ -60,6 +60,15 @@
             android:id="@+id/imageView7"
             android:layout_marginTop="40dp"
             android:layout_height="80dp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView13"
+            android:gravity="center_horizontal"
+            android:text="@string/feedback_thank"
+            android:layout_marginTop="20dp"
+            android:textSize="18sp" />
 
     </LinearLayout>
 </FrameLayout>

@@ -85,8 +85,8 @@ public class FeedbackFragment extends Fragment implements View.OnClickListener {
             Intent i = new Intent(Intent.ACTION_SEND);
             i.setType("message/html");
             i.putExtra(Intent.EXTRA_EMAIL, new String[]{"OCCCommunityServiceHour@gmail.com"});
-            i.putExtra(Intent.EXTRA_SUBJECT, "Feedback from App");
-            i.putExtra(Intent.EXTRA_TEXT, "From: "+ user.getmEmail() + "\nName : "+ name + "\nMessage : "+msg);
+            i.putExtra(Intent.EXTRA_SUBJECT, "Feedback for OCC Community College Application");
+            i.putExtra(Intent.EXTRA_TEXT, "Name : "+ name + "\nMessage : "+msg);
             try {
                 startActivity(Intent.createChooser(i, "Send feedback..."));
             } catch (android.content.ActivityNotFoundException ex) {
