@@ -1,12 +1,11 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
-import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -35,9 +34,9 @@ public class AdminHomeButtonAdapter extends BaseAdapter {
             R.id.nav_point, R.id.nav_exist
     };
     private Integer[] mStringIds ={
-            R.string.create_event,R.string.feedback,
-            R.string.all_event, R.string.upcoming_event,
-            R.string.past_event, R.string.my_account,
+            R.string.create_event_home,R.string.feedback,
+            R.string.all_event_home, R.string.upcoming_event_home,
+            R.string.past_event_home, R.string.my_account,
             R.string.point, R.string.log_out
     };
 
@@ -103,6 +102,8 @@ public class AdminHomeButtonAdapter extends BaseAdapter {
             imageView.setImageResource(mThumbIds[position]);
             view.setTag(mNavIds[position]);
             textView.setText(mStringIds[position]);
+            textView.setTextColor(Color.WHITE);
+
         }
         else
         {

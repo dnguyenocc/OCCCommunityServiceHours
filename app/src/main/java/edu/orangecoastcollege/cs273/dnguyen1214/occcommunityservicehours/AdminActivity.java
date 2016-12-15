@@ -74,9 +74,7 @@ public class AdminActivity extends AppCompatActivity
         TextView hoursPointHeaderTextView = (TextView) headerView.findViewById(R.id.hoursPointHeaderTextView);
         profileImageView.setImageURI(user.getmImageUri());
         usernameAccountTextView.setText(user.getmUserName());
-        hoursPointHeaderTextView.setText(getString(R.string.hour_points)+ String.valueOf(db.getHoursbyUserId(user.getmId())));
-
-
+        hoursPointHeaderTextView.setText(getString(R.string.hour_points)+" "+ String.valueOf(db.getHoursbyUserId(user.getmId())));
 
         navigationView.setNavigationItemSelectedListener(this);
     }

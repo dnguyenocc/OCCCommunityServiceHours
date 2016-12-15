@@ -1,11 +1,11 @@
 package edu.orangecoastcollege.cs273.dnguyen1214.occcommunityservicehours;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -30,8 +30,8 @@ public class HomeButtonAdapter extends BaseAdapter {
             R.id.nav_point, R.id.nav_exist
     };
     private Integer[] mStringIds ={
-            R.string.feedback,R.string.all_event,
-            R.string.attending_event, R.string.attended_event,
+            R.string.feedback,R.string.all_event_home,
+            R.string.attending_event_home, R.string.attended_event_home,
             R.string.my_account, R.string.point,
             R.string.log_out
     };
@@ -66,6 +66,7 @@ public class HomeButtonAdapter extends BaseAdapter {
             imageView.setImageResource(mThumbIds[position]);
             view.setTag(mNavIds[position]);
             textView.setText(mStringIds[position]);
+            textView.setTextColor(Color.WHITE);
         }
         else
         {

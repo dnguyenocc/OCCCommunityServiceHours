@@ -96,6 +96,15 @@
     <string name="sms_validation_request">Your validation request of </string>
     <string name="sms_approve"> has been approved.</string>
     <string name="sms_deny"> has been denied</string>
+    <!--Home Page-->
+    <string name="create_event_home">Create Event</string>
+    <string name="all_event_home">All Event</string>
+    <string name="past_event_home">Past Event</string>
+    <string name="attending_event_home">Attending Event</string>
+    <string name="upcoming_event_home">Upcoming Event</string>
+    <string name="attended_event_home">Attended Event</string>
+
+
     <!--Menu Drawer-->
     <string name="my_account">My Profile</string>
     <string name="create_event">Create</string>
