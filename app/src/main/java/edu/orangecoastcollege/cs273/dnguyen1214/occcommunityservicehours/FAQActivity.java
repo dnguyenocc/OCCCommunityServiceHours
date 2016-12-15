@@ -102,7 +102,7 @@ public void viewKeys(View v) {
             builder.setTitle("Keys Question");
             builder.setMessage(allKeyList.toString());
 
-            builder.setNegativeButton(R.string.cancel,
+            builder.setNegativeButton(R.string.ok,
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog,
                                             int id) {
