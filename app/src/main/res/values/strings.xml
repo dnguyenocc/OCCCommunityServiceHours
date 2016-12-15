@@ -88,6 +88,10 @@
     <string name="send_sms">send message</string>
     <string name="partcipant_list">Participant List</string>
 
+    <!--dialog_update_password.xml Strings-->
+    <string name="original_password">Enter your original password</string>
+    <string name="new_password">Type your new password</string>
+
     <!--Participation Validation Activity-->
     <string name="sms_validation_request">Your validation request of </string>
     <string name="sms_approve"> has been approved.</string>
