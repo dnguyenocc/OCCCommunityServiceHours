@@ -49,8 +49,9 @@
         android:id="@+id/textView8"
         android:textAlignment="center"
         android:textStyle="normal|bold"
-        android:textSize="15sp"
-        android:onClick="viewKeys" />
+        android:textSize="16sp"
+        android:onClick="viewKeys"
+        android:layout_marginBottom="20dp" />
 
     <ListView
         android:layout_width="match_parent"

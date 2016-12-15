@@ -126,7 +126,7 @@
     <string name="gold_level">Gold level: 250 hours or more</string>
     <string name="lifetime_level">Lifetime level: 4000 hours or more</string>
     <string name="attended_event_list">Attended Events</string>
-    <string name="detail_medal">More detail about the level here.</string>
+    <string name="detail_medal">More detail about the levels, click here.</string>
     <string name="message">Message</string>
     <string name="send_feedback">Send Feedback</string>
     <string name="recovery_questions">Recovery Questions</string>
@@ -144,7 +144,7 @@
     <!-- LABELS -->
     <string name="enter_request">Enter your question here.</string>
     <string name="answer">Enter the key word (no space) and shake your device to see the answer to your question.\n EX: occ, ptk, hourpoint...</string>
-
+    <string name="learn_more_keys">Learn more about keys question, click here.</string>
 
 
     <!-- TODO: Remove or change this placeholder text -->
