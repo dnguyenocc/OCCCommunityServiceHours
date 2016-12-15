@@ -38,7 +38,7 @@ import java.util.ArrayList;
 /**
  * Account Details Fragment Class
  *
- * - Blueprint for creating an AccountDetailsFragment
+ * - A Blueprint for creating an AccountDetailsFragment
  * - Handles the logic portion of fragment_account_details.xml
  */
 public class AccountDetailsFragment extends Fragment implements View.OnClickListener{
