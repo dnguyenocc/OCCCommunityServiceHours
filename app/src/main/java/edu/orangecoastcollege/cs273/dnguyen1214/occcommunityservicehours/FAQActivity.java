@@ -28,7 +28,7 @@ public class FAQActivity extends AppCompatActivity {
     private  FAQAnswerAdapter answerListAdapter;
     private DBHelper db;
     private FAQAnswer answer;
-
+    private String key;
     //r
     private Sensor accelerotometor;
     //Preferences to the shake detector
@@ -43,6 +43,7 @@ public class FAQActivity extends AppCompatActivity {
         // TASK 1: SET THE REFERENCES TO THE LAYOUT ELEMENTS
         answerTextView = (TextView) findViewById(R.id.answerTextView);
         questionEditText = (EditText) findViewById(R.id.questionEditText);
+        //questionEditText.addTextChangedListener(questionEditTextTextWatcher);
         questionInputLayout = (TextInputLayout) findViewById(R.id.questionInputLayout);
         faqAnswersListView = (ListView) findViewById(R.id.faqAnswersListView);
         // TASK 2: CREATE A NEW MAGIC ANSWER OBJECT
@@ -56,6 +57,7 @@ public class FAQActivity extends AppCompatActivity {
         db.addFAQAnswer(new FAQAnswer("all","What is All Event?\nThis is where all events will be show in one list view, you can click on event in the list to view its detail "));
         db.addFAQAnswer(new FAQAnswer("upcoming","What is Upcoming Event?\nonly Admin can access this function which will show all upcoming events in one list view, you can click on event in the list to view its detail "));
         db.addFAQAnswer(new FAQAnswer("past","What is Past Event?\nonly Admin can access this function which will show all past events in one list view, you can click on event in the list to view its detail "));
+        //db.addFAQAnswer(new FAQAnswer(null,"Empty \nthere is empty string. Please enter the key word"));
 
         ansswerlist = db.getAllAnswer();
 
@@ -63,30 +65,36 @@ public class FAQActivity extends AppCompatActivity {
         faqAnswersListView.setAdapter(answerListAdapter);
 
 
-        // TASK 3: REGISTER THE SENSOR MANAGER AND SETUP THE SHAKE DETECTION
-        senserManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        accelerotometor = senserManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        shakeDetector = new ShakeDetector(new ShakeDetector.OnShakeListener() {
-            @Override
-            public void onShake() {
-                //Geta random answe, put it in the answerTextView
-                //TODO get answer detail
-                viewShakeAnswer();
+            // TASK 3: REGISTER THE SENSOR MANAGER AND SETUP THE SHAKE DETECTION
+            senserManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+            accelerotometor = senserManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+            shakeDetector = new ShakeDetector(new ShakeDetector.OnShakeListener() {
+                @Override
+                public void onShake() {
+                        //Geta random answe, put it in the answerTextView
+                        //TODO get answer detail
+                    key = questionEditText.getText().toString().toLowerCase();
+                    viewShakeAnswer();
 
-            }
+                }
 
-        });
+            });
+
 
 
     }
+
+
+
     private void viewShakeAnswer()
     {
-        answer = db.getAnswer(questionEditText.getText().toString().toLowerCase());
-        if(answer != null) {
-            Intent detailsIntent = new Intent(this, FAQAnswerDetailActivity.class);
-            detailsIntent.putExtra("selectedAnswer", answer);
-            startActivity(detailsIntent);
-        }
+            if(validate(key)){
+                answer = db.getAnswer(key);
+                Intent detailsIntent = new Intent(this, FAQAnswerDetailActivity.class);
+                detailsIntent.putExtra("selectedAnswer", answer);
+                startActivity(detailsIntent);
+            }
+
     }
 
 
@@ -116,18 +124,29 @@ public class FAQActivity extends AppCompatActivity {
 
     }
 
-//    //create tag for fragment so we can look up fragment later by tag
-//    // for example: DemoFragment fragmentDemo = (DemoFragment) getSupportFragmentManager().findFragmentByTag("TAG NAME");
-//    public void transitionFragment(Fragment fragmentClass, String tag)
-//    {
-//
-//        try {
-//            FragmentTransaction fragment = getSupportFragmentManager().beginTransaction();
-//            // Insert the fragment by replacing any existing fragment
-//            fragment.replace(R.id.faqFragmentContenter, fragmentClass,tag).commit();
-//            //fragment.add(R.id.fragmentContent, fragmentClass).commit();
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//    }
+    private boolean validate(String keyword) {
+
+        boolean valid = true;
+
+
+        if(keyword.isEmpty())
+        {
+            questionInputLayout.setError("Username cannot be empty.");
+            valid = false;
+        }
+        else
+            questionInputLayout.setError(null);
+
+        if(!db.checkFAQAnswer(keyword))
+        {
+            questionInputLayout.setError("There is no key like this");
+            valid = false;
+        }
+        else
+            questionInputLayout.setError(null);
+
+
+        return  valid;
+    }
+
 }
