@@ -125,6 +125,7 @@ class DBHelper extends SQLiteOpenHelper {
                 + FAQ_ANSWER_NAME + " TEXT, "
                 + FAQ_ANSWER_DESCRIPTION + " TEXT" + ")";
         database.execSQL(createQuery);
+
         // Create the Question table
         createQuery = "CREATE TABLE " + QUESTIONS_TABLE + "("
                 + QUESTION_KEY_FIELD_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -253,6 +254,29 @@ class DBHelper extends SQLiteOpenHelper {
         db.close();
         return answer;
     }
+    public ArrayList<String> getAllAnswerKey() {
+        ArrayList<String> keyList = new ArrayList<>();
+        SQLiteDatabase database = this.getReadableDatabase();
+        //Cursor cursor = database.rawQuery(queryList, null);
+        Cursor cursor = database.query(
+                FAQ_ANSWER_TABLE,
+                new String[]{FAQ_ANSWER_KEY_FIELD_ID,
+                        FAQ_ANSWER_NAME,
+                        FAQ_ANSWER_DESCRIPTION},
+                null,
+                null,
+                null, null, null, null);
+
+
+        //COLLECT EACH ROW IN THE TABLE
+        if (cursor.moveToFirst()) {
+            do {
+                keyList.add(cursor.getString(1));
+            } while (cursor.moveToNext());
+        }
+        return keyList;
+    }
+
     public ArrayList<FAQAnswer> getAllAnswer() {
         ArrayList<FAQAnswer> answersList = new ArrayList<>();
         SQLiteDatabase database = this.getReadableDatabase();
