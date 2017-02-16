@@ -298,5 +298,8 @@ public class AdminActivity extends AppCompatActivity
         }
     }
 
+    public void reset(View view)
+    {
+    }
 
 }

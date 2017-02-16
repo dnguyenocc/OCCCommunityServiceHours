@@ -19,6 +19,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -223,6 +224,14 @@ public class MainActivity extends AppCompatActivity
             Intent detailsIntent = new Intent(this, ParticipationValidationActivity.class);
             detailsIntent.putExtra("SelectedParticipation",selectedParticipation);
             startActivity(detailsIntent);
+        }
+    }
+
+    public void reset(View view)
+    {
+        if (view instanceof Button)
+        {
+
         }
     }
 

@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
@@ -47,6 +48,7 @@ public class AllEventListFragment extends Fragment {
     // Reference to the accelerometer;
     private Sensor accelerometer;
     private ShakeDetector shakeDetector;
+    private Button resetButton;
 
     public AllEventListFragment() {
         // Required empty public constructor
@@ -78,6 +80,7 @@ public class AllEventListFragment extends Fragment {
 
         db = new DBHelper(context);
         allEventsList =db.getAllEvents();
+
       /*
         Uri imageURI = LoginActivity.getUriToResource(context,R.drawable.occpirate);
         allEventsList = new ArrayList<>();
@@ -101,18 +104,30 @@ public class AllEventListFragment extends Fragment {
         eventTimeSpinner = (Spinner)view.findViewById(R.id.eventTimeSpinner);
         ArrayAdapter<String> eventTimeSpinnerAdapter =
                 new ArrayAdapter<String>(context, android.R.layout.simple_spinner_item,
-                        new String[]{"All","Upcomming","Past"});
+                        new String[]{"All","Upcoming","Past"});
         eventTimeSpinner.setAdapter(eventTimeSpinnerAdapter);
         eventTimeSpinner.setOnItemSelectedListener(eventTimeSpinnerListener);
 
         eventsListView = (ListView) view.findViewById(R.id.allEventsListView);
         eventsListAdapter = new EventListAdapter(context, R.layout.event_list_item,allEventsList);
         eventsListView.setAdapter(eventsListAdapter);
+        resetButton = (Button) view.findViewById(R.id.resetButton);
+        resetButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                // Perform action on click
+                eventsListAdapter.clear();
+                for (Event event: allEventsList)
+                    eventsListAdapter.add(event);
+                eventTimeSpinner.setSelection(0);
+                eventNameEditText.setText("");
+            }
+        });
+
 
         // TASK 3: REGISTER THE SENSOR MANAGER AND SETUP THE SHAKE DETECTION
         sensorManager = (SensorManager) getActivity().getSystemService(Context.SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-
+ 
         shakeDetector = new ShakeDetector(new ShakeDetector.OnShakeListener() {
             @Override
             public void onShake() {
